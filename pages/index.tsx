@@ -7,7 +7,6 @@ const HomePage: NextPage = () => {
       <div>home page</div>
       <Link href='/login'><button>login</button></Link>
     </>
-
   )
 }
 
