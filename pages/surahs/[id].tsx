@@ -36,7 +36,7 @@ export default function Surah(props: any) {
         {/* {JSON.stringify(props.surah)} */}
         {props.surah.data.surah.verses.map((verse: any) => {
           return (
-            <li>
+            <li key={verse.verse_id}>
               <p>{verse.text}</p>
               <p>{verse.translations.pickthall}</p>
             </li>

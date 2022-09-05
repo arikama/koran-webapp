@@ -12,7 +12,7 @@ const HomePage: NextPage = (props: any) => {
       <ol>
         {props.surahs.map((surah: any) => {
           return (
-            <li><Link href={`/surahs/${surah.id}`}><a><u>{`${surah.title}`}</u></a></Link></li>
+            <li key={surah.id}><Link href={`/surahs/${surah.id}`}><a><u>{`${surah.title}`}</u></a></Link></li>
           )
         })}
       </ol>
