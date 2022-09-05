@@ -9,13 +9,13 @@ import { GetStaticProps, GetStaticPaths, GetServerSideProps } from 'next'
 const HomePage: NextPage = (props: any) => {
   return (
     <>
-      <List>
+      <ol>
         {props.surahs.map((surah: any) => {
           return (
-            <ListItem><Link href={`/surahs/${surah.id}`}><MuiLink>{`${surah.id} ${surah.title}`}</MuiLink></Link></ListItem>
+            <li><Link href={`/surahs/${surah.id}`}><a><u>{`${surah.title}`}</u></a></Link></li>
           )
         })}
-      </List>
+      </ol>
     </>
   )
 }

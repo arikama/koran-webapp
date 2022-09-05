@@ -1,4 +1,5 @@
 import { GetStaticProps, GetStaticPaths, GetServerSideProps } from 'next'
+import { stringify } from 'querystring'
 
 export async function getStaticPaths() {
   const resp = await fetch('https://koran-backend-production.up.railway.app/')
@@ -18,17 +19,30 @@ export async function getStaticPaths() {
 }
 
 export const getStaticProps: GetStaticProps = async (context) => {
+  const surahId = context.params!.id
+  const resp = await fetch(`https://koran-backend-production.up.railway.app/surah/${surahId}`)
+  const json = await resp.json()
   return {
     props: {
-      surah: {
-        surahId: context.params!.id
-      }
+      surah: json
     },
   }
 }
 
 export default function Surah(props: any) {
   return (
-    <>Surah {props.surah.surahId}</>
+    <>
+      <ol>
+        {/* {JSON.stringify(props.surah)} */}
+        {props.surah.data.surah.verses.map((verse: any) => {
+          return (
+            <li>
+              <p>{verse.text}</p>
+              <p>{verse.translations.pickthall}</p>
+            </li>
+          )
+        })}
+      </ol>
+    </>
   )
 }
