@@ -8,9 +8,10 @@ function MyApp({ Component, pageProps }: AppProps) {
     <GoogleOAuthProvider
       clientId={`${process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}`}
     >
-      <div>
-        <Link href='/'><a><u>index</u></a></Link>
-      </div>
+      <Link href='/'>
+        <h3><u>Koran</u></h3>
+      </Link>
+      <br />
       <Component {...pageProps} />
     </GoogleOAuthProvider>
   )

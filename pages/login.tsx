@@ -7,7 +7,6 @@ const LoginPage: NextPage = () => {
   const googleLogin = useGoogleLogin({
     flow: 'auth-code',
     onSuccess: async codeResponse => {
-      console.log('codeResponse', codeResponse);
       const auth = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/auth/google`, {
         method: 'POST',
         body: codeResponse.code,
