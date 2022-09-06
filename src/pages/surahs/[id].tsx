@@ -1,5 +1,23 @@
 import { GetStaticProps } from 'next'
 
+export default function SurahPage(props: any) {
+  return (
+    <>
+      {props.surah.data.surah.verses.map((verse: any) => {
+        return (
+          <div key={verse.verse_id}>
+            <div style={{ fontSize: '0.9em' }}>{`${verse.surah_id}:${verse.verse_id}`}</div>
+            <div style={{ fontFamily: 'Scheherazade', fontSize: '2.5em', textAlign: 'right' }}>{verse.text}</div>
+            <div style={{ fontSize: '1em' }}>{verse.translations.pickthall}</div>
+            <br />
+            <br />
+          </div>
+        )
+      })}
+    </>
+  )
+}
+
 export async function getStaticPaths() {
   const resp = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}`)
   const json = await resp.json()
@@ -26,22 +44,4 @@ export const getStaticProps: GetStaticProps = async (context) => {
       surah: json
     },
   }
-}
-
-export default function Surah(props: any) {
-  return (
-    <>
-      {props.surah.data.surah.verses.map((verse: any) => {
-        return (
-          <div key={verse.verse_id}>
-            <div style={{ fontSize: '0.9em' }}>{`${verse.surah_id}:${verse.verse_id}`}</div>
-            <div style={{ fontFamily: 'Scheherazade', fontSize: '2.5em', textAlign: 'right' }}>{verse.text}</div>
-            <div style={{ fontSize: '1em' }}>{verse.translations.pickthall}</div>
-            <br />
-            <br />
-          </div>
-        )
-      })}
-    </>
-  )
 }

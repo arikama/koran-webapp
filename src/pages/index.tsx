@@ -11,7 +11,7 @@ export type Props = {
   }>
 }
 
-const HomePage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = (props) => {
+const IndexPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = (props) => {
   return (
     <>
       {props.surahs.map((surah) => {
@@ -56,4 +56,4 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
 }
 
 
-export default HomePage
+export default IndexPage
