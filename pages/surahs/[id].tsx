@@ -1,5 +1,4 @@
-import { GetStaticProps, GetStaticPaths, GetServerSideProps } from 'next'
-import { stringify } from 'querystring'
+import { GetStaticProps } from 'next'
 
 export async function getStaticPaths() {
   const resp = await fetch('https://koran-backend-production.up.railway.app/')

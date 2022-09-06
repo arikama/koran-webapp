@@ -1,6 +1,7 @@
+import { GetStaticProps } from 'next'
 import Link from 'next/link'
+
 import type { NextPage } from 'next'
-import { GetStaticProps, GetStaticPaths, GetServerSideProps } from 'next'
 
 const HomePage: NextPage = (props: any) => {
   return (

@@ -1,6 +1,7 @@
-import type { NextPage } from 'next'
-import { GoogleLogin, useGoogleLogin } from '@react-oauth/google'
+import { useGoogleLogin } from '@react-oauth/google'
 import { useRouter } from 'next/router'
+
+import type { NextPage } from 'next'
 
 const LoginPage: NextPage = () => {
   const googleLogin = useGoogleLogin({
