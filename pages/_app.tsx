@@ -6,7 +6,7 @@ import Link from 'next/link'
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <GoogleOAuthProvider
-      clientId='454337127208-8cfsr6ebdake7qjp93n98rlrjjm9qgo6.apps.googleusercontent.com'
+      clientId={`${process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}`}
     >
       <div>
         <Link href='/'><a><u>index</u></a></Link>

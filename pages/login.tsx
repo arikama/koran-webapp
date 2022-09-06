@@ -8,7 +8,7 @@ const LoginPage: NextPage = () => {
     flow: 'auth-code',
     onSuccess: async codeResponse => {
       console.log('codeResponse', codeResponse);
-      const auth = await fetch('http://localhost:8080/auth/google', {
+      const auth = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/auth/google`, {
         method: 'POST',
         body: codeResponse.code,
       })

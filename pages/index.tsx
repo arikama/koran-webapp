@@ -18,7 +18,7 @@ const HomePage: NextPage = (props: any) => {
 }
 
 export const getStaticProps: GetStaticProps = async (context) => {
-  const resp = await fetch('https://koran-backend-production.up.railway.app/')
+  const resp = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}`)
   const json = await resp.json()
   const surahInfos = json.data.surah_infos
   const surahs = surahInfos.map((surahInfo: any) => {
