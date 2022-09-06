@@ -22,7 +22,7 @@ const HomePage: NextPage<Props> = (props) => {
               <div
                 style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <div>
-                  <u>{surah.id}</u>
+                  <span>{surah.id}</span>
                   &nbsp;&nbsp;&nbsp;&nbsp;
                   <u>{surah.title}</u>
                 </div>

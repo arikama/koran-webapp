@@ -35,7 +35,7 @@ export default function Surah(props: any) {
         return (
           <div key={verse.verse_id}>
             <div style={{ fontSize: '0.9em' }}>{`${verse.surah_id}:${verse.verse_id}`}</div>
-            <div style={{ fontFamily: 'Scheherazade', fontSize: '2.5em', textAlign: 'left' }}>{verse.text}</div>
+            <div style={{ fontFamily: 'Scheherazade', fontSize: '2.5em', textAlign: 'right' }}>{verse.text}</div>
             <div style={{ fontSize: '1em' }}>{verse.translations.pickthall}</div>
             <br />
             <br />
