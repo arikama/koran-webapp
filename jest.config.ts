@@ -17,8 +17,9 @@ const customJestConfig = {
 
   collectCoverage: true,
   collectCoverageFrom: [
-    "pages/**/*.{ts,tsx}"
-  ]
+    'src/pages/**/*.{ts,tsx}',
+    '!src/pages/_document.tsx',
+  ],
 }
 
 // createJestConfig is exported this way to ensure that next/jest can load the Next.js config which is async
