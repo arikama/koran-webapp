@@ -1,9 +1,5 @@
 import Link from 'next/link'
 import type { NextPage } from 'next'
-import MuiLink from '@mui/material/Link'
-import Typography from '@mui/material/Typography'
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
 import { GetStaticProps, GetStaticPaths, GetServerSideProps } from 'next'
 
 const HomePage: NextPage = (props: any) => {
