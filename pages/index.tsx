@@ -1,9 +1,9 @@
-import { GetStaticProps } from 'next'
+import { GetStaticProps, InferGetStaticPropsType } from 'next'
 import Link from 'next/link'
 
 import type { NextPage } from 'next'
 
-type Props = {
+export type Props = {
   surahs: Array<{
     id: number
     title: string
@@ -11,7 +11,7 @@ type Props = {
   }>
 }
 
-const HomePage: NextPage<Props> = (props) => {
+const HomePage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = (props) => {
   return (
     <>
       {props.surahs.map((surah) => {
@@ -37,7 +37,7 @@ const HomePage: NextPage<Props> = (props) => {
   )
 }
 
-export const getStaticProps: GetStaticProps = async (context) => {
+export const getStaticProps: GetStaticProps<Props> = async () => {
   const resp = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}`)
   const json = await resp.json()
   const surahInfos = json.data.surah_infos

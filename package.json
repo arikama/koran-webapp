@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint --fix",
-    "test": "jest --verbose --coverage",
+    "test": "npm run lint && jest --verbose --coverage",
     "testw": "jest --watch"
   },
   "dependencies": {
@@ -15,7 +15,8 @@
     "next": "^12.2.5",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "ts-node": "^10.9.1"
+    "ts-node": "^10.9.1",
+    "whatwg-fetch": "^3.6.2"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.16.5",
