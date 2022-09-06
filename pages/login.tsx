@@ -12,7 +12,6 @@ const LoginPage: NextPage = () => {
         body: codeResponse.code,
       })
       const json = await auth.json()
-      console.log('json', json)
       router.push('/')
     },
     onError: errorResponse => console.log(errorResponse),
