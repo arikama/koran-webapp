@@ -11,7 +11,23 @@ export class KoranApiImpl implements KoranApi {
 
   async getSurahInfos(): Promise<SurahInfo[]> {
     const response = await fetch(this.baseUrl)
-    const json = await response.json()
+
+    type Json = {
+      data: {
+        surah_infos: {
+          surah_id: number
+          title: string
+          arabic: string
+          english: string
+          verses: number
+          city: string
+          juz_start: number
+          juz_end: number
+        }[]
+      }
+    }
+
+    const json: Json = await response.json()
 
     return json.data.surah_infos.map((info: {
       surah_id: number
@@ -34,10 +50,45 @@ export class KoranApiImpl implements KoranApi {
 
   async getSurah(surahId: number): Promise<Surah> {
     const response = await fetch(`${this.baseUrl}/surah/${surahId}`)
-    type Json = {
 
+    type Json = {
+      data: {
+        surah: {
+          surah_info: {
+            surah_id: number
+            title: string
+            arabic: string
+            english: string
+            verses: number
+            city: string
+            juz_start: number
+            juz_end: number
+          },
+          verses: {
+            surah_id: number
+            verse_id: number
+            text: string
+            translations: {
+              pickthall: string
+            }
+          }[]
+        }
+      }
     }
+
     const json: Json = await response.json()
-    return {}
+
+    const surah: Surah = {
+      surahId: json.data.surah.surah_info.surah_id,
+      verses: json.data.surah.verses.map(surah => {
+        return {
+          verseId: surah.verse_id,
+          text: surah.text,
+          translation: surah.translations.pickthall
+        }
+      })
+    }
+
+    return surah
   }
 }

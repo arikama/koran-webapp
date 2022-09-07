@@ -2,35 +2,37 @@ import { GetStaticProps } from 'next'
 import { KoranApiImpl } from './../../apis/koran_api_impl'
 
 import type { KoranApi } from './../../apis/koran_api'
+import type { Surah } from './../../types/surah'
 
-export default function SurahPage(props: any) {
+export default function SurahPage(props: { surah: Surah }) {
+  const Verses = props.surah.verses.map((verse) => {
+    return (
+      <div key={verse.verseId}>
+        <div style={{
+          fontSize: '0.9em'
+        }}>
+          {`${props.surah.surahId}:${verse.verseId}`}
+        </div>
+        <div style={{
+          fontFamily: 'Scheherazade',
+          fontSize: '2.5em',
+          textAlign: 'right'
+        }}>
+          {verse.text}
+        </div>
+        <div style={{
+          fontSize: '1em'
+        }}>
+          {verse.translation}
+        </div>
+        <br />
+        <br />
+      </div>
+    )
+  })
   return (
     <>
-      {props.surah.data.surah.verses.map((verse: any) => {
-        return (
-          <div key={verse.verse_id}>
-            <div style={{
-              fontSize: '0.9em'
-            }}>
-              {`${verse.surah_id}:${verse.verse_id}`}
-            </div>
-            <div style={{
-              fontFamily: 'Scheherazade',
-              fontSize: '2.5em',
-              textAlign: 'right'
-            }}>
-              {verse.text}
-            </div>
-            <div style={{
-              fontSize: '1em'
-            }}>
-              {verse.translations.pickthall}
-            </div>
-            <br />
-            <br />
-          </div>
-        )
-      })}
+      {Verses}
     </>
   )
 }
@@ -54,12 +56,14 @@ export async function getStaticPaths() {
 }
 
 export const getStaticProps: GetStaticProps = async (context) => {
-  const surahId = context.params!.id
-  const resp = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/surah/${surahId}`)
-  const json = await resp.json()
+  const surahId = parseInt(context.params!.id as string)
+  const koranApi: KoranApi = new KoranApiImpl()
+
+  const surah = await koranApi.getSurah(surahId)
+
   return {
     props: {
-      surah: json
+      surah
     },
   }
 }
