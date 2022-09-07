@@ -1,13 +1,12 @@
-import './../styles/globals.css'
 import type { AppProps } from 'next/app'
-import Link from 'next/link'
+
+import './../styles/globals.css'
+import { AppNav } from './../components/app_nav'
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
-      <Link href='/'>
-        <h3><u>Koran</u></h3>
-      </Link>
+      <AppNav></AppNav>
       <br />
       <Component {...pageProps} />
     </>
