@@ -1,4 +1,5 @@
 import type { KoranApi } from './koran_api'
+import type { Surah } from './../types/surah'
 import type { SurahInfo } from './../types/surah_info'
 
 export class KoranApiImpl implements KoranApi {
@@ -29,5 +30,14 @@ export class KoranApiImpl implements KoranApi {
       }
       return surahInfo
     })
+  }
+
+  async getSurah(surahId: number): Promise<Surah> {
+    const response = await fetch(`${this.baseUrl}/surah/${surahId}`)
+    type Json = {
+
+    }
+    const json: Json = await response.json()
+    return {}
   }
 }

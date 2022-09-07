@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react'
-import { AppNav } from './../../src/components/app_nav'
+
+import { AppNav } from '../../src/components/app_nav'
 
 describe('AppNav', () => {
   test('render', async () => {

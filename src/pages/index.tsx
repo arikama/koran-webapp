@@ -1,10 +1,12 @@
 import { GetStaticProps, InferGetStaticPropsType } from 'next'
 import Link from 'next/link'
-import { KoranApiImpl } from '../apis/koran_api_impl'
+
+import { KoranApiImpl } from './../apis/koran_api_impl'
 
 import type { NextPage } from 'next'
-import type { KoranApi } from '../apis/koran_api'
-import type { SurahInfo } from '../types/surah_info'
+
+import type { KoranApi } from './../apis/koran_api'
+import type { SurahInfo } from './../types/surah_info'
 
 export type Props = {
   surahInfos: SurahInfo[]
@@ -51,7 +53,9 @@ const IndexPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = (pro
 
 export const getStaticProps: GetStaticProps<Props> = async () => {
   const koranApi: KoranApi = new KoranApiImpl()
+
   const surahInfos = await koranApi.getSurahInfos()
+
   return {
     props: {
       surahInfos

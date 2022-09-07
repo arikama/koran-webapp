@@ -1,9 +1,9 @@
 import { render, screen } from '@testing-library/react'
-import IndexPage, { getStaticProps } from '../../src/pages/index'
 import '@testing-library/jest-dom'
 import 'whatwg-fetch'
 
-import type { Props } from '../../src/pages/index'
+import IndexPage, { getStaticProps } from './../../src/pages/index'
+import type { Props } from './../../src/pages/index'
 
 describe('IndexPage', () => {
   test('render', async () => {
