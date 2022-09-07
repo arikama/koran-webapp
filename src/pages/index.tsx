@@ -1,56 +1,60 @@
 import { GetStaticProps, InferGetStaticPropsType } from 'next'
 import Link from 'next/link'
+import { KoranApiImpl } from '../apis/koran_api_impl'
 
 import type { NextPage } from 'next'
+import type { KoranApi } from '../apis/koran_api'
+import type { SurahInfo } from '../types/surah_info'
 
 export type Props = {
-  surahs: Array<{
-    id: number
-    title: string
-    arabic: string
-  }>
+  surahInfos: SurahInfo[]
 }
 
 const IndexPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = (props) => {
+  const SurahInfos = props.surahInfos.map(surahInfo => {
+    const href = `/surahs/${surahInfo.surahId}`
+    return (
+      <div key={surahInfo.surahId.toString()}>
+        <Link
+          href={href}
+        >
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center'
+            }}
+          >
+            <div>
+              <span>{surahInfo.surahId}</span>
+              &nbsp;&nbsp;&nbsp;&nbsp;
+              <u>{surahInfo.titleEnglish}</u>
+            </div>
+            <div style={{
+              fontFamily: 'Scheherazade',
+              fontSize: '2em', textAlign: 'right'
+            }}>
+              {surahInfo.titleArabic}
+            </div>
+          </div>
+        </Link>
+        <br />
+      </div>
+    )
+  })
   return (
     <>
-      {props.surahs.map((surah) => {
-        return (
-          <div key={`${surah.id}`}>
-            <Link
-              href={`/surahs/${surah.id}`}>
-              <div
-                style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <div>
-                  <span>{surah.id}</span>
-                  &nbsp;&nbsp;&nbsp;&nbsp;
-                  <u>{surah.title}</u>
-                </div>
-                <div style={{ fontFamily: 'Scheherazade', fontSize: '2em', textAlign: 'right' }}>{surah.arabic}</div>
-              </div>
-            </Link>
-            <br />
-          </div>
-        )
-      })}
+      {SurahInfos}
     </>
   )
 }
 
 export const getStaticProps: GetStaticProps<Props> = async () => {
-  const resp = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}`)
-  const json = await resp.json()
-  const surahInfos = json.data.surah_infos
-  const surahs = surahInfos.map((surahInfo: any) => {
-    return {
-      id: surahInfo.surah_id,
-      title: surahInfo.english,
-      arabic: surahInfo.arabic
-    }
-  })
+  const koranApi: KoranApi = new KoranApiImpl()
+  const surahInfos = await koranApi.getSurahInfos()
   return {
     props: {
-      surahs
+      surahInfos
     },
   }
 }
