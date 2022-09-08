@@ -19,6 +19,8 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
+    - env:
+        NEXT_PUBLIC_BASE_API: https://koran.arikama.co
     - run: npm ci
     - run: npm test
     - uses: codecov/codecov-action@v1.0.2
