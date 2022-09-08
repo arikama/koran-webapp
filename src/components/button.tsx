@@ -7,14 +7,15 @@ type Props = {
 
 export const Button = (props: Props) => {
   return (
-    <h2
+    <h3
       style={{
         margin: 0,
-        cursor: 'pointer'
+        cursor: 'pointer',
+        height: '32px'
       }}
       onClick={props.onClick}
     >
       {props.title}
-    </h2>
+    </h3>
   )
 }

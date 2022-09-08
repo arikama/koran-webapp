@@ -1,10 +1,15 @@
 import { render, screen } from '@testing-library/react'
+import { GoogleOAuthProvider } from '@react-oauth/google'
 
 import { AppNav } from '../../src/components/app_nav'
 
 describe('AppNav', () => {
   test('render', async () => {
-    render(<AppNav />)
+    render(
+      <GoogleOAuthProvider clientId={`${process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}`}>
+        <AppNav />)
+      </GoogleOAuthProvider>
+    )
     expect(await screen.findByText('Koran')).toBeInTheDocument()
   })
 })

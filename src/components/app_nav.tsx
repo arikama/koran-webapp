@@ -22,16 +22,16 @@ export const AppNav = () => {
     onError: errorResponse => console.log(errorResponse),
   })
   const router = useRouter()
-  const login = <div onClick={googleLogin}><Button title='🚪' onClick={googleLogin} /></div>
+  const login = <div onClick={googleLogin}><Button title='🗝' onClick={googleLogin} /></div>
   const profile = <div onClick={() => {
     router.push('/profile')
-  }}><Button title='👤' onClick={() => { router.push('/profile') }} /></div>
+  }}><Button title='✨' onClick={() => { router.push('/profile') }} /></div>
   return (
     <div style={{
       display: 'flex',
       justifyContent: 'space-between',
     }}>
-      <Button title='📖' onClick={() => { router.push('/') }} />
+      <Button title='Koran' onClick={() => { router.push('/') }} />
       {authContext.user?.token ? profile : login}
     </div>
   )
