@@ -19,12 +19,10 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - env:
+    - run: npm ci
+      env:
         NEXT_PUBLIC_GOOGLE_CLIENT_ID: 454337127208-8cfsr6ebdake7qjp93n98rlrjjm9qgo6.apps.googleusercontent.com
         NEXT_PUBLIC_BASE_API: https://koran.arikama.co
-    - run: echo $NEXT_PUBLIC_GOOGLE_CLIENT_ID
-    - run: echo $NEXT_PUBLIC_BASE_API
-    - run: npm ci
     - run: npm test
     - uses: codecov/codecov-action@v1.0.2
       with:

@@ -21,3 +21,6 @@ jobs:
         cache: 'npm'
     - run: npm ci
     - run: npm run build
+      env:
+        NEXT_PUBLIC_GOOGLE_CLIENT_ID: 454337127208-8cfsr6ebdake7qjp93n98rlrjjm9qgo6.apps.googleusercontent.com
+        NEXT_PUBLIC_BASE_API: https://koran.arikama.co
