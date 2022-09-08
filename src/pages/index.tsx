@@ -24,7 +24,8 @@ const IndexPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = (pro
             style={{
               display: 'flex',
               justifyContent: 'space-between',
-              alignItems: 'center'
+              alignItems: 'center',
+              cursor: 'pointer'
             }}
           >
             <div>
