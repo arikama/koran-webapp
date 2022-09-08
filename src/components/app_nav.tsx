@@ -17,7 +17,7 @@ export const AppNav = () => {
       })
       const json = await auth.json()
       console.log('json', json)
-      authContext.updateUser!({ token: json.token })
+      authContext.updateUser!({ token: json.data.token })
     },
     onError: errorResponse => console.log(errorResponse),
   })
