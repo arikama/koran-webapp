@@ -13,7 +13,9 @@ export const AppNav = () => {
     onSuccess: async codeResponse => {
       const auth = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/auth/google`, {
         method: 'POST',
-        body: codeResponse.code,
+        body: JSON.stringify({
+          auth_code: codeResponse.code,
+        }),
       })
       const json = await auth.json()
       console.log('json', json)

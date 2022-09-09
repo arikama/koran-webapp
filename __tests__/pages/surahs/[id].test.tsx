@@ -1,8 +1,8 @@
-import { render, screen } from '@testing-library/react'
 import '@testing-library/jest-dom'
 import 'whatwg-fetch'
+import { render, screen } from '@testing-library/react'
 
-import SurahPage, { getStaticProps, getStaticPaths } from './../../../src/pages/surahs/[id]'
+import SurahPage, { getStaticPaths, getStaticProps } from './../../../src/pages/surahs/[id]'
 
 describe('SurahPage', () => {
   test('render', async () => {

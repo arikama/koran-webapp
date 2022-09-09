@@ -1,6 +1,6 @@
-import { render, screen } from '@testing-library/react'
 import '@testing-library/jest-dom'
 import 'whatwg-fetch'
+import { render, screen } from '@testing-library/react'
 
 import IndexPage, { getStaticProps } from './../../src/pages/index'
 import type { Props } from './../../src/pages/index'
