@@ -1,6 +1,13 @@
 import { useContext, useEffect, useState } from 'react'
+import { useRouter } from 'next/router'
 
 import { AuthContext, WireContext } from './../pages/_app'
+import {
+  POINTER_FONT_SIZE,
+  QURAN_FONT_FAMILY,
+  QURAN_FONT_SIZE,
+  TRANSLATION_FONT_SIZE,
+} from './../constants/font'
 import { Button } from './../components/button'
 import { getSurahVerseId } from '../utils/get_surah_verse_id'
 
@@ -9,13 +16,18 @@ import type { Verse } from './../types/verse'
 export default function BookmarkPage() {
   const wireContext = useContext(WireContext)
   const authContext = useContext(AuthContext)
+  const router = useRouter()
 
   const [currentPointer, setCurrentPointer] = useState<string>('')
   const [verse, setVerse] = useState<Verse>({ key: '', verse: '', translation: '' })
 
   useEffect(() => {
     (async () => {
-      if (authContext.isLoggedIn() && authContext.user) {
+      if (!authContext.isLoggedIn()) {
+        router.push('/')
+        return
+      }
+      if (authContext.user) {
         const currentPointer = await wireContext.userApi().getUserPointer(authContext.user.email, authContext.user.token)
 
         setCurrentPointer(currentPointer)
@@ -33,29 +45,37 @@ export default function BookmarkPage() {
       }
     })()
   }, [currentPointer, wireContext],)
+
+  if (!verse.verse || !verse.translation) {
+    return <></>
+  }
+
   return (
     <>
       <div
         style={{
-          fontSize: '0.9em'
+          fontSize: POINTER_FONT_SIZE
         }}
       >
         {currentPointer}
       </div>
-      <div style={{
-        fontFamily: 'Scheherazade',
-        fontSize: '2.5em',
-        textAlign: 'right'
-      }}>
+      <div
+        style={{
+          fontFamily: QURAN_FONT_FAMILY,
+          fontSize: QURAN_FONT_SIZE,
+          textAlign: 'right'
+        }}
+      >
         {verse.verse}
       </div>
       <div
         style={{
-          fontSize: '1em'
+          fontSize: TRANSLATION_FONT_SIZE
         }}
       >
         {verse.translation}
       </div>
+      &nbsp;
       <div
         style={{
           textAlign: 'right',
