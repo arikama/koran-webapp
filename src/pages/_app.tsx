@@ -5,6 +5,8 @@ import './../styles/globals.css'
 import { AppNav } from './../components/app_nav'
 
 import type { AppProps } from 'next/app'
+import type { KoranApi } from '../apis/koran_api'
+import { KoranApiImpl } from './../apis/koran_api_impl'
 import type { User } from './../types/user'
 
 type Auth = {
@@ -13,7 +15,18 @@ type Auth = {
   isLoggedIn: () => boolean
 }
 
-export const AuthContext = React.createContext<Auth>({ updateUser: () => { }, isLoggedIn: () => false })
+type Wire = {
+  getKoranApi: () => KoranApi
+}
+
+export const AuthContext = React.createContext<Auth>({
+  updateUser: () => { },
+  isLoggedIn: () => false,
+})
+
+export const WireContext = React.createContext<Wire>({
+  getKoranApi: () => new KoranApiImpl()
+})
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [userState, setUserState] = useState<User>({
@@ -24,22 +37,30 @@ function MyApp({ Component, pageProps }: AppProps) {
   })
   return (
     <>
-      <AuthContext.Provider value={{
-        user: userState,
-        updateUser: (user: User) => {
-          setUserState(user)
-        },
-        isLoggedIn: () => {
-          return !!userState.token
-        }
-      }}>
-        <GoogleOAuthProvider
-          clientId={`${process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}`}
+      <AuthContext.Provider
+        value={{
+          user: userState,
+          updateUser: (user: User) => {
+            setUserState(user)
+          },
+          isLoggedIn: () => {
+            return !!userState.token
+          }
+        }}
+      >
+        <WireContext.Provider
+          value={{
+            getKoranApi: () => new KoranApiImpl()
+          }}
         >
-          <AppNav></AppNav>
-          <br />
-          <Component {...pageProps} />
-        </GoogleOAuthProvider>
+          <GoogleOAuthProvider
+            clientId={`${process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}`}
+          >
+            <AppNav></AppNav>
+            <br />
+            <Component {...pageProps} />
+          </GoogleOAuthProvider>
+        </WireContext.Provider>
       </AuthContext.Provider>
     </>
   )

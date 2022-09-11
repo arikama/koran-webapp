@@ -1,19 +1,20 @@
 import { useContext, useEffect, useState } from 'react'
 
-import { AuthContext } from './../pages/_app'
+import { AuthContext, WireContext } from './../pages/_app'
 import { Button } from './../components/button'
+import { getSurahVerseId } from '../utils/get_surah_verse_id'
 
-type Verse = {
-  verse: string
-  translation: string
-}
+import type { Verse } from './../types/verse'
 
 export default function BookmarkPage() {
+  const wireContext = useContext(WireContext)
   const authContext = useContext(AuthContext)
+
   const [currentPointer, setCurrentPointer] = useState<string>('')
-  const [verse, setVerse] = useState<Verse>({ verse: '', translation: '' })
+  const [verse, setVerse] = useState<Verse>({ key: '', verse: '', translation: '' })
+
   useEffect(() => {
-    const f = async () => {
+    (async () => {
       const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/user/pointer`, {
         method: 'POST',
         body: JSON.stringify({
@@ -25,36 +26,20 @@ export default function BookmarkPage() {
       })
       const json = await response.json()
       const cp = (json.data.current_pointer as string)
-      const [surahId, verseId] = cp.split(':')
-      const response2 = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/surah/${surahId}/verse/${verseId}`, {
-        method: 'GET'
-      })
-      const json2 = await response2.json()
-      const verse = json2.data.verse
-      const translation = json2.data.translations.pickthall
-      console.log('! json2:', json2)
       setCurrentPointer(cp)
-    }
-    f()
+    })()
   }, [authContext.user])
   useEffect(() => {
-    const f = async () => {
-      const cp = currentPointer
-      const [surahId, verseId] = cp.split(':')
-      const response2 = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/surah/${surahId}/verse/${verseId}`, {
-        method: 'GET'
-      })
-      const json2 = await response2.json()
-      const verse = json2.data.verse
-      const translation = json2.data.translations.pickthall
-      console.log('! json2:', json2)
-      setVerse({
-        verse,
-        translation,
-      })
-    }
-    f()
-  }, [currentPointer])
+    (async () => {
+      const parsed = getSurahVerseId(currentPointer)
+
+      if (parsed.ok) {
+        const verse = await wireContext.getKoranApi().getVerse(parsed.surahId, parsed.verseId)
+
+        setVerse(verse)
+      }
+    })()
+  }, [currentPointer, wireContext],)
   return (
     <>
       <div

@@ -1,6 +1,7 @@
 import type { KoranApi } from './koran_api'
 import type { Surah } from './../types/surah'
 import type { SurahInfo } from './../types/surah_info'
+import type { Verse } from './../types/verse'
 
 export class KoranApiImpl implements KoranApi {
   baseUrl: string
@@ -90,5 +91,21 @@ export class KoranApiImpl implements KoranApi {
     }
 
     return surah
+  }
+
+  async getVerse(surahId: number, verseId: number): Promise<Verse> {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/surah/${surahId}/verse/${verseId}`, {
+      method: 'GET'
+    })
+
+    const json = await response.json()
+
+    const verse: Verse = {
+      key: `${surahId}:${verseId}`,
+      verse: json.data.verse,
+      translation: json.data.translations.pickthall
+    }
+
+    return verse
   }
 }
