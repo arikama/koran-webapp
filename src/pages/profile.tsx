@@ -12,7 +12,7 @@ export default function ProfilePage() {
     >
       <u
         onClick={() => {
-          authContext.updateUser!({ token: '' })
+          authContext.updateUser!({ email: '', token: '', name: '', picture: '' })
           router.push('/')
         }}
       >
