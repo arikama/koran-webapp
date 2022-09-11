@@ -25,7 +25,7 @@ export const Button = (props: Props = { onClick: () => { }, disabled: false }) =
         ...props.style,
       }}
     >
-      <u>{props.children}</u>
+      {props.children}
     </button>
   )
 }
