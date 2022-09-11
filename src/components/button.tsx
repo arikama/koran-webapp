@@ -21,7 +21,6 @@ export const Button = (props: Props = { onClick: () => { }, disabled: false }) =
         background: 'none',
         cursor: 'pointer',
         fontSize: '1em',
-        color: props.disabled ? 'gray' : '',
         ...props.style,
       }}
     >

@@ -1,5 +1,4 @@
 import { useContext, useEffect, useState } from 'react'
-import Link from 'next/link'
 import { useRouter } from 'next/router'
 
 import { AuthContext, WireContext } from './../pages/_app'
@@ -60,11 +59,13 @@ export default function BookmarkPage() {
           fontSize: POINTER_FONT_SIZE
         }}
       >
-        <Link
-          href={`/surahs/${parsed.surahId}#${parsed.verseId}`}
+        <Button
+          onClick={() => {
+            router.push(`/surahs/${parsed.surahId}#${parsed.verseId}`)
+          }}
         >
-          <u>{currentPointer}</u>
-        </Link>
+          {currentPointer}
+        </Button>
       </div>
       <div
         style={{

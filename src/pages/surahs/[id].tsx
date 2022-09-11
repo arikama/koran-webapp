@@ -1,4 +1,3 @@
-import Link from 'next/link'
 import { useRouter } from 'next/router'
 
 import {
@@ -7,6 +6,7 @@ import {
   QURAN_FONT_SIZE,
   TRANSLATION_FONT_SIZE,
 } from './../../constants/font'
+import { Button } from './../../components/button'
 import { GetStaticProps } from 'next'
 import { KoranApiImpl } from './../../apis/koran_api_impl'
 
@@ -33,11 +33,13 @@ export default function SurahPage(props: { surah: Surah }) {
           <div>
             {`${props.surah.surahId}:${verse.verseId}`}
           </div>
-          <u
+          <Button
             onClick={() => {
               router.back()
             }}
-          >back</u>
+          >
+            back
+          </Button>
         </div>
         <div
           style={{

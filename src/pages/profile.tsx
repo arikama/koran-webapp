@@ -2,6 +2,7 @@ import { useContext } from 'react'
 import { useRouter } from 'next/router'
 
 import { AuthContext } from './../pages/_app'
+import { Button } from './../components/button'
 
 export default function ProfilePage() {
   const authContext = useContext(AuthContext)
@@ -10,14 +11,14 @@ export default function ProfilePage() {
     <div
       style={{ textAlign: 'center' }}
     >
-      <u
+      <Button
         onClick={() => {
           authContext.updateUser!({ email: '', token: '', name: '', picture: '' })
           router.push('/')
         }}
       >
         Logout
-      </u>
+      </Button>
     </div>
   )
 }

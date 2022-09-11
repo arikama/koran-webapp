@@ -1,6 +1,7 @@
 import { GetStaticProps, InferGetStaticPropsType } from 'next'
-import Link from 'next/link'
+import { useRouter } from 'next/router'
 
+import { Button } from './../components/button'
 import { KoranApiImpl } from './../apis/koran_api_impl'
 
 import type { NextPage } from 'next'
@@ -13,34 +14,43 @@ export type Props = {
 }
 
 const IndexPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = (props) => {
+  const router = useRouter()
+
   const SurahInfos = props.surahInfos.map(surahInfo => {
     const href = `/surahs/${surahInfo.surahId}`
+
     return (
       <div key={surahInfo.surahId.toString()}>
-        <Link
+        {/* <Link
           href={href}
+        > */}
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            cursor: 'pointer'
+          }}
         >
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              cursor: 'pointer'
-            }}
-          >
-            <div>
-              <span>{surahInfo.surahId}</span>
-              &nbsp;&nbsp;&nbsp;&nbsp;
-              <u>{surahInfo.titleEnglish}</u>
-            </div>
-            <div style={{
-              fontFamily: 'Scheherazade',
-              fontSize: '2em', textAlign: 'right'
-            }}>
-              {surahInfo.titleArabic}
-            </div>
+          <div>
+            <span>{surahInfo.surahId}</span>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <Button
+              onClick={() => {
+                router.push(href)
+              }}
+            >
+              {surahInfo.titleEnglish}
+            </Button>
           </div>
-        </Link>
+          <div style={{
+            fontFamily: 'Scheherazade',
+            fontSize: '2em', textAlign: 'right'
+          }}>
+            {surahInfo.titleArabic}
+          </div>
+        </div>
+        {/* </Link> */}
         <br />
       </div>
     )
