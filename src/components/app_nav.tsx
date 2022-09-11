@@ -61,7 +61,6 @@ export const AppNav = () => {
         &nbsp;
         <Button
           onClick={onClickBookmark}
-          disabled={!authContext.isLoggedIn()}
           style={{
             background: router.pathname === '/bookmark' ? 'gainsboro' : 'none'
           }}
