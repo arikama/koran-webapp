@@ -3,6 +3,7 @@ import type { PropsWithChildren } from 'react'
 type Props = PropsWithChildren & {
   onClick: () => void
   disabled?: boolean
+  style?: React.CSSProperties
 }
 
 export const Button = (props: Props = { onClick: () => { }, disabled: false }) => {
@@ -16,6 +17,7 @@ export const Button = (props: Props = { onClick: () => { }, disabled: false }) =
         }
       }
       style={{
+        ...props.style,
         userSelect: 'none',
         cursor: 'pointer',
         color: props.disabled ? 'gray' : ''

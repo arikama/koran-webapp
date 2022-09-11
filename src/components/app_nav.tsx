@@ -35,12 +35,22 @@ export const AppNav = () => {
           display: 'flex',
         }}
       >
-        <Button onClick={onClickKoran}>Koran</Button>
+        <Button
+          onClick={onClickKoran}
+          style={{
+            fontWeight: router.pathname == '/' ? 'bold' : ''
+          }}
+        >
+          Koran
+        </Button>
         &nbsp;
         &nbsp;
         <Button
           onClick={onClickBookmark}
           disabled={!authContext.isLoggedIn()}
+          style={{
+            fontWeight: router.pathname == '/bookmark' ? 'bold' : ''
+          }}
         >
           Bookmark
         </Button>
