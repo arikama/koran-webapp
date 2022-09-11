@@ -1,13 +1,15 @@
 import React, { useState } from 'react'
+import type { AppProps } from 'next/app'
 import { GoogleOAuthProvider } from '@react-oauth/google'
 
 import './../styles/globals.css'
 import { AppNav } from './../components/app_nav'
-
-import type { AppProps } from 'next/app'
-import type { KoranApi } from '../apis/koran_api'
 import { KoranApiImpl } from './../apis/koran_api_impl'
+import { UserApiImpl } from '../apis/user_api_impl'
+
+import type { KoranApi } from '../apis/koran_api'
 import type { User } from './../types/user'
+import type { UserApi } from '../apis/user_api'
 
 type Auth = {
   user?: User
@@ -16,7 +18,8 @@ type Auth = {
 }
 
 type Wire = {
-  getKoranApi: () => KoranApi
+  koranApi: () => KoranApi
+  userApi: () => UserApi
 }
 
 export const AuthContext = React.createContext<Auth>({
@@ -25,7 +28,8 @@ export const AuthContext = React.createContext<Auth>({
 })
 
 export const WireContext = React.createContext<Wire>({
-  getKoranApi: () => new KoranApiImpl()
+  koranApi: () => new KoranApiImpl(),
+  userApi: () => new UserApiImpl(),
 })
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -50,7 +54,8 @@ function MyApp({ Component, pageProps }: AppProps) {
       >
         <WireContext.Provider
           value={{
-            getKoranApi: () => new KoranApiImpl()
+            koranApi: () => new KoranApiImpl(),
+            userApi: () => new UserApiImpl(),
           }}
         >
           <GoogleOAuthProvider

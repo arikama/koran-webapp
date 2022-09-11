@@ -15,26 +15,19 @@ export default function BookmarkPage() {
 
   useEffect(() => {
     (async () => {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/user/pointer`, {
-        method: 'POST',
-        body: JSON.stringify({
-          email: authContext.user?.email,
-        }),
-        headers: {
-          'x-access-token': authContext.user?.token!,
-        }
-      })
-      const json = await response.json()
-      const cp = (json.data.current_pointer as string)
-      setCurrentPointer(cp)
+      if (authContext.isLoggedIn() && authContext.user) {
+        const currentPointer = await wireContext.userApi().getUserPointer(authContext.user.email, authContext.user.token)
+
+        setCurrentPointer(currentPointer)
+      }
     })()
-  }, [authContext.user])
+  }, [authContext, authContext.isLoggedIn, wireContext])
   useEffect(() => {
     (async () => {
       const parsed = getSurahVerseId(currentPointer)
 
       if (parsed.ok) {
-        const verse = await wireContext.getKoranApi().getVerse(parsed.surahId, parsed.verseId)
+        const verse = await wireContext.koranApi().getVerse(parsed.surahId, parsed.verseId)
 
         setVerse(verse)
       }
@@ -70,19 +63,11 @@ export default function BookmarkPage() {
       >
         <Button
           onClick={async () => {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/user/pointer/advance`, {
-              method: 'PATCH',
-              body: JSON.stringify({
-                email: authContext.user?.email,
-              }),
-              headers: {
-                'x-access-token': authContext.user?.token!,
-              }
-            })
-            const json = await response.json()
-            console.log('!! json:', json)
-            const cp = (json.data.current_pointer as string)
-            setCurrentPointer(cp)
+            if (authContext.isLoggedIn() && authContext.user) {
+              const currentPointer = await wireContext.userApi().advanceUserPointer(authContext.user.email, authContext.user.token)
+
+              setCurrentPointer(currentPointer)
+            }
           }}
         >
           Next
