@@ -41,7 +41,7 @@ export const AppNav = () => {
         <Button
           onClick={onClickKoran}
           style={{
-            fontWeight: router.pathname != '/bookmark' ? 'bold' : ''
+            background: (router.route === '/' || router.route === '/surahs/[id]') ? 'buttonface' : 'none'
           }}
         >
           Koran
@@ -52,7 +52,7 @@ export const AppNav = () => {
           onClick={onClickBookmark}
           disabled={!authContext.isLoggedIn()}
           style={{
-            fontWeight: router.pathname == '/bookmark' ? 'bold' : ''
+            background: router.pathname === '/bookmark' ? 'buttonface' : 'none'
           }}
         >
           Bookmark

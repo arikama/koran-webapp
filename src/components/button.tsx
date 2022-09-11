@@ -8,7 +8,7 @@ type Props = PropsWithChildren & {
 
 export const Button = (props: Props = { onClick: () => { }, disabled: false }) => {
   return (
-    <u
+    <button
       onClick={
         () => {
           if (!props.disabled) {
@@ -17,13 +17,15 @@ export const Button = (props: Props = { onClick: () => { }, disabled: false }) =
         }
       }
       style={{
-        ...props.style,
-        userSelect: 'none',
+        border: 'none',
+        background: 'none',
         cursor: 'pointer',
-        color: props.disabled ? 'gray' : ''
+        fontSize: '1em',
+        color: props.disabled ? 'gray' : '',
+        ...props.style,
       }}
     >
-      {props.children}
-    </u>
+      <u>{props.children}</u>
+    </button>
   )
 }
