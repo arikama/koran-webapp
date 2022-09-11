@@ -23,6 +23,7 @@ export const LoginButton = (props: Props) => {
     onSuccess: async codeResponse => {
       const user = await props.googleAuthApi.auth(codeResponse.code)
       authContext.updateUser(user)
+      router.push('/bookmark')
     },
     onError: errorResponse => console.error(errorResponse),
   })

@@ -1,3 +1,6 @@
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+
 import {
   POINTER_FONT_SIZE,
   QURAN_FONT_FAMILY,
@@ -11,15 +14,30 @@ import type { KoranApi } from './../../apis/koran_api'
 import type { Surah } from './../../types/surah'
 
 export default function SurahPage(props: { surah: Surah }) {
+  const router = useRouter()
+
   const Verses = props.surah.verses.map((verse) => {
     return (
-      <div key={verse.verseId}>
+      <div
+        key={verse.verseId}
+        id={`${verse.verseId}`}
+      >
         <div
           style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
             fontSize: POINTER_FONT_SIZE
           }}
         >
-          {`${props.surah.surahId}:${verse.verseId}`}
+          <div>
+            {`${props.surah.surahId}:${verse.verseId}`}
+          </div>
+          <u
+            onClick={() => {
+              router.back()
+            }}
+          >back</u>
         </div>
         <div
           style={{

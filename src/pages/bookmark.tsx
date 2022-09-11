@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from 'react'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
 
 import { AuthContext, WireContext } from './../pages/_app'
@@ -33,7 +34,7 @@ export default function BookmarkPage() {
         setCurrentPointer(currentPointer)
       }
     })()
-  }, [authContext, authContext.isLoggedIn, wireContext])
+  }, [authContext, authContext.isLoggedIn, router, wireContext])
   useEffect(() => {
     (async () => {
       const parsed = getSurahVerseId(currentPointer)
@@ -46,6 +47,8 @@ export default function BookmarkPage() {
     })()
   }, [currentPointer, wireContext],)
 
+  const parsed = getSurahVerseId(currentPointer)
+
   if (!verse.verse || !verse.translation) {
     return <></>
   }
@@ -57,7 +60,11 @@ export default function BookmarkPage() {
           fontSize: POINTER_FONT_SIZE
         }}
       >
-        {currentPointer}
+        <Link
+          href={`/surahs/${parsed.surahId}#${parsed.verseId}`}
+        >
+          <u>{currentPointer}</u>
+        </Link>
       </div>
       <div
         style={{

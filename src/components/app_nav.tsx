@@ -24,12 +24,15 @@ export const AppNav = () => {
   }
 
   return (
-    <div style={{
-      display: 'flex',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      height: 32
-    }}>
+    <div
+      id='app_nav'
+      style={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        height: 32
+      }}
+    >
       <div
         style={{
           display: 'flex',
@@ -38,7 +41,7 @@ export const AppNav = () => {
         <Button
           onClick={onClickKoran}
           style={{
-            fontWeight: router.pathname == '/' ? 'bold' : ''
+            fontWeight: router.pathname != '/bookmark' ? 'bold' : ''
           }}
         >
           Koran
