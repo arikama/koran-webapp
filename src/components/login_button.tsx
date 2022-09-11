@@ -3,25 +3,19 @@ import { useContext } from 'react'
 import { useGoogleLogin } from '@react-oauth/google'
 import { useRouter } from 'next/router'
 
-import { AuthContext } from './../pages/_app'
+import { AuthContext, WireContext } from './../pages/_app'
 import { Button } from './button'
 import { SZ_32 } from './../constants/dimensions'
 
-import type { GoogleAuthApi } from './../apis/google_auth_api'
-import type { PropsWithChildren } from 'react'
-
-type Props = PropsWithChildren & {
-  googleAuthApi: GoogleAuthApi
-}
-
-export const LoginButton = (props: Props) => {
+export const LoginButton = () => {
   const authContext = useContext(AuthContext)
+  const wireContext = useContext(WireContext)
   const router = useRouter()
 
   const googleLogin = useGoogleLogin({
     flow: 'auth-code',
     onSuccess: async codeResponse => {
-      const user = await props.googleAuthApi.auth(codeResponse.code)
+      const user = await wireContext.googleAuthApi().auth(codeResponse.code)
       authContext.updateUser(user)
       router.push('/bookmark')
     },

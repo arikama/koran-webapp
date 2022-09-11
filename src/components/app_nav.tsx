@@ -1,17 +1,25 @@
 import { useContext } from 'react'
+import { useGoogleLogin } from '@react-oauth/google'
 import { useRouter } from 'next/router'
 
-import { AuthContext } from './../pages/_app'
+import { AuthContext, WireContext } from './../pages/_app'
 import { Button } from './button'
-import { GoogleAuthApiImpl } from '../apis/google_auth_api_impl'
 import { LoginButton } from './login_button'
-
-import type { GoogleAuthApi } from '../apis/google_auth_api'
 
 export const AppNav = () => {
   const authContext = useContext(AuthContext)
+  const wireContext = useContext(WireContext)
   const router = useRouter()
-  const googleAuthApi: GoogleAuthApi = new GoogleAuthApiImpl()
+
+  const googleLogin = useGoogleLogin({
+    flow: 'auth-code',
+    onSuccess: async codeResponse => {
+      const user = await wireContext.googleAuthApi().auth(codeResponse.code)
+      authContext.updateUser(user)
+      router.push('/bookmark')
+    },
+    onError: errorResponse => console.error(errorResponse),
+  })
 
   const onClickKoran = () => {
     router.push('/')
@@ -20,6 +28,8 @@ export const AppNav = () => {
   const onClickBookmark = () => {
     if (authContext.isLoggedIn()) {
       router.push('/bookmark')
+    } else {
+      googleLogin()
     }
   }
 
@@ -36,12 +46,13 @@ export const AppNav = () => {
       <div
         style={{
           display: 'flex',
+          height: '100%'
         }}
       >
         <Button
           onClick={onClickKoran}
           style={{
-            textDecoration: (router.route === '/' || router.route === '/surahs/[id]') ? 'underline' : 'none'
+            background: (router.route === '/' || router.route === '/surahs/[id]') ? 'gainsboro' : 'none'
           }}
         >
           Koran
@@ -52,13 +63,13 @@ export const AppNav = () => {
           onClick={onClickBookmark}
           disabled={!authContext.isLoggedIn()}
           style={{
-            textDecoration: router.pathname === '/bookmark' ? 'underline' : 'none'
+            background: router.pathname === '/bookmark' ? 'gainsboro' : 'none'
           }}
         >
           Bookmark
         </Button>
       </div>
-      <LoginButton googleAuthApi={googleAuthApi} />
+      <LoginButton />
     </div>
   )
 }

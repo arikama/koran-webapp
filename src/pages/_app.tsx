@@ -4,6 +4,8 @@ import { GoogleOAuthProvider } from '@react-oauth/google'
 
 import './../styles/globals.css'
 import { AppNav } from './../components/app_nav'
+import { GoogleAuthApi } from '../apis/google_auth_api'
+import { GoogleAuthApiImpl } from '../apis/google_auth_api_impl'
 import { KoranApiImpl } from './../apis/koran_api_impl'
 import { UserApiImpl } from '../apis/user_api_impl'
 
@@ -20,6 +22,7 @@ type Auth = {
 type Wire = {
   koranApi: () => KoranApi
   userApi: () => UserApi
+  googleAuthApi: () => GoogleAuthApi
 }
 
 export const AuthContext = React.createContext<Auth>({
@@ -30,6 +33,7 @@ export const AuthContext = React.createContext<Auth>({
 export const WireContext = React.createContext<Wire>({
   koranApi: () => new KoranApiImpl(),
   userApi: () => new UserApiImpl(),
+  googleAuthApi: () => new GoogleAuthApiImpl()
 })
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -56,6 +60,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           value={{
             koranApi: () => new KoranApiImpl(),
             userApi: () => new UserApiImpl(),
+            googleAuthApi: () => new GoogleAuthApiImpl()
           }}
         >
           <GoogleOAuthProvider
