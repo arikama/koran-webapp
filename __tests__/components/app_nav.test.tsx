@@ -3,6 +3,8 @@ import { GoogleOAuthProvider } from '@react-oauth/google'
 
 import { AppNav } from '../../src/components/app_nav'
 
+jest.mock('next/router', () => require('next-router-mock'))
+
 describe('AppNav', () => {
   test('render', async () => {
     render(
