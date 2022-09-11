@@ -71,7 +71,7 @@ export const AppNav = () => {
               router.push('/bookmark')
             }
           }}
-          disabled={!!authContext.user?.token}
+          disabled={!authContext.user?.token}
         >
           Bookmark
         </Button>
