@@ -4,6 +4,7 @@ import { useGoogleLogin } from '@react-oauth/google'
 import { useRouter } from 'next/router'
 
 import { AuthContext } from './../pages/_app'
+import { Button } from './button'
 
 import type { User } from './../types/user'
 
@@ -28,13 +29,13 @@ export const AppNav = () => {
 
   const Login = () => {
     return (
-      <u onClick={googleLogin}>Login</u>
+      <Button onClick={googleLogin}>Login</Button>
     )
   }
 
   const Profile = () => {
     return (
-      <div
+      <Button
         onClick={() => {
           router.push('/profile')
         }}
@@ -45,7 +46,7 @@ export const AppNav = () => {
           height={32}
           width={32}
         />
-      </div>
+      </Button>
     )
   }
 
@@ -61,19 +62,19 @@ export const AppNav = () => {
           display: 'flex',
         }}
       >
-        <u onClick={() => { router.push('/') }}>Koran</u>
+        <Button onClick={() => { router.push('/') }}>Koran</Button>
         &nbsp;
         &nbsp;
-        <u
+        <Button
           onClick={() => {
             if (authContext.user?.token) {
               router.push('/bookmark')
             }
           }}
-          style={{
-            color: authContext.user?.token ? '' : 'gray'
-          }}
-        >Bookmark</u>
+          disabled={!!authContext.user?.token}
+        >
+          Bookmark
+        </Button>
       </div>
       {authContext.user?.token ? Profile() : Login()}
     </div>

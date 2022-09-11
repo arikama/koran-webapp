@@ -1,8 +1,7 @@
 import { useContext, useEffect, useState } from 'react'
 
 import { AuthContext } from './../pages/_app'
-
-import type { User } from './../types/user'
+import { Button } from './../components/button'
 
 type Verse = {
   verse: string
@@ -81,10 +80,10 @@ export default function BookmarkPage() {
       </div>
       <div
         style={{
-          textAlign: 'right'
+          textAlign: 'right',
         }}
       >
-        <u
+        <Button
           onClick={async () => {
             const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/user/pointer/advance`, {
               method: 'PATCH',
@@ -102,7 +101,7 @@ export default function BookmarkPage() {
           }}
         >
           Next
-        </u>
+        </Button>
       </div>
     </>
   )
