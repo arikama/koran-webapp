@@ -1,10 +1,11 @@
-import Link from 'next/link'
+import Image from 'next/image'
 import { useContext } from 'react'
 import { useGoogleLogin } from '@react-oauth/google'
 import { useRouter } from 'next/router'
 
 import { AuthContext } from './../pages/_app'
-import { Button } from './button'
+
+import type { User } from './../types/user'
 
 export const AppNav = () => {
   const authContext = useContext(AuthContext)
@@ -18,23 +19,63 @@ export const AppNav = () => {
         }),
       })
       const json = await auth.json()
-      console.log('json', json)
-      authContext.updateUser!({ token: json.data.token })
+      const user: User = json.data
+      authContext.updateUser!(user)
     },
     onError: errorResponse => console.log(errorResponse),
   })
   const router = useRouter()
-  const login = <div onClick={googleLogin}><Button title='🗝' onClick={googleLogin} /></div>
-  const profile = <div onClick={() => {
-    router.push('/profile')
-  }}><Button title='✨' onClick={() => { router.push('/profile') }} /></div>
+
+  const Login = () => {
+    return (
+      <u onClick={googleLogin}>Login</u>
+    )
+  }
+
+  const Profile = () => {
+    return (
+      <div
+        onClick={() => {
+          router.push('/profile')
+        }}
+      >
+        <Image
+          src={authContext.user?.picture!}
+          alt='profile'
+          height={32}
+          width={32}
+        />
+      </div>
+    )
+  }
+
   return (
     <div style={{
       display: 'flex',
       justifyContent: 'space-between',
+      alignItems: 'center',
+      height: 32
     }}>
-      <Button title='Koran' onClick={() => { router.push('/') }} />
-      {authContext.user?.token ? profile : login}
+      <div
+        style={{
+          display: 'flex',
+        }}
+      >
+        <u onClick={() => { router.push('/') }}>Koran</u>
+        &nbsp;
+        &nbsp;
+        <u
+          onClick={() => {
+            if (authContext.user?.token) {
+              router.push('/bookmark')
+            }
+          }}
+          style={{
+            color: authContext.user?.token ? '' : 'gray'
+          }}
+        >Bookmark</u>
+      </div>
+      {authContext.user?.token ? Profile() : Login()}
     </div>
   )
 }

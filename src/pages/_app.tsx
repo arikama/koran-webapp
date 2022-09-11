@@ -1,13 +1,11 @@
 import React, { useState } from 'react'
-import type { AppProps } from 'next/app'
 import { GoogleOAuthProvider } from '@react-oauth/google'
 
 import './../styles/globals.css'
 import { AppNav } from './../components/app_nav'
 
-type User = {
-  token: string
-}
+import type { AppProps } from 'next/app'
+import type { User } from './../types/user'
 
 type Auth = {
   user?: User
@@ -17,7 +15,12 @@ type Auth = {
 export const AuthContext = React.createContext<Auth>({})
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const [userState, setUserState] = useState<User>({ token: '' })
+  const [userState, setUserState] = useState<User>({
+    email: '',
+    token: '',
+    name: '',
+    picture: '',
+  })
   return (
     <>
       <AuthContext.Provider value={{
