@@ -5,6 +5,8 @@ import { useRouter } from 'next/router'
 
 import { AuthContext } from './../pages/_app'
 
+import type { User } from './../types/user'
+
 export const AppNav = () => {
   const authContext = useContext(AuthContext)
   const googleLogin = useGoogleLogin({
@@ -17,8 +19,8 @@ export const AppNav = () => {
         }),
       })
       const json = await auth.json()
-      console.log('json', json)
-      authContext.updateUser!({ token: json.data.token })
+      const user: User = json.data
+      authContext.updateUser!(user)
     },
     onError: errorResponse => console.log(errorResponse),
   })
@@ -38,7 +40,7 @@ export const AppNav = () => {
         }}
       >
         <Image
-          src='https://lh3.googleusercontent.com/a/AItbvmlt4GCRygWBd5a9TU3yYaJd7nXLzY-_TcsqxMq-=s96-c'
+          src={authContext.user?.picture!}
           alt='profile'
           height={32}
           width={32}
