@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint --fix",
-    "test": "npm run lint && jest --verbose --coverage",
+    "test": "npm run lint && jest --coverage",
     "testw": "jest --watchAll "
   },
   "dependencies": {
