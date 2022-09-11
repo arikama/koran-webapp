@@ -58,7 +58,13 @@ export default function BookmarkPage() {
   }, [currentPointer])
   return (
     <>
-      <div>{currentPointer}</div>
+      <div
+        style={{
+          fontSize: '0.9em'
+        }}
+      >
+        {currentPointer}
+      </div>
       <div style={{
         fontFamily: 'Scheherazade',
         fontSize: '2.5em',
@@ -66,7 +72,13 @@ export default function BookmarkPage() {
       }}>
         {verse.verse}
       </div>
-      <div>{verse.translation}</div>
+      <div
+        style={{
+          fontSize: '1em'
+        }}
+      >
+        {verse.translation}
+      </div>
       <div
         style={{
           textAlign: 'right'

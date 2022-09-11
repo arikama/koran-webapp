@@ -64,7 +64,16 @@ export const AppNav = () => {
         <u onClick={() => { router.push('/') }}>Koran</u>
         &nbsp;
         &nbsp;
-        <u onClick={() => { router.push('/bookmark') }}>Bookmark</u>
+        <u
+          onClick={() => {
+            if (authContext.user?.token) {
+              router.push('/bookmark')
+            }
+          }}
+          style={{
+            color: authContext.user?.token ? '' : 'gray'
+          }}
+        >Bookmark</u>
       </div>
       {authContext.user?.token ? Profile() : Login()}
     </div>
