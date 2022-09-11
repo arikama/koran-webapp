@@ -1,53 +1,26 @@
-import Image from 'next/image'
 import { useContext } from 'react'
-import { useGoogleLogin } from '@react-oauth/google'
 import { useRouter } from 'next/router'
 
 import { AuthContext } from './../pages/_app'
 import { Button } from './button'
+import { GoogleAuthApiImpl } from '../apis/google_auth_api_impl'
+import { LoginButton } from './login_button'
 
-import type { User } from './../types/user'
+import type { GoogleAuthApi } from '../apis/google_auth_api'
 
 export const AppNav = () => {
   const authContext = useContext(AuthContext)
-  const googleLogin = useGoogleLogin({
-    flow: 'auth-code',
-    onSuccess: async codeResponse => {
-      const auth = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/auth/google`, {
-        method: 'POST',
-        body: JSON.stringify({
-          auth_code: codeResponse.code,
-        }),
-      })
-      const json = await auth.json()
-      const user: User = json.data
-      authContext.updateUser!(user)
-    },
-    onError: errorResponse => console.log(errorResponse),
-  })
   const router = useRouter()
+  const googleAuthApi: GoogleAuthApi = new GoogleAuthApiImpl()
 
-  const Login = () => {
-    return (
-      <Button onClick={googleLogin}>Login</Button>
-    )
+  const onClickKoran = () => {
+    router.push('/')
   }
 
-  const Profile = () => {
-    return (
-      <Button
-        onClick={() => {
-          router.push('/profile')
-        }}
-      >
-        <Image
-          src={authContext.user?.picture!}
-          alt='profile'
-          height={32}
-          width={32}
-        />
-      </Button>
-    )
+  const onClickBookmark = () => {
+    if (authContext.isLoggedIn()) {
+      router.push('/bookmark')
+    }
   }
 
   return (
@@ -62,21 +35,17 @@ export const AppNav = () => {
           display: 'flex',
         }}
       >
-        <Button onClick={() => { router.push('/') }}>Koran</Button>
+        <Button onClick={onClickKoran}>Koran</Button>
         &nbsp;
         &nbsp;
         <Button
-          onClick={() => {
-            if (authContext.user?.token) {
-              router.push('/bookmark')
-            }
-          }}
-          disabled={!authContext.user?.token}
+          onClick={onClickBookmark}
+          disabled={!authContext.isLoggedIn()}
         >
           Bookmark
         </Button>
       </div>
-      {authContext.user?.token ? Profile() : Login()}
+      <LoginButton googleAuthApi={googleAuthApi} />
     </div>
   )
 }

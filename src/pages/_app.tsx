@@ -9,10 +9,11 @@ import type { User } from './../types/user'
 
 type Auth = {
   user?: User
-  updateUser?: (user: User) => void
+  updateUser: (user: User) => void
+  isLoggedIn: () => boolean
 }
 
-export const AuthContext = React.createContext<Auth>({})
+export const AuthContext = React.createContext<Auth>({ updateUser: () => { }, isLoggedIn: () => false })
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [userState, setUserState] = useState<User>({
@@ -27,6 +28,9 @@ function MyApp({ Component, pageProps }: AppProps) {
         user: userState,
         updateUser: (user: User) => {
           setUserState(user)
+        },
+        isLoggedIn: () => {
+          return !!userState.token
         }
       }}>
         <GoogleOAuthProvider
