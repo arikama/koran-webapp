@@ -7,3 +7,7 @@
 
 1. Create `.env` file (refer `example.env` file for details)
 2. `npm run dev`
+
+## Test
+
+1. `npm run test`
