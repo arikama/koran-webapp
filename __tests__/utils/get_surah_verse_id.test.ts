@@ -39,4 +39,13 @@ describe('getSurahVerseId', () => {
       })
     })
   })
+
+  test('exception', () => {
+    const actual = getSurahVerseId('x:x')
+    expect(actual).toEqual({
+      ok: false,
+      surahId: -1,
+      verseId: -1
+    })
+  })
 })
