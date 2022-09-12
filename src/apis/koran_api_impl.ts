@@ -71,6 +71,7 @@ export class KoranApiImpl implements KoranApi {
             text: string
             translations: {
               pickthall: string
+              clearquran: string
             }
           }[]
         }
@@ -85,7 +86,7 @@ export class KoranApiImpl implements KoranApi {
         return {
           verseId: surah.verse_id,
           text: surah.text,
-          translation: surah.translations.pickthall
+          translation: surah.translations.clearquran
         }
       })
     }
@@ -103,7 +104,7 @@ export class KoranApiImpl implements KoranApi {
     const verse: Verse = {
       key: `${surahId}:${verseId}`,
       verse: json.data.verse,
-      translation: json.data.translations.pickthall
+      translation: json.data.translations.clearquran
     }
 
     return verse
