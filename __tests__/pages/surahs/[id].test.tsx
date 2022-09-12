@@ -11,11 +11,11 @@ describe('SurahPage', () => {
 
     expect(await screen.findByText('1:1')).toBeInTheDocument()
     expect(await screen.findByText('بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ')).toBeInTheDocument()
-    expect(await screen.findByText('In the name of Allah, the Beneficent, the Merciful.')).toBeInTheDocument()
+    expect(await screen.findByText('In the name of God, the Gracious, the Merciful.')).toBeInTheDocument()
 
     expect(await screen.findByText('1:7')).toBeInTheDocument()
     expect(await screen.findByText('صِرَاطَ الَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ الْمَغْضُوبِ عَلَيْهِمْ وَلَا الضَّالِّينَ')).toBeInTheDocument()
-    expect(await screen.findByText('The path of those whom Thou hast favoured; Not the (path) of those who earn Thine anger nor of those who go astray.')).toBeInTheDocument()
+    expect(await screen.findByText('The path of those You have blessed, not of those against whom there is anger, nor of those who are misguided.')).toBeInTheDocument()
   })
 
   test('getStaticPaths', async () => {
