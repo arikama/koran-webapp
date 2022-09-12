@@ -2,8 +2,15 @@ import '@testing-library/react'
 
 import { GoogleAuthApi } from '../../src/apis/google_auth_api'
 import { GoogleAuthApiImpl } from '../../src/apis/google_auth_api_impl'
+import { server } from '../../mocks/server'
 
 describe('GoogleAuthApiImpl', () => {
+  beforeAll(() => server.listen())
+
+  afterEach(() => server.resetHandlers())
+
+  afterAll(() => server.close())
+
   test('auth', async () => {
     const googleAuthApi: GoogleAuthApi = new GoogleAuthApiImpl()
 

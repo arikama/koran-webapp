@@ -1,6 +1,13 @@
 import { UserApiImpl } from "../../src/apis/user_api_impl"
+import { server } from '../../mocks/server'
 
 describe('UserApiImpl', () => {
+  beforeAll(() => server.listen())
+
+  afterEach(() => server.resetHandlers())
+
+  afterAll(() => server.close())
+
   const userApiImpl = new UserApiImpl()
 
   test('getUserPointer', async () => {

@@ -1,6 +1,13 @@
 import { KoranApiImpl } from "../../src/apis/koran_api_impl"
+import { server } from '../../mocks/server'
 
 describe('KoranApiImpl', () => {
+  beforeAll(() => server.listen())
+
+  afterEach(() => server.resetHandlers())
+
+  afterAll(() => server.close())
+
   test('getSurahInfos', async () => {
     const koranApiImpl = new KoranApiImpl()
 
