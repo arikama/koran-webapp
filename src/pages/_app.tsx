@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import type { AppProps } from 'next/app'
 import { GoogleOAuthProvider } from '@react-oauth/google'
+import Script from 'next/script'
 
 import './../styles/globals.css'
 import { AppNav } from './../components/app_nav'
@@ -45,6 +46,22 @@ function MyApp({ Component, pageProps }: AppProps) {
   })
   return (
     <>
+      <Script
+        src='https://www.googletagmanager.com/gtag/js?id=G-H3YY66J738'
+      />
+      <Script
+        id='google-analytics'
+        dangerouslySetInnerHTML={{
+          __html:
+            `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'G-H3YY66J738');
+            `
+        }}
+      />
       <AuthContext.Provider
         value={{
           user: userState,
