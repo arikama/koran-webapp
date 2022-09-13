@@ -11,7 +11,7 @@ const user: User = {
   email: 'amir.ariffin@google.com',
   token: 'token',
   name: 'Amir',
-  picture: ''
+  picture: 'https://lh3.googleusercontent.com/a/AItbvmkTDWeH-xnEOWmutU6_QH2-s5aSYogZsio9AqaqCpw=s96-c'
 }
 
 describe('ProfilePage', () => {
