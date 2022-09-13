@@ -1,31 +1,34 @@
-import { render, screen, waitFor } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
 import { AuthContext } from '../../src/pages/_app'
 import ProfilePage from '../../src/pages/profile'
 import { User } from '../../src/types/user'
 
-jest.mock('next/router', () => require('next-router-mock'))
-
-const user: User = {
-  email: 'amir.ariffin@google.com',
-  token: 'token',
-  name: 'Amir',
-  picture: 'https://lh3.googleusercontent.com/a/AItbvmkTDWeH-xnEOWmutU6_QH2-s5aSYogZsio9AqaqCpw=s96-c'
-}
+// https://github.com/vercel/next.js/issues/7479#issuecomment-512525335
+const useRouter = jest.spyOn(require('next/router'), 'useRouter')
 
 describe('ProfilePage', () => {
   test('logout', async () => {
+    const pushFn = jest.fn()
+    const updateUserFn = jest.fn()
+
+    useRouter.mockImplementation(() => ({
+      push: pushFn
+    }))
+
+    const user: User = {
+      email: 'amir.ariffin@google.com',
+      token: 'token',
+      name: 'Amir',
+      picture: 'https://lh3.googleusercontent.com/a/AItbvmkTDWeH-xnEOWmutU6_QH2-s5aSYogZsio9AqaqCpw=s96-c'
+    }
+
     render(
       <AuthContext.Provider
         value={{
           user,
-          updateUser: ({ email, token, name, picture }) => {
-            user.email = email
-            user.name = name
-            user.token = token
-            user.picture = picture
-          },
+          updateUser: updateUserFn,
           isLoggedIn: () => user.token !== ''
         }}
       >
@@ -40,11 +43,8 @@ describe('ProfilePage', () => {
     expect(logoutButton).toBeInTheDocument()
 
     await userEvent.click(logoutButton)
-    await waitFor(() => {
-      expect(screen.queryByText('Amir')).not.toBeInTheDocument()
-    })
 
-    expect(screen.queryByText('amir.ariffin@google.com')).not.toBeInTheDocument()
-    expect(logoutButton).not.toBeInTheDocument()
+    expect(updateUserFn).toBeCalledWith({ email: '', token: '', name: '', picture: '' })
+    expect(pushFn).toBeCalledWith('/')
   })
 })

@@ -13,9 +13,10 @@ export default function ProfilePage() {
 
   useEffect(() => {
     if (!authContext.isLoggedIn()) {
+      router.push('/')
       return
     }
-  }, [authContext, authContext.user, router, router.pathname])
+  }, [authContext, router])
 
   if (!authContext.isLoggedIn()) {
     return <></>
