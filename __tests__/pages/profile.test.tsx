@@ -9,14 +9,38 @@ import { User } from '../../src/types/user'
 const useRouter = jest.spyOn(require('next/router'), 'useRouter')
 
 describe('ProfilePage', () => {
-  test('logout', async () => {
-    const pushFn = jest.fn()
-    const updateUserFn = jest.fn()
+  const pushFn = jest.fn()
+  const updateUserFn = jest.fn()
+
+  beforeEach(() => {
+    pushFn.mockReset()
+    updateUserFn.mockReset()
 
     useRouter.mockImplementation(() => ({
       push: pushFn
     }))
+  })
 
+  test('visiting /profile when not logged in', () => {
+    const isLoggedInMock = jest.fn()
+    isLoggedInMock.mockImplementation(() => false)
+
+    render(
+      <AuthContext.Provider
+        value={{
+          updateUser: updateUserFn,
+          isLoggedIn: isLoggedInMock
+        }}
+      >
+        <ProfilePage />
+      </AuthContext.Provider>
+    )
+
+    expect(isLoggedInMock).toBeCalledTimes(2)
+    expect(pushFn).toBeCalledWith('/')
+  })
+
+  test('logout', async () => {
     const user: User = {
       email: 'amir.ariffin@google.com',
       token: 'token',
@@ -24,12 +48,15 @@ describe('ProfilePage', () => {
       picture: 'https://lh3.googleusercontent.com/a/AItbvmkTDWeH-xnEOWmutU6_QH2-s5aSYogZsio9AqaqCpw=s96-c'
     }
 
+    const isLoggedInMock = jest.fn()
+    isLoggedInMock.mockImplementation(() => true)
+
     render(
       <AuthContext.Provider
         value={{
           user,
           updateUser: updateUserFn,
-          isLoggedIn: () => user.token !== ''
+          isLoggedIn: isLoggedInMock
         }}
       >
         <ProfilePage />
@@ -44,6 +71,7 @@ describe('ProfilePage', () => {
 
     await userEvent.click(logoutButton)
 
+    expect(isLoggedInMock).toBeCalledTimes(2)
     expect(updateUserFn).toBeCalledWith({ email: '', token: '', name: '', picture: '' })
     expect(pushFn).toBeCalledWith('/')
   })
