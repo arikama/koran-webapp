@@ -1,7 +1,7 @@
 import { triggerGtmPageview } from "../../src/utils/trigger_gtm_pageview"
 
-describe('', () => {
-  test('', () => {
+describe('triggerGtmPageview', () => {
+  test('data layer installed', () => {
     const mockPushFn = jest.fn()
     window.dataLayer = {
       push: mockPushFn
@@ -11,11 +11,11 @@ describe('', () => {
     expect(mockPushFn).toBeCalledTimes(1)
   })
 
-  test('', () => {
+  test('data layer not installed', () => {
     const mockPushFn = jest.fn()
     window.dataLayer = undefined
 
     triggerGtmPageview()
-    expect(mockPushFn).toBeCalledTimes(1)
+    expect(mockPushFn).toBeCalledTimes(0)
   })
 })
