@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import type { AppProps } from 'next/app'
 import { GoogleOAuthProvider } from '@react-oauth/google'
 import Script from 'next/script'
+import { useRouter } from 'next/router'
 
 import './../styles/globals.css'
 import { AppNav } from './../components/app_nav'
@@ -13,6 +14,7 @@ import { UserApiImpl } from '../apis/user_api_impl'
 import type { KoranApi } from '../apis/koran_api'
 import type { User } from './../types/user'
 import type { UserApi } from '../apis/user_api'
+import { triggerGtmPageview } from '../utils/trigger_gtm_pageview'
 
 type Auth = {
   user?: User
@@ -38,12 +40,16 @@ export const WireContext = React.createContext<Wire>({
 })
 
 function MyApp({ Component, pageProps }: AppProps) {
+  const router = useRouter()
   const [userState, setUserState] = useState<User>({
     email: '',
     token: '',
     name: '',
     picture: '',
   })
+  useEffect(() => {
+    triggerGtmPageview()
+  }, [router.pathname])
   return (
     <>
       <Script
