@@ -11,16 +11,11 @@ import { GoogleAuthApiImpl } from '../apis/google_auth_api_impl'
 import { KoranApiImpl } from './../apis/koran_api_impl'
 import { UserApiImpl } from '../apis/user_api_impl'
 
+import { Auth } from '../types/auth'
 import type { KoranApi } from '../apis/koran_api'
 import type { User } from './../types/user'
 import type { UserApi } from '../apis/user_api'
 import { triggerGtmPageview } from '../utils/trigger_gtm_pageview'
-
-type Auth = {
-  user?: User
-  updateUser: (user: User) => void
-  isLoggedIn: () => boolean
-}
 
 type Wire = {
   koranApi: () => KoranApi
