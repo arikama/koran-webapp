@@ -29,7 +29,7 @@ export const WireContext = React.createContext<Wire>({
 
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter()
-  const [userState, setUserState] = useState<User>({
+  const [user, setUserState] = useState<User>({
     email: "",
     token: "",
     name: "",
@@ -60,12 +60,12 @@ function MyApp({ Component, pageProps }: AppProps) {
       />
       <AuthContext.Provider
         value={{
-          user: userState,
+          user: user,
           updateUser: (user: User) => {
             setUserState(user)
           },
           isLoggedIn: () => {
-            return !!userState.token
+            return !!user.token
           }
         }}
       >
