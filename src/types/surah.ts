@@ -1,5 +1,7 @@
 export type Surah = {
-  surahId: number
+  surahId: number,
+  englishName: string,
+  arabicName: string
   verses: {
     verseId: number
     text: string

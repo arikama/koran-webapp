@@ -1,3 +1,4 @@
+import Head from 'next/head'
 import { useRouter } from 'next/router'
 
 import {
@@ -64,6 +65,9 @@ export default function SurahPage(props: { surah: Surah }) {
   })
   return (
     <>
+      <Head>
+        <title>{props.surah.englishName}</title>
+      </Head>
       {Verses}
     </>
   )

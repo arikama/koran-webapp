@@ -82,6 +82,8 @@ export class KoranApiImpl implements KoranApi {
 
     const surah: Surah = {
       surahId: json.data.surah.surah_info.surah_id,
+      englishName: json.data.surah.surah_info.english,
+      arabicName: json.data.surah.surah_info.arabic,
       verses: json.data.surah.verses.map(surah => {
         return {
           verseId: surah.verse_id,

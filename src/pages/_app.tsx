@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import type { AppProps } from 'next/app'
 import { GoogleOAuthProvider } from '@react-oauth/google'
+import Head from 'next/head'
 import Script from 'next/script'
 import { useRouter } from 'next/router'
 
@@ -47,6 +48,9 @@ function MyApp({ Component, pageProps }: AppProps) {
   }, [router.pathname])
   return (
     <>
+      <Head>
+        <title>Koran</title>
+      </Head>
       <Script
         id='gtm'
         dangerouslySetInnerHTML={{
