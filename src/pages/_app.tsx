@@ -9,6 +9,7 @@ import "../styles/globals.css"
 import { AppNav } from "../components/app_nav"
 import { GoogleAuthApiImpl } from "../apis/google_auth_api_impl"
 import { KoranApiImpl } from "../apis/koran_api_impl"
+import { USER_LOCAL_STORAGE_KEY } from "../constants/storage"
 import { UserApiImpl } from "../apis/user_api_impl"
 import { triggerGtmPageview } from "../utils/trigger_gtm_pageview"
 
@@ -29,7 +30,7 @@ export const WireContext = React.createContext<Wire>({
 
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter()
-  const [user, setUserState] = useState<User>({
+  const [user, setUser] = useState<User>({
     email: "",
     token: "",
     name: "",
@@ -39,6 +40,17 @@ function MyApp({ Component, pageProps }: AppProps) {
   useEffect(() => {
     triggerGtmPageview()
   }, [router.pathname])
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const userBlob = window.localStorage.getItem(USER_LOCAL_STORAGE_KEY)
+      if (userBlob) {
+        if (!user.token) {
+          setUser(JSON.parse(userBlob) as User)
+        }
+      }
+    }
+  }, [user])
 
   return (
     <>
@@ -62,7 +74,10 @@ function MyApp({ Component, pageProps }: AppProps) {
         value={{
           user: user,
           updateUser: (user: User) => {
-            setUserState(user)
+            if (typeof window !== "undefined" && user) {
+              window.localStorage.setItem(USER_LOCAL_STORAGE_KEY, JSON.stringify(user))
+            }
+            setUser(user)
           },
           isLoggedIn: () => {
             return !!user.token
