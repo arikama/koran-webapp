@@ -7,6 +7,7 @@ import { AuthContext, WireContext } from './../pages/_app'
 import { Button } from './button'
 import GoogleLoginOptionsImpl from '../google/google_login_options_impl'
 import { SZ_32 } from './../constants/dimensions'
+import { onLoginSuccess } from '../utils/on_login_success'
 
 export const LoginButton = () => {
   const authContext = useContext(AuthContext)
@@ -14,12 +15,7 @@ export const LoginButton = () => {
   const router = useRouter()
   const googleLoginOptions = new GoogleLoginOptionsImpl(wireContext.googleAuthApi())
 
-  const googleLogin = useGoogleLogin(googleLoginOptions.authCodeFlowConfig(
-    (user) => {
-      authContext.updateUser(user)
-      router.push('/bookmark')
-    }
-  ))
+  const googleLogin = useGoogleLogin(googleLoginOptions.authCodeFlowConfig(onLoginSuccess(authContext, router)))
 
   const Profile = () => {
     return (

@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import React, { useContext } from 'react'
 import { useGoogleLogin } from '@react-oauth/google'
 import { useRouter } from 'next/router'
 
@@ -6,6 +6,7 @@ import { AuthContext, WireContext } from './../pages/_app'
 import { Button } from './button'
 import GoogleLoginOptionsImpl from '../google/google_login_options_impl'
 import { LoginButton } from './login_button'
+import { onLoginSuccess } from '../utils/on_login_success'
 
 export const AppNav = () => {
   const authContext = useContext(AuthContext)
@@ -13,12 +14,7 @@ export const AppNav = () => {
   const router = useRouter()
   const googleLoginOptions = new GoogleLoginOptionsImpl(wireContext.googleAuthApi())
 
-  const googleLogin = useGoogleLogin(googleLoginOptions.authCodeFlowConfig(
-    (user) => {
-      authContext.updateUser(user)
-      router.push('/bookmark')
-    }
-  ))
+  const googleLogin = useGoogleLogin(googleLoginOptions.authCodeFlowConfig(onLoginSuccess(authContext, router)))
 
   const onClickKoran = () => {
     router.push('/')
