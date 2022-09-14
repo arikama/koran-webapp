@@ -5,15 +5,15 @@ import Head from "next/head"
 import Script from "next/script"
 import { useRouter } from "next/router"
 
-import "./../styles/globals.css"
-import { AppNav } from "./../components/app_nav"
+import "../styles/globals.css"
+import { AppNav } from "../components/app_nav"
 import { GoogleAuthApiImpl } from "../apis/google_auth_api_impl"
-import { KoranApiImpl } from "./../apis/koran_api_impl"
+import { KoranApiImpl } from "../apis/koran_api_impl"
 import { UserApiImpl } from "../apis/user_api_impl"
 import { triggerGtmPageview } from "../utils/trigger_gtm_pageview"
 
 import type { Auth } from "../types/auth"
-import type { User } from "./../types/user"
+import type { User } from "../types/user"
 import type { Wire } from "../types/wire"
 
 export const AuthContext = React.createContext<Auth>({
