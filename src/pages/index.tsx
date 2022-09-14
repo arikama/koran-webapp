@@ -1,10 +1,9 @@
 import { GetStaticProps, InferGetStaticPropsType } from 'next'
+import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
 
 import { Button } from './../components/button'
 import { KoranApiImpl } from './../apis/koran_api_impl'
-
-import type { NextPage } from 'next'
 
 import type { KoranApi } from './../apis/koran_api'
 import type { SurahInfo } from './../types/surah_info'
@@ -21,9 +20,6 @@ const IndexPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = (pro
 
     return (
       <div key={surahInfo.surahId.toString()}>
-        {/* <Link
-          href={href}
-        > */}
         <div
           style={{
             display: 'flex',
@@ -50,7 +46,6 @@ const IndexPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = (pro
             {surahInfo.titleArabic}
           </div>
         </div>
-        {/* </Link> */}
         <br />
       </div>
     )
@@ -73,6 +68,5 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
     },
   }
 }
-
 
 export default IndexPage
