@@ -1,9 +1,9 @@
 import '@testing-library/jest-dom'
 
-import { getSurahVerseId } from './../../src/utils/get_surah_verse_id'
+import { getSurahVerseId } from '../../src/utils/get_surah_verse_id'
 
 describe('getSurahVerseId', () => {
-  test('valid inputs', () => {
+  test('valid tags', () => {
     const tests = [
       {
         input: '1:1',
@@ -28,8 +28,8 @@ describe('getSurahVerseId', () => {
     })
   })
 
-  test('invalid inputs', () => {
-    const tests = ['', '1', '1:', ':1']
+  test('invalid tags', () => {
+    const tests = ['', '1', '1:', ':1', 'x:x']
     tests.forEach(test => {
       const actual = getSurahVerseId(test)
       expect(actual).toEqual({
@@ -37,15 +37,6 @@ describe('getSurahVerseId', () => {
         surahId: -1,
         verseId: -1
       })
-    })
-  })
-
-  test('exception', () => {
-    const actual = getSurahVerseId('x:x')
-    expect(actual).toEqual({
-      ok: false,
-      surahId: -1,
-      verseId: -1
     })
   })
 })

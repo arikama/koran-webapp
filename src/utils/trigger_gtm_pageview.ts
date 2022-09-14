@@ -1,7 +1,9 @@
 declare global {
-  interface Window { dataLayer?: {
-    push: (data: Object) => boolean
-  } }
+  interface Window {
+    dataLayer?: {
+      push: (data: Object) => boolean
+    }
+  }
 }
 
 export function triggerGtmPageview(): boolean {
