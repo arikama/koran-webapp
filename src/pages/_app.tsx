@@ -1,20 +1,20 @@
-import React, { useEffect, useState } from 'react'
-import type { AppProps } from 'next/app'
-import { GoogleOAuthProvider } from '@react-oauth/google'
-import Head from 'next/head'
-import Script from 'next/script'
-import { useRouter } from 'next/router'
+import React, { useEffect, useState } from "react"
+import type { AppProps } from "next/app"
+import { GoogleOAuthProvider } from "@react-oauth/google"
+import Head from "next/head"
+import Script from "next/script"
+import { useRouter } from "next/router"
 
-import './../styles/globals.css'
-import { AppNav } from './../components/app_nav'
-import { GoogleAuthApiImpl } from '../apis/google_auth_api_impl'
-import { KoranApiImpl } from './../apis/koran_api_impl'
-import { UserApiImpl } from '../apis/user_api_impl'
-import { triggerGtmPageview } from '../utils/trigger_gtm_pageview'
+import "./../styles/globals.css"
+import { AppNav } from "./../components/app_nav"
+import { GoogleAuthApiImpl } from "../apis/google_auth_api_impl"
+import { KoranApiImpl } from "./../apis/koran_api_impl"
+import { UserApiImpl } from "../apis/user_api_impl"
+import { triggerGtmPageview } from "../utils/trigger_gtm_pageview"
 
-import type { Auth } from '../types/auth'
-import type { User } from './../types/user'
-import type { Wire } from '../types/wire'
+import type { Auth } from "../types/auth"
+import type { User } from "./../types/user"
+import type { Wire } from "../types/wire"
 
 export const AuthContext = React.createContext<Auth>({
   updateUser: () => { },
@@ -30,10 +30,10 @@ export const WireContext = React.createContext<Wire>({
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter()
   const [userState, setUserState] = useState<User>({
-    email: '',
-    token: '',
-    name: '',
-    picture: '',
+    email: "",
+    token: "",
+    name: "",
+    picture: "",
   })
   useEffect(() => {
     triggerGtmPageview()
@@ -44,15 +44,15 @@ function MyApp({ Component, pageProps }: AppProps) {
         <title>Koran</title>
       </Head>
       <Script
-        id='gtm'
+        id="gtm"
         dangerouslySetInnerHTML={{
           __html:
             `
-            (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-            })(window,document,'script','dataLayer','GTM-MCCNJVK');
+            (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({"gtm.start":
+            new Date().getTime(),event:"gtm.js"});var f=d.getElementsByTagName(s)[0],
+            j=d.createElement(s),dl=l!="dataLayer"?"&l="+l:"";j.async=true;j.src=
+            "https://www.googletagmanager.com/gtm.js?id="+i+dl;f.parentNode.insertBefore(j,f);
+            })(window,document,"script","dataLayer","GTM-MCCNJVK");
             `
         }}
       />
