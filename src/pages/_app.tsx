@@ -7,22 +7,14 @@ import { useRouter } from 'next/router'
 
 import './../styles/globals.css'
 import { AppNav } from './../components/app_nav'
-import { GoogleAuthApi } from '../apis/google_auth_api'
 import { GoogleAuthApiImpl } from '../apis/google_auth_api_impl'
 import { KoranApiImpl } from './../apis/koran_api_impl'
 import { UserApiImpl } from '../apis/user_api_impl'
-
-import { Auth } from '../types/auth'
-import type { KoranApi } from '../apis/koran_api'
-import type { User } from './../types/user'
-import type { UserApi } from '../apis/user_api'
 import { triggerGtmPageview } from '../utils/trigger_gtm_pageview'
 
-type Wire = {
-  koranApi: () => KoranApi
-  userApi: () => UserApi
-  googleAuthApi: () => GoogleAuthApi
-}
+import type { Auth } from '../types/auth'
+import type { User } from './../types/user'
+import type { Wire } from '../types/wire'
 
 export const AuthContext = React.createContext<Auth>({
   updateUser: () => { },
