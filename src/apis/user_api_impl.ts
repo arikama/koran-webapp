@@ -1,8 +1,9 @@
 import type { UserApi } from './user_api'
+import { getUrl } from '../utils/getUrl'
 
 export class UserApiImpl implements UserApi {
   async getUserPointer(email: string, token: string): Promise<string> {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/user/pointer`, {
+    const response = await fetch(getUrl("/user/pointer"), {
       method: 'POST',
       body: JSON.stringify({
         email,
@@ -16,8 +17,9 @@ export class UserApiImpl implements UserApi {
 
     return json.data.current_pointer
   }
+
   async advanceUserPointer(email: string, token: string): Promise<string> {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/user/pointer/advance`, {
+    const response = await fetch(getUrl("/user/pointer/advance"), {
       method: 'PATCH',
       body: JSON.stringify({
         email,

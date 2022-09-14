@@ -1,9 +1,10 @@
 import type { GoogleAuthApi } from './google_auth_api'
 import type { User } from './../types/user'
+import { getUrl } from '../utils/getUrl'
 
 export class GoogleAuthApiImpl implements GoogleAuthApi {
   async auth(userAuthCode: string): Promise<User> {
-    const auth = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/auth/google`, {
+    const auth = await fetch(getUrl("/auth/google"), {
       method: 'POST',
       body: JSON.stringify({
         auth_code: userAuthCode,
