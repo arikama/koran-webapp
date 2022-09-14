@@ -5,22 +5,21 @@ import { useRouter } from 'next/router'
 
 import { AuthContext, WireContext } from './../pages/_app'
 import { Button } from './button'
+import GoogleLoginOptionsImpl from '../google/google_login_options_impl'
 import { SZ_32 } from './../constants/dimensions'
 
 export const LoginButton = () => {
   const authContext = useContext(AuthContext)
   const wireContext = useContext(WireContext)
   const router = useRouter()
+  const googleLoginOptions = new GoogleLoginOptionsImpl(wireContext.googleAuthApi())
 
-  const googleLogin = useGoogleLogin({
-    flow: 'auth-code',
-    onSuccess: async codeResponse => {
-      const user = await wireContext.googleAuthApi().auth(codeResponse.code)
+  const googleLogin = useGoogleLogin(googleLoginOptions.authCodeFlowConfig(
+    (user) => {
       authContext.updateUser(user)
       router.push('/bookmark')
-    },
-    onError: errorResponse => console.error(errorResponse),
-  })
+    }
+  ))
 
   const Profile = () => {
     return (

@@ -11,7 +11,7 @@ export default class GoogleLoginOptionsImpl implements GoogleLoginOptions {
     this.googleAuthApi = googleAuthApi
   }
 
-  authCodeFlowConfig(onSuccessCallback: (user: User) => void, onErrorCallback: (error: string) => void) {
+  authCodeFlowConfig(onSuccessCallback: (user: User) => void) {
     return {
       flow: "auth-code" as "auth-code",
       onSuccess: (codeResponse: Omit<CodeResponse, "error" | "error_description" | "error_uri">) => {
@@ -21,8 +21,7 @@ export default class GoogleLoginOptionsImpl implements GoogleLoginOptions {
         return null
       },
       onError: (errorResponse: Pick<CodeResponse, "error" | "error_description" | "error_uri">) => {
-        onErrorCallback(errorResponse.error_description || '')
-        return null
+        console.info(errorResponse)
       }
     }
   }

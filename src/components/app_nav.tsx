@@ -17,9 +17,6 @@ export const AppNav = () => {
     (user) => {
       authContext.updateUser(user)
       router.push('/bookmark')
-    },
-    (error) => {
-      console.error(error)
     }
   ))
 

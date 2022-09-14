@@ -48,9 +48,10 @@ describe('LoginButton', () => {
     useGoogleLogin.mockImplementation(() => googleLogin)
 
     const push = jest.fn()
-    useRouter.mockImplementationOnce(() => {
+    const router = {
       push
-    })
+    }
+    useRouter.mockImplementation(() => router)
 
     render(
       <AuthContext.Provider
@@ -73,5 +74,8 @@ describe('LoginButton', () => {
 
     const profileImg = await screen.findByAltText('profile')
     expect(profileImg).toBeInTheDocument()
+
+    await userEvent.click(profileImg)
+    expect(push).toBeCalledTimes(1)
   })
 })

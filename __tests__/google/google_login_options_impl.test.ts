@@ -17,7 +17,6 @@ describe('GoogleLoginOptionsImpl', () => {
 
   test('authCodeFlowConfig', async () => {
     const onSuccessMock = jest.fn()
-    const onErrorMock = jest.fn()
 
     jest.spyOn(googleAuthApiImpl, 'auth').mockImplementationOnce(async () => {
       const user: User = {
@@ -29,7 +28,7 @@ describe('GoogleLoginOptionsImpl', () => {
       return user
     })
 
-    const options = googleLoginOptionsImpl.authCodeFlowConfig(onSuccessMock, onErrorMock)
+    const options = googleLoginOptionsImpl.authCodeFlowConfig(onSuccessMock)
     expect(options.flow).toEqual('auth-code')
 
     const codeResponse: CodeResponse = {
@@ -38,6 +37,8 @@ describe('GoogleLoginOptionsImpl', () => {
     }
 
     options.onSuccess(codeResponse)
+    options.onError(codeResponse)
+
     await waitFor(() => {
       expect(onSuccessMock).toBeCalledWith({
         "email": "amir.ariffin@google.com",
@@ -45,11 +46,6 @@ describe('GoogleLoginOptionsImpl', () => {
         "picture": "https://lh3.googleusercontent.com/a/AItbvmkTDWeH-xnEOWmutU6_QH2-s5aSYogZsio9AqaqCpw=s96-c",
         "token": "token"
       })
-    })
-
-    options.onError(codeResponse)
-    await waitFor(() => {
-      expect(onErrorMock).toBeCalledWith('')
     })
   })
 })
