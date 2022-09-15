@@ -1,6 +1,6 @@
 {
   "name": "koran-webapp",
-  "version": "1.2.1",
+  "version": "0.0.0",
   "private": false,
   "scripts": {
     "dev": "next lint --fix && next dev",
