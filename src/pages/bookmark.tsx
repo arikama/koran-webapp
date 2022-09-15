@@ -10,6 +10,7 @@ import {
 } from './../constants/font'
 import { Button } from './../components/button'
 import { getSurahVerseId } from '../utils/get_surah_verse_id'
+import { useUserSettings } from '../hooks/use_user_settings'
 
 import type { Verse } from './../types/verse'
 
@@ -34,6 +35,7 @@ export default function BookmarkPage() {
       }
     })()
   }, [authContext, authContext.isLoggedIn, router, wireContext])
+
   useEffect(() => {
     (async () => {
       const parsed = getSurahVerseId(currentPointer)
@@ -46,27 +48,19 @@ export default function BookmarkPage() {
     })()
   }, [currentPointer, wireContext],)
 
+  const { userSettings, updateUserSettings } = useUserSettings()
+
   const parsed = getSurahVerseId(currentPointer)
 
   if (!verse.verse || !verse.translation) {
     return <></>
   }
 
-  return (
-    <>
-      <div
-        style={{
-          fontSize: POINTER_FONT_SIZE
-        }}
-      >
-        <Button
-          onClick={() => {
-            router.push(`/surahs/${parsed.surahId}#${parsed.verseId}`)
-          }}
-        >
-          {currentPointer}
-        </Button>
-      </div>
+  const renderVerse = () => {
+    if (userSettings.hideVerse) {
+      return <></>
+    }
+    return (
       <div
         style={{
           fontFamily: QURAN_FONT_FAMILY,
@@ -76,6 +70,16 @@ export default function BookmarkPage() {
       >
         {verse.verse}
       </div>
+    )
+  }
+
+  const renderTranslation = () => {
+    if (userSettings.hideTranslation) {
+      return (
+        <></>
+      )
+    }
+    return (
       <div
         style={{
           fontSize: TRANSLATION_FONT_SIZE
@@ -83,23 +87,91 @@ export default function BookmarkPage() {
       >
         {verse.translation}
       </div>
+    )
+  }
+
+  const renderTag = () => {
+    return (
+      <Button
+        onClick={() => {
+          router.push(`/surahs/${parsed.surahId}#${parsed.verseId}`)
+        }}
+      >
+        {currentPointer}
+      </Button>
+    )
+  }
+
+  const renderShowHideVerse = () => {
+    return (
+      <Button
+        onClick={() => {
+          updateUserSettings({
+            ...userSettings,
+            hideVerse: !userSettings.hideVerse
+          })
+        }}
+      >
+        {userSettings.hideVerse ? "show" : "hide"}&nbsp;verse
+      </Button>
+    )
+  }
+
+  const renderShowHideTranslation = () => {
+    return (
+      <Button
+        onClick={() => {
+          updateUserSettings({
+            ...userSettings,
+            hideTranslation: !userSettings.hideTranslation
+          })
+        }}
+      >
+        {userSettings.hideTranslation ? "show" : "hide"}&nbsp;translation
+      </Button>
+    )
+  }
+
+  const renderNext = () => {
+    return (
+      <Button
+        onClick={async () => {
+          if (authContext.isLoggedIn() && authContext.user) {
+            const currentPointer = await wireContext.userApi().advanceUserPointer(authContext.user.email, authContext.user.token)
+
+            setCurrentPointer(currentPointer)
+          }
+        }}
+      >
+        Next
+      </Button>
+    )
+  }
+
+  return (
+    <>
+      <div
+        style={{
+          fontSize: POINTER_FONT_SIZE,
+          display: 'flex',
+          justifyContent: 'space-between'
+        }}
+      >
+        {renderTag()}
+        <div>
+          {renderShowHideVerse()}
+          {renderShowHideTranslation()}
+        </div>
+      </div>
+      {renderVerse()}
+      {renderTranslation()}
       &nbsp;
       <div
         style={{
           textAlign: 'right',
         }}
       >
-        <Button
-          onClick={async () => {
-            if (authContext.isLoggedIn() && authContext.user) {
-              const currentPointer = await wireContext.userApi().advanceUserPointer(authContext.user.email, authContext.user.token)
-
-              setCurrentPointer(currentPointer)
-            }
-          }}
-        >
-          Next
-        </Button>
+        {renderNext()}
       </div>
     </>
   )
