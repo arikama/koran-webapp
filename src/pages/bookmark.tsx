@@ -10,7 +10,7 @@ import {
 } from './../constants/font'
 import { Button } from './../components/button'
 import { getSurahVerseId } from '../utils/get_surah_verse_id'
-import { useUserSettings } from '../hooks/use_user_settings'
+import { useBookmarkSettings } from '../hooks/use_bookmark_settings'
 
 import type { Verse } from './../types/verse'
 
@@ -48,7 +48,7 @@ export default function BookmarkPage() {
     })()
   }, [currentPointer, wireContext],)
 
-  const { userSettings, updateUserSettings } = useUserSettings()
+  const { bookmarkSettings, updateBookmarkSettings } = useBookmarkSettings()
 
   const parsed = getSurahVerseId(currentPointer)
 
@@ -57,8 +57,8 @@ export default function BookmarkPage() {
   }
 
   const renderVerse = () => {
-    if (userSettings.hideVerse) {
-      return <></>
+    if (bookmarkSettings.hideVerse) {
+      return <>&nbsp;</>
     }
     return (
       <div
@@ -74,9 +74,9 @@ export default function BookmarkPage() {
   }
 
   const renderTranslation = () => {
-    if (userSettings.hideTranslation) {
+    if (bookmarkSettings.hideTranslation) {
       return (
-        <></>
+        <>&nbsp;</>
       )
     }
     return (
@@ -106,13 +106,13 @@ export default function BookmarkPage() {
     return (
       <Button
         onClick={() => {
-          updateUserSettings({
-            ...userSettings,
-            hideVerse: !userSettings.hideVerse
+          updateBookmarkSettings({
+            ...bookmarkSettings,
+            hideVerse: !bookmarkSettings.hideVerse
           })
         }}
       >
-        {userSettings.hideVerse ? "show" : "hide"}&nbsp;verse
+        {bookmarkSettings.hideVerse ? "show" : "hide"}&nbsp;verse
       </Button>
     )
   }
@@ -121,13 +121,13 @@ export default function BookmarkPage() {
     return (
       <Button
         onClick={() => {
-          updateUserSettings({
-            ...userSettings,
-            hideTranslation: !userSettings.hideTranslation
+          updateBookmarkSettings({
+            ...bookmarkSettings,
+            hideTranslation: !bookmarkSettings.hideTranslation
           })
         }}
       >
-        {userSettings.hideTranslation ? "show" : "hide"}&nbsp;translation
+        {bookmarkSettings.hideTranslation ? "show" : "hide"}&nbsp;translation
       </Button>
     )
   }
