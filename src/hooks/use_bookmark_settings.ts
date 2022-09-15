@@ -21,12 +21,12 @@ export function useBookmarkSettings() {
     }
   }, [])
 
-  const updateBookmarkSettings = (user: BookmarkSettings) => {
+  const updateBookmarkSettings = (update: BookmarkSettings) => {
     if (typeof window !== "undefined") {
-      const blob = JSON.stringify(user)
+      const blob = JSON.stringify(update)
       window.localStorage.setItem(BOOKMARK_SETTINGS_STORAGE_KEY, blob)
     }
-    setBookmarkSettings(user)
+    setBookmarkSettings(update)
   }
 
   return { bookmarkSettings, updateBookmarkSettings }

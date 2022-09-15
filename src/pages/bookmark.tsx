@@ -18,6 +18,7 @@ export default function BookmarkPage() {
   const wireContext = useContext(WireContext)
   const authContext = useContext(AuthContext)
   const router = useRouter()
+  const { bookmarkSettings, updateBookmarkSettings } = useBookmarkSettings()
 
   const [currentPointer, setCurrentPointer] = useState<string>('')
   const [verse, setVerse] = useState<Verse>({ key: '', verse: '', translation: '' })
@@ -47,8 +48,6 @@ export default function BookmarkPage() {
       }
     })()
   }, [currentPointer, wireContext],)
-
-  const { bookmarkSettings, updateBookmarkSettings } = useBookmarkSettings()
 
   const parsed = getSurahVerseId(currentPointer)
 
