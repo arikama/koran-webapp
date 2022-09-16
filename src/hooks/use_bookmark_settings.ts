@@ -5,8 +5,8 @@ import { BookmarkSettings } from "../types/bookmark_settings"
 
 export function useBookmarkSettings() {
   const [bookmarkSettings, setBookmarkSettings] = useState<BookmarkSettings>({
-    hideVerse: true,
-    hideTranslation: true
+    hideVerse: false,
+    hideTranslation: false
   })
 
   useEffect(() => {
