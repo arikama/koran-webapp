@@ -17,6 +17,14 @@ import type { Auth } from "../types/auth"
 import type { User } from "../types/user"
 import type { Wire } from "../types/wire"
 
+declare global {
+  interface Window {
+    dataLayer?: {
+      push: (data: Object) => boolean
+    }
+  }
+}
+
 export const AuthContext = React.createContext<Auth>({
   updateUser: () => { return null },
   isLoggedIn: () => false,

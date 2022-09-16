@@ -9,7 +9,9 @@ import {
   TRANSLATION_FONT_SIZE,
 } from './../constants/font'
 import { Button } from './../components/button'
+import { TRACKING_ACTIONS } from '../constants/tracking_actions'
 import { getSurahVerseId } from '../utils/get_surah_verse_id'
+import { triggerGtmUserclick } from '../utils/trigger_gtm_userclick'
 import { useBookmarkSettings } from '../hooks/use_bookmark_settings'
 
 import type { Verse } from './../types/verse'
@@ -135,6 +137,7 @@ export default function BookmarkPage() {
     return (
       <Button
         onClick={async () => {
+          triggerGtmUserclick(TRACKING_ACTIONS.BOOKMARK_NEXT)
           if (authContext.isLoggedIn() && authContext.user) {
             const currentPointer = await wireContext.userApi().advanceUserPointer(authContext.user.email, authContext.user.token)
 
