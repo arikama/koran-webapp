@@ -9,6 +9,7 @@ import { KoranApiImpl } from './../../apis/koran_api_impl'
 import { QuranText } from '../../components/quran_text'
 import { STORAGE } from '../../constants/storage'
 import { ShowHideButton } from '../../components/show_hide_button'
+import { TranslationText } from '../../components/translation_text'
 import { usePersistentState } from '../../hooks/use_persistent_state'
 
 import type { KoranApi } from './../../apis/koran_api'
@@ -69,13 +70,7 @@ export default function SurahPage(props: { surah: Surah }) {
       return <></>
     }
     return (
-      <div
-        style={{
-          fontSize: FONT.FONT_SIZE_S
-        }}
-      >
-        {verseTranslation}
-      </div>
+      <TranslationText text={verseTranslation} />
     )
   }
 

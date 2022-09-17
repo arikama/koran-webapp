@@ -9,6 +9,7 @@ import { FONT } from './../constants/font'
 import { QuranText } from '../components/quran_text'
 import { STORAGE } from '../constants/storage'
 import { TRACKING_ACTIONS } from '../constants/tracking_actions'
+import { TranslationText } from '../components/translation_text'
 import { getEmptyUser } from '../utils/get_empty_user'
 import { getSurahVerseId } from '../utils/get_surah_verse_id'
 import { triggerGtmUserclick } from '../utils/trigger_gtm_userclick'
@@ -87,13 +88,7 @@ export default function BookmarkPage() {
       <>
         <Break />
         <Break />
-        <div
-          style={{
-            fontSize: FONT.FONT_SIZE
-          }}
-        >
-          {verse.translation}
-        </div>
+        <TranslationText text={verse.translation} />
       </>
     )
   }
