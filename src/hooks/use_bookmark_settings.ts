@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react"
 
-import { BOOKMARK_SETTINGS_STORAGE_KEY } from "../constants/storage"
-import { BookmarkSettings } from "../types/bookmark_settings"
+import { STORAGE } from "../constants/storage"
+
+import type { BookmarkSettings } from "../types/bookmark_settings"
 
 export function useBookmarkSettings() {
   const [bookmarkSettings, setBookmarkSettings] = useState<BookmarkSettings>({
@@ -11,7 +12,7 @@ export function useBookmarkSettings() {
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      const blob = window.localStorage.getItem(BOOKMARK_SETTINGS_STORAGE_KEY)
+      const blob = window.localStorage.getItem(STORAGE.BOOKMARK_SETTINGS_STORAGE_KEY)
       if (blob) {
         const parsed = JSON.parse(blob) as BookmarkSettings
         if (parsed) {
@@ -24,7 +25,7 @@ export function useBookmarkSettings() {
   const updateBookmarkSettings = (update: BookmarkSettings) => {
     if (typeof window !== "undefined") {
       const blob = JSON.stringify(update)
-      window.localStorage.setItem(BOOKMARK_SETTINGS_STORAGE_KEY, blob)
+      window.localStorage.setItem(STORAGE.BOOKMARK_SETTINGS_STORAGE_KEY, blob)
     }
     setBookmarkSettings(update)
   }

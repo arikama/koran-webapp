@@ -10,12 +10,85 @@ import {
 import { Button } from './../../components/button'
 import { GetStaticProps } from 'next'
 import { KoranApiImpl } from './../../apis/koran_api_impl'
+import { STORAGE } from '../../constants/storage'
+import { ShowHideButton } from '../../components/show_hide_button'
+import { usePersistentState } from '../../hooks/use_persistent_state'
 
 import type { KoranApi } from './../../apis/koran_api'
 import type { Surah } from './../../types/surah'
+import type { SurahSettings } from '../../types/surah_settings'
 
 export default function SurahPage(props: { surah: Surah }) {
   const router = useRouter()
+  const [surahSettings, updateSurahSettings] = usePersistentState<SurahSettings>(
+    STORAGE.SURAH_SETTINGS_STORAGE_KEY,
+    {
+      hideVerse: false,
+      hideTranslation: false
+    },
+  )
+
+  const renderShowHideVerse = () => {
+    return (
+      <ShowHideButton
+        what="verse"
+        isHiding={surahSettings.hideVerse}
+        onClick={() => {
+          updateSurahSettings({
+            ...surahSettings,
+            hideVerse: !surahSettings.hideVerse
+          })
+        }}
+      />
+    )
+  }
+
+  const renderShowHideTranslation = () => {
+    return (
+      <ShowHideButton
+        what="translation"
+        isHiding={surahSettings.hideTranslation}
+        onClick={() => {
+          updateSurahSettings({
+            ...surahSettings,
+            hideTranslation: !surahSettings.hideTranslation
+          })
+        }}
+      />
+    )
+  }
+
+  const renderVerse = (verseText: string) => {
+    if (surahSettings.hideVerse) {
+      return <>&nbsp;</>
+    }
+    return (
+      <div
+        style={{
+          fontFamily: QURAN_FONT_FAMILY,
+          fontSize: QURAN_FONT_SIZE,
+          textAlign: 'right'
+        }}
+      >
+        {verseText}
+      </div>
+    )
+  }
+
+  const renderTranslation = (verseTranslation: string) => {
+    if (surahSettings.hideTranslation) {
+      return <>&nbsp;</>
+    }
+    return (
+      <div
+        style={{
+          fontSize: TRANSLATION_FONT_SIZE
+        }}
+      >
+        {verseTranslation}
+      </div>
+    )
+  }
 
   const Verses = props.surah.verses.map((verse) => {
     return (
@@ -42,22 +115,8 @@ export default function SurahPage(props: { surah: Surah }) {
             back
           </Button>
         </div>
-        <div
-          style={{
-            fontFamily: QURAN_FONT_FAMILY,
-            fontSize: QURAN_FONT_SIZE,
-            textAlign: 'right'
-          }}
-        >
-          {verse.text}
-        </div>
-        <div
-          style={{
-            fontSize: TRANSLATION_FONT_SIZE
-          }}
-        >
-          {verse.translation}
-        </div>
+        {renderVerse(verse.text)}
+        {renderTranslation(verse.translation)}
         <br />
         <br />
       </div>
@@ -68,6 +127,16 @@ export default function SurahPage(props: { surah: Surah }) {
       <Head>
         <title>{props.surah.englishName}</title>
       </Head>
+      <div
+        style={{
+          fontSize: POINTER_FONT_SIZE,
+          display: "flex",
+          justifyContent: "flex-end"
+        }}
+      >
+        {renderShowHideVerse()}
+        {renderShowHideTranslation()}
+      </div>
       {Verses}
     </>
   )
