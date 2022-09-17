@@ -10,6 +10,7 @@ import {
 import { Button } from './../../components/button'
 import { GetStaticProps } from 'next'
 import { KoranApiImpl } from './../../apis/koran_api_impl'
+import { QuranText } from '../../components/quran_text'
 import { STORAGE } from '../../constants/storage'
 import { ShowHideButton } from '../../components/show_hide_button'
 import { usePersistentState } from '../../hooks/use_persistent_state'
@@ -60,24 +61,16 @@ export default function SurahPage(props: { surah: Surah }) {
 
   const renderVerse = (verseText: string) => {
     if (surahSettings.hideVerse) {
-      return <>&nbsp;</>
+      return <></>
     }
     return (
-      <div
-        style={{
-          fontFamily: QURAN_FONT_FAMILY,
-          fontSize: QURAN_FONT_SIZE,
-          textAlign: 'right'
-        }}
-      >
-        {verseText}
-      </div>
+      <QuranText verseText={verseText} />
     )
   }
 
   const renderTranslation = (verseTranslation: string) => {
     if (surahSettings.hideTranslation) {
-      return <>&nbsp;</>
+      return <></>
     }
     return (
       <div
@@ -115,7 +108,9 @@ export default function SurahPage(props: { surah: Surah }) {
             back
           </Button>
         </div>
+        &nbsp;
         {renderVerse(verse.text)}
+        &nbsp;
         {renderTranslation(verse.translation)}
         <br />
         <br />
