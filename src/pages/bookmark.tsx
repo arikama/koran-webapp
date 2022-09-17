@@ -3,10 +3,13 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 
 import { AuthContext, WireContext } from './../pages/app'
+import { Break } from '../components/break'
 import { Button } from './../components/button'
 import { FONT } from './../constants/font'
+import { QuranText } from '../components/quran_text'
 import { STORAGE } from '../constants/storage'
 import { TRACKING_ACTIONS } from '../constants/tracking_actions'
+import { getEmptyUser } from '../utils/get_empty_user'
 import { getSurahVerseId } from '../utils/get_surah_verse_id'
 import { triggerGtmUserclick } from '../utils/trigger_gtm_userclick'
 import { usePersistentState } from '../hooks/use_persistent_state'
@@ -32,10 +35,14 @@ export default function BookmarkPage() {
         router.push('/')
         return
       }
-      if (authContext.user) {
-        const currentPointer = await wireContext.userApi().getUserPointer(authContext.user.email, authContext.user.token)
+      if (authContext.user?.token) {
+        try {
+          const currentPointer = await wireContext.userApi().getUserPointer(authContext.user.email, authContext.user.token)
 
-        setCurrentPointer(currentPointer)
+          setCurrentPointer(currentPointer)
+        } catch (e) {
+          authContext.updateUser(getEmptyUser())
+        }
       }
     })()
   }, [authContext, authContext.isLoggedIn, router, wireContext])
@@ -60,35 +67,33 @@ export default function BookmarkPage() {
 
   const renderVerse = () => {
     if (bookmarkSettings.hideVerse) {
-      return <>&nbsp;</>
+      return <></>
     }
     return (
-      <div
-        style={{
-          fontFamily: FONT.QURAN_FONT_FAMILY,
-          fontSize: FONT.QURAN_FONT_SIZE,
-          textAlign: 'right'
-        }}
-      >
-        {verse.verse}
-      </div>
+      <>
+        <Break />
+        <QuranText text={verse.verse} />
+      </>
     )
   }
 
   const renderTranslation = () => {
     if (bookmarkSettings.hideTranslation) {
       return (
-        <>&nbsp;</>
+        <></>
       )
     }
     return (
-      <div
-        style={{
-          fontSize: FONT.FONT_SIZE_S
-        }}
-      >
-        {verse.translation}
-      </div>
+      <>
+        <Break />
+        <div
+          style={{
+            fontSize: FONT.FONT_SIZE
+          }}
+        >
+          {verse.translation}
+        </div>
+      </>
     )
   }
 
@@ -136,18 +141,21 @@ export default function BookmarkPage() {
 
   const renderNext = () => {
     return (
-      <Button
-        onClick={async () => {
-          triggerGtmUserclick(TRACKING_ACTIONS.BOOKMARK_NEXT)
-          if (authContext.isLoggedIn() && authContext.user) {
-            const currentPointer = await wireContext.userApi().advanceUserPointer(authContext.user.email, authContext.user.token)
+      <>
+        <Break />
+        <Button
+          onClick={async () => {
+            triggerGtmUserclick(TRACKING_ACTIONS.BOOKMARK_NEXT)
+            if (authContext.isLoggedIn() && authContext.user) {
+              const currentPointer = await wireContext.userApi().advanceUserPointer(authContext.user.email, authContext.user.token)
 
-            setCurrentPointer(currentPointer)
-          }
-        }}
-      >
-        Next
-      </Button>
+              setCurrentPointer(currentPointer)
+            }
+          }}
+        >
+          Next
+        </Button>
+      </>
     )
   }
 
@@ -171,7 +179,6 @@ export default function BookmarkPage() {
       </div>
       {renderVerse()}
       {renderTranslation()}
-      &nbsp;
       <div
         style={{
           textAlign: 'right',

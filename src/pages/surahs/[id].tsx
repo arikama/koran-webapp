@@ -85,6 +85,8 @@ export default function SurahPage(props: { surah: Surah }) {
         key={verse.verseId}
         id={`${verse.verseId}`}
       >
+        <Break />
+        <Break />
         <div
           style={{
             display: 'flex',
@@ -108,8 +110,6 @@ export default function SurahPage(props: { surah: Surah }) {
         {renderVerse(verse.text)}
         <Break />
         {renderTranslation(verse.translation)}
-        <br />
-        <br />
       </div>
     )
   })

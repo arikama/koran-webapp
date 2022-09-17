@@ -10,6 +10,7 @@ import { GoogleAuthApiImpl } from "../apis/google_auth_api_impl"
 import { KoranApiImpl } from "../apis/koran_api_impl"
 import { STORAGE } from "../constants/storage"
 import { UserApiImpl } from "../apis/user_api_impl"
+import { getEmptyUser } from "../utils/get_empty_user"
 import { triggerGtmPageview } from "../utils/trigger_gtm_pageview"
 
 import type { Auth } from "../types/auth"
@@ -37,12 +38,7 @@ export const WireContext = React.createContext<Wire>({
 
 export default function App(props: PropsWithChildren) {
   const router = useRouter()
-  const [user, setUser] = useState<User>({
-    email: "",
-    token: "",
-    name: "",
-    picture: "",
-  })
+  const [user, setUser] = useState<User>(getEmptyUser())
 
   useEffect(() => {
     triggerGtmPageview()
