@@ -9,7 +9,7 @@ import "../styles/globals.css"
 import { AppNav } from "../components/app_nav"
 import { GoogleAuthApiImpl } from "../apis/google_auth_api_impl"
 import { KoranApiImpl } from "../apis/koran_api_impl"
-import { USER_LOCAL_STORAGE_KEY } from "../constants/storage"
+import { STORAGE } from "../constants/storage"
 import { UserApiImpl } from "../apis/user_api_impl"
 import { triggerGtmPageview } from "../utils/trigger_gtm_pageview"
 
@@ -51,7 +51,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      const userBlob = window.localStorage.getItem(USER_LOCAL_STORAGE_KEY)
+      const userBlob = window.localStorage.getItem(STORAGE.USER_LOCAL_STORAGE_KEY)
       if (userBlob) {
         if (!user.token) {
           setUser(JSON.parse(userBlob) as User)
@@ -86,7 +86,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           user: user,
           updateUser: (user: User) => {
             if (typeof window !== "undefined" && user) {
-              window.localStorage.setItem(USER_LOCAL_STORAGE_KEY, JSON.stringify(user))
+              window.localStorage.setItem(STORAGE.USER_LOCAL_STORAGE_KEY, JSON.stringify(user))
             }
             setUser(user)
           },
