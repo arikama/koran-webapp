@@ -4,6 +4,7 @@ import { useRouter } from 'next/router'
 
 import { Button } from './../components/button'
 import { KoranApiImpl } from './../apis/koran_api_impl'
+import { QURAN_FONT_FAMILY } from '../constants/font'
 
 import type { KoranApi } from './../apis/koran_api'
 import type { SurahInfo } from './../types/surah_info'
@@ -44,7 +45,7 @@ const IndexPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = (pro
             </Button>
           </div>
           <div style={{
-            fontFamily: 'Scheherazade',
+            fontFamily: `${QURAN_FONT_FAMILY}`,
             fontSize: '2em', textAlign: 'right'
           }}>
             {surahInfo.titleArabic}
