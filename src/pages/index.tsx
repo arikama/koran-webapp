@@ -65,6 +65,9 @@ const IndexPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = (pro
           onClick={() => {
             router.push(href)
           }}
+          style={{
+            cursor: "pointer"
+          }}
         >
           {surahId}
         </u>

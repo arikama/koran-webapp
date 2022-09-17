@@ -149,6 +149,9 @@ export default function SurahPage(props: { surah: Surah }) {
           onClick={() => {
             router.push(href)
           }}
+          style={{
+            cursor: "pointer"
+          }}
         >
           {verseId}
         </u>
