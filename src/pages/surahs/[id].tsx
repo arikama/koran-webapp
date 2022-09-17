@@ -1,13 +1,9 @@
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 
-import {
-  POINTER_FONT_SIZE,
-  QURAN_FONT_FAMILY,
-  QURAN_FONT_SIZE,
-  TRANSLATION_FONT_SIZE,
-} from './../../constants/font'
+import { Break } from '../../components/break'
 import { Button } from './../../components/button'
+import { FONT } from './../../constants/font'
 import { GetStaticProps } from 'next'
 import { KoranApiImpl } from './../../apis/koran_api_impl'
 import { QuranText } from '../../components/quran_text'
@@ -64,7 +60,7 @@ export default function SurahPage(props: { surah: Surah }) {
       return <></>
     }
     return (
-      <QuranText verseText={verseText} />
+      <QuranText text={verseText} />
     )
   }
 
@@ -75,7 +71,7 @@ export default function SurahPage(props: { surah: Surah }) {
     return (
       <div
         style={{
-          fontSize: TRANSLATION_FONT_SIZE
+          fontSize: FONT.FONT_SIZE_S
         }}
       >
         {verseTranslation}
@@ -94,7 +90,7 @@ export default function SurahPage(props: { surah: Surah }) {
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
-            fontSize: POINTER_FONT_SIZE
+            fontSize: FONT.FONT_SIZE_S
           }}
         >
           <div>
@@ -108,9 +104,9 @@ export default function SurahPage(props: { surah: Surah }) {
             back
           </Button>
         </div>
-        &nbsp;
+        <Break />
         {renderVerse(verse.text)}
-        &nbsp;
+        <Break />
         {renderTranslation(verse.translation)}
         <br />
         <br />
@@ -139,17 +135,14 @@ export default function SurahPage(props: { surah: Surah }) {
     const buttons = shortcuts.map((verseId => {
       const href = `/surahs/${props.surah.surahId}/#${verseId}`
       return (
-        <u
+        <Button
           key={href}
           onClick={() => {
             router.push(href)
           }}
-          style={{
-            cursor: "pointer"
-          }}
         >
           {verseId}
-        </u>
+        </Button>
       )
     }))
     return (
@@ -166,7 +159,7 @@ export default function SurahPage(props: { surah: Surah }) {
         >
           {buttons}
         </div>
-        &nbsp;
+        <Break />
       </div>
     )
   }
@@ -191,7 +184,7 @@ export default function SurahPage(props: { surah: Surah }) {
           {renderShowHideVerse()}
           {renderShowHideTranslation()}
         </div>
-        &nbsp;
+        <Break />
       </div>
       {Verses}
     </>

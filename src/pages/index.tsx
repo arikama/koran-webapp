@@ -2,9 +2,9 @@ import { GetStaticProps, InferGetStaticPropsType } from 'next'
 import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
 
-import { QURAN_FONT_FAMILY, QURAN_FONT_SIZE_1P7 } from '../constants/font'
 import { Button } from './../components/button'
 import { KoranApiImpl } from './../apis/koran_api_impl'
+import { QuranText } from '../components/quran_text'
 
 import type { KoranApi } from './../apis/koran_api'
 import type { SurahInfo } from './../types/surah_info'
@@ -44,13 +44,7 @@ const IndexPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = (pro
               {surahInfo.titleEnglish}
             </Button>
           </div>
-          <div style={{
-            fontFamily: `${QURAN_FONT_FAMILY}`,
-            fontSize: `${QURAN_FONT_SIZE_1P7}`,
-            textAlign: 'right'
-          }}>
-            {surahInfo.titleArabic}
-          </div>
+          <QuranText text={surahInfo.titleArabic} />
         </div>
       </div>
     )
@@ -61,17 +55,14 @@ const IndexPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = (pro
     const buttons = shortcuts.map((surahId => {
       const href = `/#${surahId}`
       return (
-        <u
+        <Button
           key={href}
           onClick={() => {
             router.push(href)
           }}
-          style={{
-            cursor: "pointer"
-          }}
         >
           {surahId}
-        </u>
+        </Button>
       )
     }))
     return (

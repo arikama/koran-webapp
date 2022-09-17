@@ -5,13 +5,15 @@ import Head from "next/head"
 import Script from "next/script"
 import { useRouter } from "next/router"
 
-import "../styles/globals.css"
 import { AppNav } from "../components/app_nav"
+import { Break } from "../components/break"
 import { GoogleAuthApiImpl } from "../apis/google_auth_api_impl"
 import { KoranApiImpl } from "../apis/koran_api_impl"
 import { STORAGE } from "../constants/storage"
 import { UserApiImpl } from "../apis/user_api_impl"
 import { triggerGtmPageview } from "../utils/trigger_gtm_pageview"
+
+import "../styles/globals.css"
 
 import type { Auth } from "../types/auth"
 import type { User } from "../types/user"
@@ -106,7 +108,7 @@ function MyApp({ Component, pageProps }: AppProps) {
             clientId={`${process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}`}
           >
             <AppNav></AppNav>
-            <br />
+            <Break />
             <Component {...pageProps} />
           </GoogleOAuthProvider>
         </WireContext.Provider>

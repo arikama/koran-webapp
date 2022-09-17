@@ -1,7 +1,7 @@
 import { FONT } from "../constants/font"
 
 export function QuranText(props: {
-  verseText: string
+  text: string
 }) {
   return (
     <div
@@ -12,7 +12,7 @@ export function QuranText(props: {
         lineHeight: FONT.QURAN_LINE_HEIGHT
       }}
     >
-      {props.verseText}
+      {props.text}
     </div>
   )
 }

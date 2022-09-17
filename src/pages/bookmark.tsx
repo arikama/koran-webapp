@@ -3,13 +3,8 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 
 import { AuthContext, WireContext } from './../pages/_app'
-import {
-  POINTER_FONT_SIZE,
-  QURAN_FONT_FAMILY,
-  QURAN_FONT_SIZE,
-  TRANSLATION_FONT_SIZE,
-} from './../constants/font'
 import { Button } from './../components/button'
+import { FONT } from './../constants/font'
 import { TRACKING_ACTIONS } from '../constants/tracking_actions'
 import { getSurahVerseId } from '../utils/get_surah_verse_id'
 import { triggerGtmUserclick } from '../utils/trigger_gtm_userclick'
@@ -65,8 +60,8 @@ export default function BookmarkPage() {
     return (
       <div
         style={{
-          fontFamily: QURAN_FONT_FAMILY,
-          fontSize: QURAN_FONT_SIZE,
+          fontFamily: FONT.QURAN_FONT_FAMILY,
+          fontSize: FONT.QURAN_FONT_SIZE,
           textAlign: 'right'
         }}
       >
@@ -84,7 +79,7 @@ export default function BookmarkPage() {
     return (
       <div
         style={{
-          fontSize: TRANSLATION_FONT_SIZE
+          fontSize: FONT.FONT_SIZE_S
         }}
       >
         {verse.translation}
@@ -158,7 +153,7 @@ export default function BookmarkPage() {
       </Head>
       <div
         style={{
-          fontSize: POINTER_FONT_SIZE,
+          fontSize: FONT.FONT_SIZE_S,
           display: 'flex',
           justifyContent: 'space-between'
         }}
