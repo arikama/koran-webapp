@@ -5,18 +5,23 @@ import { useRouter } from 'next/router'
 import { AuthContext, WireContext } from './../pages/app'
 import { Button } from './../components/button'
 import { FONT } from './../constants/font'
+import { STORAGE } from '../constants/storage'
 import { TRACKING_ACTIONS } from '../constants/tracking_actions'
 import { getSurahVerseId } from '../utils/get_surah_verse_id'
 import { triggerGtmUserclick } from '../utils/trigger_gtm_userclick'
-import { useBookmarkSettings } from '../hooks/use_bookmark_settings'
+import { usePersistentState } from '../hooks/use_persistent_state'
 
+import type { BookmarkSettings } from '../types/bookmark_settings'
 import type { Verse } from './../types/verse'
 
 export default function BookmarkPage() {
   const wireContext = useContext(WireContext)
   const authContext = useContext(AuthContext)
   const router = useRouter()
-  const { bookmarkSettings, updateBookmarkSettings } = useBookmarkSettings()
+  const [bookmarkSettings, setBookmarkSettings] = usePersistentState<BookmarkSettings>(STORAGE.BOOKMARK_SETTINGS_STORAGE_KEY, {
+    hideVerse: false,
+    hideTranslation: false
+  })
 
   const [currentPointer, setCurrentPointer] = useState<string>('')
   const [verse, setVerse] = useState<Verse>({ key: '', verse: '', translation: '' })
@@ -103,7 +108,7 @@ export default function BookmarkPage() {
     return (
       <Button
         onClick={() => {
-          updateBookmarkSettings({
+          setBookmarkSettings({
             ...bookmarkSettings,
             hideVerse: !bookmarkSettings.hideVerse
           })
@@ -118,7 +123,7 @@ export default function BookmarkPage() {
     return (
       <Button
         onClick={() => {
-          updateBookmarkSettings({
+          setBookmarkSettings({
             ...bookmarkSettings,
             hideTranslation: !bookmarkSettings.hideTranslation
           })
