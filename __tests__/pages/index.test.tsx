@@ -14,11 +14,11 @@ describe('IndexPage', () => {
     const result = await getStaticProps({}) as unknown as { props: Props }
     render(<IndexPage surahInfos={result.props.surahInfos} />)
 
-    expect(await screen.findByText('1')).toBeInTheDocument()
+    expect(((await screen.findAllByText('1')).length)).not.toEqual(0)
     expect(await screen.findByText('The Opening')).toBeInTheDocument()
     expect(await screen.findByText('ٱلْفَاتِحَة')).toBeInTheDocument()
 
-    expect(await screen.findByText('114')).toBeInTheDocument()
+    expect(((await screen.findAllByText('114')).length)).not.toEqual(0)
     expect(await screen.findByText('Mankind')).toBeInTheDocument()
     expect(await screen.findByText('ٱلنَّاس')).toBeInTheDocument()
   })

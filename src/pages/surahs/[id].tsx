@@ -122,20 +122,78 @@ export default function SurahPage(props: { surah: Surah }) {
       </div>
     )
   })
+
+  const renderShortcuts = () => {
+    const surahSz = props.surah.verses.length
+    const set = new Set<number>([
+      Math.round(surahSz * 0.25),
+      Math.round(surahSz * 0.5),
+      Math.round(surahSz * 0.75),
+      Math.round(surahSz * 1.0),
+    ])
+    const shortcuts = Array.from(set).sort((a, b) => {
+      if (a === b) {
+        return 0
+      }
+      if (a < b) {
+        return -1
+      } else {
+        return 1
+      }
+    })
+    const buttons = shortcuts.map((verseId => {
+      const href = `/surahs/${props.surah.surahId}/#${verseId}`
+      return (
+        <u
+          key={href}
+          onClick={() => {
+            router.push(href)
+          }}
+        >
+          {verseId}
+        </u>
+      )
+    }))
+    return (
+      <div
+        style={{
+          fontSize: "0.9em"
+        }}
+      >
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between"
+          }}
+        >
+          {buttons}
+        </div>
+        &nbsp;
+      </div>
+    )
+  }
+
   return (
     <>
       <Head>
         <title>{props.surah.englishName}</title>
       </Head>
+      {renderShortcuts()}
       <div
         style={{
-          fontSize: POINTER_FONT_SIZE,
-          display: "flex",
-          justifyContent: "flex-end"
+          fontSize: "0.9em",
         }}
       >
-        {renderShowHideVerse()}
-        {renderShowHideTranslation()}
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "flex-end"
+          }}
+        >
+          {renderShowHideVerse()}
+          {renderShowHideTranslation()}
+        </div>
+        &nbsp;
       </div>
       {Verses}
     </>

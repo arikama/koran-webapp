@@ -54,8 +54,38 @@ const IndexPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = (pro
       </div>
     )
   })
+
+  const renderShortcuts = () => {
+    const shortcuts = [25, 50, 75, 100, 114]
+    const buttons = shortcuts.map((surahId => {
+      const href = `/#${surahId}`
+      return (
+        <u
+          key={href}
+          onClick={() => {
+            router.push(href)
+          }}
+        >
+          {surahId}
+        </u>
+      )
+    }))
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          fontSize: "0.9em"
+        }}
+      >
+        {buttons}
+      </div>
+    )
+  }
+
   return (
     <>
+      {renderShortcuts()}
       {SurahInfos}
     </>
   )
