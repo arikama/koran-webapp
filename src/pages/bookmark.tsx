@@ -86,6 +86,7 @@ export default function BookmarkPage() {
     return (
       <>
         <Break />
+        <Break />
         <div
           style={{
             fontSize: FONT.FONT_SIZE
@@ -142,6 +143,7 @@ export default function BookmarkPage() {
   const renderNext = () => {
     return (
       <>
+        <Break />
         <Break />
         <Button
           onClick={async () => {
