@@ -19,7 +19,10 @@ const IndexPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = (pro
     const href = `/surahs/${surahInfo.surahId}`
 
     return (
-      <div key={surahInfo.surahId.toString()}>
+      <div
+        id={surahInfo.surahId.toString()}
+        key={surahInfo.surahId.toString()}
+      >
         <div
           style={{
             display: 'flex',
@@ -33,6 +36,7 @@ const IndexPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = (pro
             &nbsp;&nbsp;&nbsp;&nbsp;
             <Button
               onClick={() => {
+                router.push(`/#${surahInfo.surahId.toString()}`)
                 router.push(href)
               }}
             >
