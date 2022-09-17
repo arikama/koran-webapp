@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from 'react'
+import Head from 'next/head'
 import { useRouter } from 'next/router'
 
 import { AuthContext, WireContext } from './../pages/_app'
@@ -152,6 +153,9 @@ export default function BookmarkPage() {
 
   return (
     <>
+      <Head>
+        <title>Bookmark</title>
+      </Head>
       <div
         style={{
           fontSize: POINTER_FONT_SIZE,
