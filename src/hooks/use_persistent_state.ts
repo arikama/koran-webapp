@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 
-export function usePersistentState<T>(storageKey: string, initialState: T): [T, (newState: T) => boolean] {
+export function usePersistentState<T>(storageKey: string, initialState: T): [T, (newState: T) => void] {
   const [state, setState] = useState<T>(initialState)
 
   useEffect(() => {
@@ -20,9 +20,6 @@ export function usePersistentState<T>(storageKey: string, initialState: T): [T, 
     if (typeof window !== "undefined") {
       const blob = JSON.stringify(newState)
       window.localStorage.setItem(storageKey, blob)
-      return true
-    } else {
-      return false
     }
   }
 
