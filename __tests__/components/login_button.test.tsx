@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react'
 import { GoogleOAuthProvider } from '@react-oauth/google'
 import userEvent from '@testing-library/user-event'
 
-import { AuthContext } from '../../src/pages/_app'
+import { AuthContext } from '../../src/pages/app'
 import { LoginButton } from '../../src/components/login_button'
 
 const useGoogleLogin = jest.spyOn(require('@react-oauth/google'), 'useGoogleLogin')

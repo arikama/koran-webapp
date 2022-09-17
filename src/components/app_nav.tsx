@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import { useGoogleLogin } from '@react-oauth/google'
 import { useRouter } from 'next/router'
 
-import { AuthContext, WireContext } from './../pages/_app'
+import { AuthContext, WireContext } from './../pages/app'
 import { Button } from './button'
 import GoogleLoginOptionsImpl from '../google/google_login_options_impl'
 import { LoginButton } from './login_button'

@@ -3,7 +3,7 @@ import { GoogleOAuthProvider } from '@react-oauth/google'
 import userEvent from '@testing-library/user-event'
 
 import { AppNav } from '../../src/components/app_nav'
-import { AuthContext } from '../../src/pages/_app'
+import { AuthContext } from '../../src/pages/app'
 
 const useRouter = jest.spyOn(require('next/router'), 'useRouter')
 const useGoogleLogin = jest.spyOn(require('@react-oauth/google'), 'useGoogleLogin')

@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
-import { AuthContext } from '../../src/pages/_app'
+import { AuthContext } from '../../src/pages/app'
 import ProfilePage from '../../src/pages/profile'
 import { User } from '../../src/types/user'
 

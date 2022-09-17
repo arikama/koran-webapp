@@ -21,7 +21,9 @@ export default class GoogleLoginOptionsImpl implements GoogleLoginOptions {
         return null
       },
       onError: (errorResponse: Pick<CodeResponse, "error" | "error_description" | "error_uri">) => {
-        console.info(errorResponse)
+        if (process.env.NODE_ENV !== "test") {
+          console.info(errorResponse)
+        }
       }
     }
   }

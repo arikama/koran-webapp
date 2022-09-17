@@ -1,9 +1,8 @@
 import { render, screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 
-import { AuthContext, WireContext } from "../../src/pages/_app"
+import { AuthContext, WireContext } from "../../src/pages/app"
 import BookmarkPage from "../../src/pages/bookmark"
-import { act } from "react-dom/test-utils"
 import { getDefaultUser } from '../../src/testutils/get_default_user'
 
 import type { Auth } from "../../src/types/auth"

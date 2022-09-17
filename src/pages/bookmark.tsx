@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from 'react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 
-import { AuthContext, WireContext } from './../pages/_app'
+import { AuthContext, WireContext } from './../pages/app'
 import { Button } from './../components/button'
 import { FONT } from './../constants/font'
 import { TRACKING_ACTIONS } from '../constants/tracking_actions'

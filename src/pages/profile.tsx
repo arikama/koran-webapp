@@ -2,7 +2,7 @@ import { useContext, useEffect } from 'react'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 
-import { AuthContext } from './../pages/_app'
+import { AuthContext } from './../pages/app'
 import { Button } from './../components/button'
 
 const IMG_SZ = 100
