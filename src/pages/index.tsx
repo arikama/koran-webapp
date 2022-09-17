@@ -2,7 +2,7 @@ import { GetStaticProps, InferGetStaticPropsType } from 'next'
 import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
 
-import { QURAN_FONT_FAMILY, QURAN_FONT_SIZE } from '../constants/font'
+import { QURAN_FONT_FAMILY, QURAN_FONT_SIZE_1P7 } from '../constants/font'
 import { Button } from './../components/button'
 import { KoranApiImpl } from './../apis/koran_api_impl'
 
@@ -46,7 +46,7 @@ const IndexPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = (pro
           </div>
           <div style={{
             fontFamily: `${QURAN_FONT_FAMILY}`,
-            fontSize: `${QURAN_FONT_SIZE}`,
+            fontSize: `${QURAN_FONT_SIZE_1P7}`,
             textAlign: 'right'
           }}>
             {surahInfo.titleArabic}
