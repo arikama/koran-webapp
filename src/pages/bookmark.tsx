@@ -39,26 +39,19 @@ export default function BookmarkPage() {
       if (authContext.user?.token) {
         try {
           const currentPointer = await wireContext.userApi().getUserPointer(authContext.user.email, authContext.user.token)
+          const parsed = getSurahVerseId(currentPointer)
 
-          setCurrentPointer(currentPointer)
+          if (parsed.ok) {
+            const verse = await wireContext.koranApi().getVerse(parsed.surahId, parsed.verseId)
+            setCurrentPointer(currentPointer)
+            setVerse(verse)
+          }
         } catch (e) {
           authContext.updateUser(getEmptyUser())
         }
       }
     })()
   }, [authContext, authContext.isLoggedIn, router, wireContext])
-
-  useEffect(() => {
-    (async () => {
-      const parsed = getSurahVerseId(currentPointer)
-
-      if (parsed.ok) {
-        const verse = await wireContext.koranApi().getVerse(parsed.surahId, parsed.verseId)
-
-        setVerse(verse)
-      }
-    })()
-  }, [currentPointer, wireContext],)
 
   const parsed = getSurahVerseId(currentPointer)
 
@@ -145,8 +138,13 @@ export default function BookmarkPage() {
             triggerGtmUserclick(TRACKING_ACTIONS.BOOKMARK_NEXT)
             if (authContext.isLoggedIn() && authContext.user) {
               const currentPointer = await wireContext.userApi().advanceUserPointer(authContext.user.email, authContext.user.token)
+              const parsed = getSurahVerseId(currentPointer)
 
-              setCurrentPointer(currentPointer)
+              if (parsed.ok) {
+                const verse = await wireContext.koranApi().getVerse(parsed.surahId, parsed.verseId)
+                setCurrentPointer(currentPointer)
+                setVerse(verse)
+              }
             }
           }}
         >
