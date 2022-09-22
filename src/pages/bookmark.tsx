@@ -5,6 +5,7 @@ import { useRouter } from "next/router"
 import { AuthContext, WireContext } from "../pages/app"
 import { Break } from "../components/break"
 import { Button } from "../components/button"
+import { DIMENSIONS } from "../constants/dimensions"
 import { FONT } from "../constants/font"
 import { QuranText } from "../components/quran_text"
 import { STORAGE } from "../constants/storage"
@@ -75,8 +76,7 @@ export default function BookmarkPage() {
     }
     return (
       <>
-        <Break />
-        <Break />
+        <Break size={DIMENSIONS.SZ_8} />
         <TranslationText text={verse.translation} />
       </>
     )
@@ -127,8 +127,7 @@ export default function BookmarkPage() {
   const renderNext = () => {
     return (
       <>
-        <Break />
-        <Break />
+        <Break size={DIMENSIONS.SZ_8} />
         <Button
           onClick={async () => {
             if (isLoading) {
