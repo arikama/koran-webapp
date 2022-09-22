@@ -5,8 +5,8 @@ import { useRouter } from 'next/router'
 
 import { AuthContext, WireContext } from './../pages/app'
 import { Button } from './button'
+import { DIMENSIONS } from './../constants/dimensions'
 import GoogleLoginOptionsImpl from '../google/google_login_options_impl'
-import { SZ_32 } from './../constants/dimensions'
 import { onLoginSuccess } from '../utils/on_login_success'
 
 export const LoginButton = () => {
@@ -27,8 +27,8 @@ export const LoginButton = () => {
         <Image
           src={authContext.user?.picture!}
           alt='profile'
-          height={SZ_32}
-          width={SZ_32}
+          height={DIMENSIONS.SZ_32}
+          width={DIMENSIONS.SZ_32}
         />
       </Button>
     )

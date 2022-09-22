@@ -12,6 +12,7 @@ import { ShowHideButton } from '../../components/show_hide_button'
 import { TranslationText } from '../../components/translation_text'
 import { usePersistentState } from '../../hooks/use_persistent_state'
 
+import { DIMENSIONS } from '../../constants/dimensions'
 import type { KoranApi } from './../../apis/koran_api'
 import type { Surah } from './../../types/surah'
 import type { SurahSettings } from '../../types/surah_settings'
@@ -80,8 +81,6 @@ export default function SurahPage(props: { surah: Surah }) {
         key={verse.verseId}
         id={`${verse.verseId}`}
       >
-        <Break />
-        <Break />
         <div
           style={{
             display: 'flex',
@@ -105,6 +104,7 @@ export default function SurahPage(props: { surah: Surah }) {
         {renderVerse(verse.text)}
         <Break />
         {renderTranslation(verse.translation)}
+        <Break size={DIMENSIONS.SZ_64} />
       </div>
     )
   })
