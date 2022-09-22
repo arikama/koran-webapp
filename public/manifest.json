@@ -1,0 +1,15 @@
+{
+  "name": "Koran",
+  "short_name": "Koran",
+  "description": "Koran is a modern Quran online app with a clean user interface optimized for mobile",
+  "start_url": "/bookmark",
+  "background_color": "white",
+  "display": "fullscreen",
+  "icons": [
+    {
+      "src": "/koran192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}
