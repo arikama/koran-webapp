@@ -23,14 +23,14 @@ describe('Button', () => {
     expect(mockFn).toBeCalledTimes(1)
   })
 
-  test('clicking on disabled button', async () => {
+  test('clicking on loading button', async () => {
     const user = userEvent.setup()
     const mockFn = jest.fn()
 
     render(
       <Button
         onClick={mockFn}
-        disabled={true}
+        isLoading={true}
       >
         Google please hire me!
       </Button>

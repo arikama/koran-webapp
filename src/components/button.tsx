@@ -2,16 +2,16 @@ import type { PropsWithChildren } from 'react'
 
 type Props = PropsWithChildren & {
   onClick: () => void
-  disabled?: boolean
   style?: React.CSSProperties
+  isLoading?: boolean
 }
 
-export const Button = (props: Props = { onClick: () => { }, disabled: false }) => {
+export const Button = (props: Props = { onClick: () => { }, isLoading: false }) => {
   return (
     <button
       onClick={
         () => {
-          if (!props.disabled) {
+          if (!props.isLoading) {
             props.onClick()
           }
         }
@@ -21,7 +21,7 @@ export const Button = (props: Props = { onClick: () => { }, disabled: false }) =
         background: 'none',
         cursor: 'pointer',
         fontSize: '1em',
-        textDecoration: 'underline',
+        textDecoration: !props.isLoading ? "underline" : "",
         ...props.style,
       }}
     >

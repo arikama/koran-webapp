@@ -29,6 +29,7 @@ export default function BookmarkPage() {
 
   const [currentPointer, setCurrentPointer] = useState<string>('')
   const [verse, setVerse] = useState<Verse>({ key: '', verse: '', translation: '' })
+  const [isLoading, setIsLoading] = useState<boolean>(false)
 
   useEffect(() => {
     (async () => {
@@ -51,13 +52,9 @@ export default function BookmarkPage() {
         }
       }
     })()
-  }, [authContext, authContext.isLoggedIn, router, wireContext])
+  }, [authContext, router, wireContext])
 
   const parsed = getSurahVerseId(currentPointer)
-
-  if (!verse.verse || !verse.translation) {
-    return <></>
-  }
 
   const renderVerse = () => {
     if (bookmarkSettings.hideVerse) {
@@ -135,6 +132,10 @@ export default function BookmarkPage() {
         <Break />
         <Button
           onClick={async () => {
+            if (isLoading) {
+              return
+            }
+            setIsLoading(true)
             triggerGtmUserclick(TRACKING_ACTIONS.BOOKMARK_NEXT)
             if (authContext.isLoggedIn() && authContext.user) {
               const currentPointer = await wireContext.userApi().advanceUserPointer(authContext.user.email, authContext.user.token)
@@ -146,7 +147,9 @@ export default function BookmarkPage() {
                 setVerse(verse)
               }
             }
+            setIsLoading(false)
           }}
+          isLoading={isLoading}
         >
           Next
         </Button>
