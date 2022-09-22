@@ -40,6 +40,8 @@ export default function BookmarkPage() {
         return
       }
       try {
+        setIsLoading(true)
+
         const currentPointer = await wireContext.userApi().getUserPointer(authContext.user!.email, authContext.user!.token)
         const parsed = getSurahVerseId(currentPointer)
 
@@ -48,8 +50,11 @@ export default function BookmarkPage() {
           setCurrentPointer(currentPointer)
           setVerse(verse)
         }
+
+        setIsLoading(false)
       } catch (e) {
         authContext.updateUser(getEmptyUser())
+        setIsLoading(false)
       }
     })()
   }, [authContext, router, wireContext])
