@@ -1,55 +1,54 @@
-import { useContext, useEffect, useState } from 'react'
-import Head from 'next/head'
-import { useRouter } from 'next/router'
+import { useContext, useEffect, useState } from "react"
+import Head from "next/head"
+import { useRouter } from "next/router"
 
-import { AuthContext, WireContext } from './../pages/app'
-import { Break } from '../components/break'
-import { Button } from './../components/button'
-import { FONT } from './../constants/font'
-import { QuranText } from '../components/quran_text'
-import { STORAGE } from '../constants/storage'
-import { TRACKING_ACTIONS } from '../constants/tracking_actions'
-import { TranslationText } from '../components/translation_text'
-import { getEmptyUser } from '../utils/get_empty_user'
-import { getSurahVerseId } from '../utils/get_surah_verse_id'
-import { triggerGtmUserclick } from '../utils/trigger_gtm_userclick'
-import { usePersistentState } from '../hooks/use_persistent_state'
+import { AuthContext, WireContext } from "../pages/app"
+import { Break } from "../components/break"
+import { Button } from "../components/button"
+import { FONT } from "../constants/font"
+import { QuranText } from "../components/quran_text"
+import { STORAGE } from "../constants/storage"
+import { TRACKING_ACTIONS } from "../constants/tracking_actions"
+import { TranslationText } from "../components/translation_text"
+import { getEmptyUser } from "../utils/get_empty_user"
+import { getSurahVerseId } from "../utils/get_surah_verse_id"
+import { triggerGtmUserclick } from "../utils/trigger_gtm_userclick"
+import { usePersistentState } from "../hooks/use_persistent_state"
 
-import type { BookmarkSettings } from '../types/bookmark_settings'
-import type { Verse } from './../types/verse'
+import type { BookmarkSettings } from "../types/bookmark_settings"
+import type { Verse } from "../types/verse"
 
 export default function BookmarkPage() {
+  const router = useRouter()
   const wireContext = useContext(WireContext)
   const authContext = useContext(AuthContext)
-  const router = useRouter()
+
   const [bookmarkSettings, setBookmarkSettings] = usePersistentState<BookmarkSettings>(STORAGE.BOOKMARK_SETTINGS_STORAGE_KEY, {
     hideVerse: false,
     hideTranslation: false
   })
 
-  const [currentPointer, setCurrentPointer] = useState<string>('')
-  const [verse, setVerse] = useState<Verse>({ key: '', verse: '', translation: '' })
+  const [currentPointer, setCurrentPointer] = useState<string>("")
+  const [verse, setVerse] = useState<Verse>({ key: "", verse: "", translation: "" })
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
   useEffect(() => {
     (async () => {
       if (!authContext.isLoggedIn()) {
-        router.push('/')
+        router.push("/")
         return
       }
-      if (authContext.user?.token) {
-        try {
-          const currentPointer = await wireContext.userApi().getUserPointer(authContext.user.email, authContext.user.token)
-          const parsed = getSurahVerseId(currentPointer)
+      try {
+        const currentPointer = await wireContext.userApi().getUserPointer(authContext.user!.email, authContext.user!.token)
+        const parsed = getSurahVerseId(currentPointer)
 
-          if (parsed.ok) {
-            const verse = await wireContext.koranApi().getVerse(parsed.surahId, parsed.verseId)
-            setCurrentPointer(currentPointer)
-            setVerse(verse)
-          }
-        } catch (e) {
-          authContext.updateUser(getEmptyUser())
+        if (parsed.ok) {
+          const verse = await wireContext.koranApi().getVerse(parsed.surahId, parsed.verseId)
+          setCurrentPointer(currentPointer)
+          setVerse(verse)
         }
+      } catch (e) {
+        authContext.updateUser(getEmptyUser())
       }
     })()
   }, [authContext, router, wireContext])
@@ -165,8 +164,8 @@ export default function BookmarkPage() {
       <div
         style={{
           fontSize: FONT.FONT_SIZE_S,
-          display: 'flex',
-          justifyContent: 'space-between'
+          display: "flex",
+          justifyContent: "space-between"
         }}
       >
         {renderTag()}
@@ -179,7 +178,7 @@ export default function BookmarkPage() {
       {renderTranslation()}
       <div
         style={{
-          textAlign: 'right',
+          textAlign: "right",
         }}
       >
         {renderNext()}
