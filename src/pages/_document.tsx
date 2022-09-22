@@ -9,6 +9,10 @@ class MyDocument extends Document {
             href="https://fonts.googleapis.com/css?family=Amiri&display=swap"
             rel="stylesheet"
           />
+          <link
+            href="/manifest.json"
+            rel="manifest"
+          />
         </Head>
         <body>
           <Main />
