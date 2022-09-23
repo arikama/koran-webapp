@@ -28,35 +28,43 @@ const IndexPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = (pro
 
   const SurahInfos = props.surahInfos.map(surahInfo => {
     const href = `/surahs/${surahInfo.surahId}`
+    const onClick = () => {
+      router.push(`/#${surahInfo.surahId.toString()}`)
+      router.push(href)
+    }
 
     return (
       <div
         id={surahInfo.surahId.toString()}
         key={surahInfo.surahId.toString()}
+        style={{
+          display: "flex",
+          alignItems: "center",
+          height: "70px"
+        }}
       >
-        <div
+        {surahInfo.surahId}
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <Button
+          onClick={onClick}
           style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            cursor: 'pointer',
-            height: "70px"
+            flex: 1,
+            textAlign: "left",
+            height: "100%",
+            cursor: "pointer"
           }}
         >
-          <div>
-            <span>{surahInfo.surahId}</span>
-            &nbsp;&nbsp;&nbsp;&nbsp;
-            <Button
-              onClick={() => {
-                router.push(`/#${surahInfo.surahId.toString()}`)
-                router.push(href)
-              }}
-            >
-              {surahInfo.titleEnglish}
-            </Button>
-          </div>
+          {surahSettings?.hideTranslation ? null : surahInfo.titleEnglish}
+        </Button>
+        <Button
+          onClick={onClick}
+          style={{
+            textDecoration: "none",
+            cursor: "pointer"
+          }}
+        >
           {surahSettings?.hideVerse ? null : <QuranText text={surahInfo.titleArabic} />}
-        </div>
+        </Button>
       </div>
     )
   })
