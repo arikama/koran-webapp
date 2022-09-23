@@ -100,7 +100,7 @@ export default function SurahPage(props: { surah: Surah }) {
             back
           </Button>
         </div>
-        <Break />
+        <Break size={DIMENSIONS.SZ_8} />
         {renderVerse(verse.text)}
         <Break />
         {renderTranslation(verse.translation)}
