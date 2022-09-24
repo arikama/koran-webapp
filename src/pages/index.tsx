@@ -1,5 +1,4 @@
 import { GetStaticProps, InferGetStaticPropsType } from "next"
-import type { NextPage } from "next"
 import { useRouter } from "next/router"
 
 import { Button } from "./../components/button"
@@ -8,8 +7,10 @@ import { KoranApiImpl } from "./../apis/koran_api_impl"
 import { QuranText } from "../components/quran_text"
 import { getSurahSettings } from "../utils/get_surah_settings"
 
-import type { KoranApi } from "./../apis/koran_api"
-import type { SurahInfo } from "./../types/surah_info"
+import type { NextPage } from "next"
+
+import type { KoranApi } from "../apis/koran_api"
+import type { SurahInfo } from "../types/surah_info"
 
 const SURAH_TITLE_HEIGHT = 70
 const SURAH_SHORTCUTS = [25, 50, 75, 100, 114]
@@ -82,19 +83,6 @@ const IndexPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = (pro
   }
 
   const renderShortcuts = () => {
-    const buttons = SURAH_SHORTCUTS.map((surahId => {
-      const href = `/#${surahId}`
-      return (
-        <Button
-          key={href}
-          onClick={() => {
-            router.push(href)
-          }}
-        >
-          {surahId}
-        </Button>
-      )
-    }))
     return (
       <div
         style={{
@@ -103,7 +91,19 @@ const IndexPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = (pro
           fontSize: FONT.FONT_SIZE_S
         }}
       >
-        {buttons}
+        {
+          SURAH_SHORTCUTS.map(surahId => {
+            const href = `/#${surahId}`
+            return (
+              <Button
+                key={href}
+                onClick={() => { router.push(href) }}
+              >
+                {surahId}
+              </Button>
+            )
+          })
+        }
       </div>
     )
   }
