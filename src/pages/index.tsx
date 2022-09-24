@@ -5,11 +5,10 @@ import { useRouter } from 'next/router'
 import { Button } from './../components/button'
 import { KoranApiImpl } from './../apis/koran_api_impl'
 import { QuranText } from '../components/quran_text'
-import { STORAGE } from '../constants/storage'
+import { getSurahSettings } from '../utils/get_surah_settings'
 
 import type { KoranApi } from './../apis/koran_api'
 import type { SurahInfo } from './../types/surah_info'
-import type { SurahSettings } from '../types/surah_settings'
 
 export type Props = {
   surahInfos: SurahInfo[]
@@ -17,14 +16,7 @@ export type Props = {
 
 const IndexPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = (props) => {
   const router = useRouter()
-
-  let surahSettings: SurahSettings | null = null
-  try {
-    const blob = window.localStorage.getItem(STORAGE.SURAH_SETTINGS_STORAGE_KEY)
-    if (blob) {
-      surahSettings = JSON.parse(blob) as SurahSettings
-    }
-  } catch (ignored) { ; }
+  const surahSettings = getSurahSettings()
 
   const SurahInfos = props.surahInfos.map(surahInfo => {
     const href = `/surahs/${surahInfo.surahId}`
