@@ -2,6 +2,7 @@
 
 .vscode
 .env
+codecov
 
 # dependencies
 /node_modules

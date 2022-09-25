@@ -27,6 +27,6 @@ jobs:
       env:
         NEXT_PUBLIC_GOOGLE_CLIENT_ID: 454337127208-8cfsr6ebdake7qjp93n98rlrjjm9qgo6.apps.googleusercontent.com
         NEXT_PUBLIC_BASE_API: https://koran-backend-production.up.railway.app
-    - uses: codecov/codecov-action@v1.0.2
+    - uses: codecov/codecov-action@v3
       with:
         token: 6375bc49-325d-4678-ad62-2986d0081ada
