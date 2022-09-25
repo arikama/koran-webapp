@@ -4,6 +4,7 @@
   "description": "Koran is a modern Quran online app with a clean user interface optimized for mobile",
   "start_url": "/bookmark",
   "background_color": "white",
+  "theme_color": "white",
   "display": "fullscreen",
   "icons": [
     {
