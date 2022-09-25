@@ -5,7 +5,7 @@
   "start_url": "/bookmark",
   "background_color": "#FFFFFF",
   "theme_color": "#FFFFFF",
-  "display": "fullscreen",
+  "display": "standalone",
   "icons": [
     {
       "src": "/koran192.png",
