@@ -75,39 +75,41 @@ export default function SurahPage(props: { surah: Surah }) {
     )
   }
 
-  const Verses = props.surah.verses.map((verse) => {
-    return (
-      <div
-        key={verse.verseId}
-        id={`${verse.verseId}`}
-      >
+  const renderVerses = () => {
+    return props.surah.verses.map((verse) => {
+      return (
         <div
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            fontSize: FONT.FONT_SIZE_S
-          }}
+          key={verse.verseId}
+          id={`${verse.verseId}`}
         >
-          <div>
-            {`${props.surah.surahId}:${verse.verseId}`}
-          </div>
-          <Button
-            onClick={() => {
-              router.back()
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              fontSize: FONT.FONT_SIZE_S
             }}
           >
-            back
-          </Button>
+            <div>
+              {`${props.surah.surahId}:${verse.verseId}`}
+            </div>
+            <Button
+              onClick={() => {
+                router.back()
+              }}
+            >
+              back
+            </Button>
+          </div>
+          <Break size={DIMENSIONS.SZ_8} />
+          {renderVerse(verse.text)}
+          <Break />
+          {renderTranslation(verse.translation)}
+          <Break size={DIMENSIONS.SZ_64} />
         </div>
-        <Break size={DIMENSIONS.SZ_8} />
-        {renderVerse(verse.text)}
-        <Break />
-        {renderTranslation(verse.translation)}
-        <Break size={DIMENSIONS.SZ_64} />
-      </div>
-    )
-  })
+      )
+    })
+  }
 
   const renderShortcuts = () => {
     const surahSz = props.surah.verses.length
@@ -181,7 +183,7 @@ export default function SurahPage(props: { surah: Surah }) {
         </div>
         <Break />
       </div>
-      {Verses}
+      {renderVerses()}
     </>
   )
 }
