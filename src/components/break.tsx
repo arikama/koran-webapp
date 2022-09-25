@@ -8,7 +8,7 @@ export function Break(props: { size?: number }) {
   return (
     <div
       style={{
-        height: `${props.size}px`
+        height: `${size}px`
       }}
     />
   )

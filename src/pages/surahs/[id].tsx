@@ -16,6 +16,7 @@ import { DIMENSIONS } from '../../constants/dimensions'
 import type { KoranApi } from './../../apis/koran_api'
 import type { Surah } from './../../types/surah'
 import type { SurahSettings } from '../../types/surah_settings'
+import { getSurahShortcuts } from '../../utils/get_surah_shortcuts'
 
 export default function SurahPage(props: { surah: Surah }) {
   const router = useRouter()
@@ -113,39 +114,26 @@ export default function SurahPage(props: { surah: Surah }) {
 
   const renderShortcuts = () => {
     const surahSz = props.surah.verses.length
-    const set = new Set<number>([
-      Math.round(surahSz * 0.25),
-      Math.round(surahSz * 0.5),
-      Math.round(surahSz * 0.75),
-      Math.round(surahSz * 1.0),
-    ])
-    const shortcuts = Array.from(set).sort((a, b) => {
-      if (a === b) {
-        return 0
-      }
-      if (a < b) {
-        return -1
-      } else {
-        return 1
-      }
-    })
-    const buttons = shortcuts.map((verseId => {
-      const href = `/surahs/${props.surah.surahId}/#${verseId}`
-      return (
-        <Button
-          key={href}
-          onClick={() => {
-            router.push(href)
-          }}
-        >
-          {verseId}
-        </Button>
-      )
-    }))
+    const shortcuts = getSurahShortcuts(surahSz)
+    const renderButtons = () => {
+      return shortcuts.map(verseId => {
+        const href = `/surahs/${props.surah.surahId}/#${verseId}`
+        return (
+          <Button
+            key={href}
+            onClick={() => {
+              router.push(href)
+            }}
+          >
+            {verseId}
+          </Button>
+        )
+      })
+    }
     return (
       <div
         style={{
-          fontSize: "0.9em"
+          fontSize: FONT.FONT_SIZE_S
         }}
       >
         <div
@@ -154,22 +142,18 @@ export default function SurahPage(props: { surah: Surah }) {
             justifyContent: "space-between"
           }}
         >
-          {buttons}
+          {renderButtons()}
         </div>
         <Break />
       </div>
     )
   }
 
-  return (
-    <>
-      <Head>
-        <title>{props.surah.englishName}</title>
-      </Head>
-      {renderShortcuts()}
+  const renderUserActions = () => {
+    return (
       <div
         style={{
-          fontSize: "0.9em",
+          fontSize: FONT.FONT_SIZE_S,
         }}
       >
         <div
@@ -183,6 +167,16 @@ export default function SurahPage(props: { surah: Surah }) {
         </div>
         <Break />
       </div>
+    )
+  }
+
+  return (
+    <>
+      <Head>
+        <title>{props.surah.englishName}</title>
+      </Head>
+      {renderShortcuts()}
+      {renderUserActions()}
       {renderVerses()}
     </>
   )
