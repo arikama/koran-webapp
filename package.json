@@ -11,7 +11,7 @@
     "testw": "jest --watchAll --no-coverage"
   },
   "dependencies": {
-    "@react-oauth/google": "^0.2.6",
+    "@react-oauth/google": "0.6.1",
     "@testing-library/user-event": "^14.4.3",
     "next": "^12.2.5",
     "react": "18.2.0",
