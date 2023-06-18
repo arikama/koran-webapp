@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import { useRouter } from 'next/router'
+import { useState } from 'react'
 
 import { Break } from '../../components/break'
 import { Button } from './../../components/button'
@@ -27,6 +28,33 @@ export default function SurahPage(props: { surah: Surah }) {
       hideTranslation: false
     },
   )
+  const [favSet, setFavSet] = useState<Set<string>>(new Set())
+
+  const renderFav = (surahVerse: string) => {
+    const isFav = favSet.has(surahVerse)
+
+    return (
+      <Button
+        onClick={() => {
+          if (!isFav) {
+            setFavSet(prev => {
+              return new Set(prev.add(surahVerse))
+            })
+          } else {
+            setFavSet(prev => {
+              prev.delete(surahVerse)
+              return new Set(prev)
+            })
+          }
+        }}
+        style={{
+          textDecoration: isFav ? undefined : "underline"
+        }}
+      >
+        {!favSet.has(surahVerse) ? "favorite" : <div style={{ fontSize: `${FONT.FONT_SIZE_S}` }}>❤️</div>}
+      </Button>
+    )
+  }
 
   const renderShowHideVerse = () => {
     return (
@@ -94,13 +122,16 @@ export default function SurahPage(props: { surah: Surah }) {
             <div>
               {`${props.surah.surahId}:${verse.verseId}`}
             </div>
-            <Button
-              onClick={() => {
-                router.back()
-              }}
-            >
-              back
-            </Button>
+            <div>
+              {renderFav(`${props.surah.surahId}:${verse.verseId}`)}
+              <Button
+                onClick={() => {
+                  router.back()
+                }}
+              >
+                back
+              </Button>
+            </div>
           </div>
           <Break size={DIMENSIONS.SZ_8} />
           {renderVerse(verse.text)}
@@ -176,8 +207,15 @@ export default function SurahPage(props: { surah: Surah }) {
         <title>{props.surah.englishName}</title>
       </Head>
       {renderShortcuts()}
-      {renderUserActions()}
-      {renderVerses()}
+      <div
+        style={{
+          paddingLeft: `${DIMENSIONS.SZ_6}px`,
+          paddingRight: `${DIMENSIONS.SZ_6}px`
+        }}
+      >
+        {renderUserActions()}
+        {renderVerses()}
+      </div>
     </>
   )
 }

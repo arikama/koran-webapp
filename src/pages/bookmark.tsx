@@ -32,6 +32,7 @@ export default function BookmarkPage() {
   const [currentPointer, setCurrentPointer] = useState<string>("")
   const [verse, setVerse] = useState<Verse>({ key: "", verse: "", translation: "" })
   const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [isFav, setIsFav] = useState<boolean>(false)
 
   useEffect(() => {
     (async () => {
@@ -95,6 +96,21 @@ export default function BookmarkPage() {
         }}
       >
         {currentPointer}
+      </Button>
+    )
+  }
+
+  const renderFav = () => {
+    return (
+      <Button
+        onClick={() => {
+          setIsFav(!isFav)
+        }}
+        style={{
+          textDecoration: isFav ? undefined : "underline"
+        }}
+      >
+        {!isFav ? "favorite" : <div style={{ fontSize: `${FONT.FONT_SIZE_S}` }}>❤️</div>}
       </Button>
     )
   }
@@ -172,8 +188,11 @@ export default function BookmarkPage() {
           justifyContent: "space-between"
         }}
       >
-        {renderTag()}
         <div>
+          {renderTag()}
+        </div>
+        <div>
+          {renderFav()}
           {renderShowHideVerse()}
           {renderShowHideTranslation()}
         </div>
