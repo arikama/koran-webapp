@@ -74,7 +74,7 @@ export const AppNav = () => {
             background: router.pathname === '/favs' ? 'gainsboro' : 'none'
           }}
         >
-          Favs
+          Favorite
         </Button>
       </div>
       <LoginButton />

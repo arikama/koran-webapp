@@ -32,7 +32,7 @@ export default function BookmarkPage() {
   const [currentPointer, setCurrentPointer] = useState<string>("")
   const [verse, setVerse] = useState<Verse>({ key: "", verse: "", translation: "" })
   const [isLoading, setIsLoading] = useState<boolean>(false)
-  const [isFav, setIsFav] = useState<boolean>(false)
+  const [favSet, setFavSet] = useState<Set<string>>(new Set())
 
   useEffect(() => {
     (async () => {
@@ -53,6 +53,8 @@ export default function BookmarkPage() {
         }
 
         setIsLoading(false)
+
+        setFavSet(await wireContext.favManager().get())
       } catch (e) {
         authContext.updateUser(getEmptyUser())
         setIsLoading(false)
@@ -101,10 +103,16 @@ export default function BookmarkPage() {
   }
 
   const renderFav = () => {
+    const isFav = favSet.has(currentPointer)
+
     return (
       <Button
-        onClick={() => {
-          setIsFav(!isFav)
+        onClick={async () => {
+          if (!isFav) {
+            setFavSet(await wireContext.favManager().add(currentPointer))
+          } else {
+            setFavSet(await wireContext.favManager().remove(currentPointer))
+          }
         }}
         style={{
           textDecoration: isFav ? undefined : "underline"

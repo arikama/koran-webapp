@@ -1,26 +1,28 @@
+import { useContext, useEffect, useState } from 'react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import { useState } from 'react'
 
 import { Break } from '../../components/break'
-import { Button } from './../../components/button'
-import { FONT } from './../../constants/font'
+import { Button } from '../../components/button'
+import { DIMENSIONS } from '../../constants/dimensions'
+import { FONT } from '../../constants/font'
 import { GetStaticProps } from 'next'
-import { KoranApiImpl } from './../../apis/koran_api_impl'
+import { KoranApiImpl } from '../../apis/koran_api_impl'
 import { QuranText } from '../../components/quran_text'
 import { STORAGE } from '../../constants/storage'
 import { ShowHideButton } from '../../components/show_hide_button'
 import { TranslationText } from '../../components/translation_text'
+import { WireContext } from "../../pages/app"
+import { getSurahShortcuts } from '../../utils/get_surah_shortcuts'
 import { usePersistentState } from '../../hooks/use_persistent_state'
 
-import { DIMENSIONS } from '../../constants/dimensions'
-import type { KoranApi } from './../../apis/koran_api'
-import type { Surah } from './../../types/surah'
+import type { KoranApi } from '../../apis/koran_api'
+import type { Surah } from '../../types/surah'
 import type { SurahSettings } from '../../types/surah_settings'
-import { getSurahShortcuts } from '../../utils/get_surah_shortcuts'
 
 export default function SurahPage(props: { surah: Surah }) {
   const router = useRouter()
+  const wireContext = useContext(WireContext)
   const [surahSettings, updateSurahSettings] = usePersistentState<SurahSettings>(
     STORAGE.SURAH_SETTINGS_STORAGE_KEY,
     {
@@ -30,21 +32,22 @@ export default function SurahPage(props: { surah: Surah }) {
   )
   const [favSet, setFavSet] = useState<Set<string>>(new Set())
 
+  useEffect(() => {
+    (async () => {
+      setFavSet(await wireContext.favManager().get())
+    })()
+  }, [wireContext, router])
+
   const renderFav = (surahVerse: string) => {
     const isFav = favSet.has(surahVerse)
 
     return (
       <Button
-        onClick={() => {
+        onClick={async () => {
           if (!isFav) {
-            setFavSet(prev => {
-              return new Set(prev.add(surahVerse))
-            })
+            setFavSet(await wireContext.favManager().add(surahVerse))
           } else {
-            setFavSet(prev => {
-              prev.delete(surahVerse)
-              return new Set(prev)
-            })
+            setFavSet(await wireContext.favManager().remove(surahVerse))
           }
         }}
         style={{

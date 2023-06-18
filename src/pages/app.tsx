@@ -6,6 +6,7 @@ import { useRouter } from "next/router"
 
 import { AppNav } from "../components/app_nav"
 import { Break } from "../components/break"
+import { FavManagerDummy } from "../managers/fav_manager_dummy"
 import { GoogleAuthApiImpl } from "../apis/google_auth_api_impl"
 import { KoranApiImpl } from "../apis/koran_api_impl"
 import { STORAGE } from "../constants/storage"
@@ -25,7 +26,8 @@ export const AuthContext = React.createContext<Auth>({
 export const WireContext = React.createContext<Wire>({
   koranApi: () => new KoranApiImpl(),
   userApi: () => new UserApiImpl(),
-  googleAuthApi: () => new GoogleAuthApiImpl()
+  googleAuthApi: () => new GoogleAuthApiImpl(),
+  favManager: () => new FavManagerDummy()
 })
 
 export default function App(props: PropsWithChildren) {
@@ -86,7 +88,8 @@ export default function App(props: PropsWithChildren) {
           value={{
             koranApi: () => new KoranApiImpl(),
             userApi: () => new UserApiImpl(),
-            googleAuthApi: () => new GoogleAuthApiImpl()
+            googleAuthApi: () => new GoogleAuthApiImpl(),
+            favManager: () => new FavManagerDummy()
           }}
         >
           <GoogleOAuthProvider
