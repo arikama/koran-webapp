@@ -26,6 +26,8 @@ describe('onLoginSuccess', () => {
       push: pushMock
     }
 
+    window.localStorage.setItem("loginsuccesspagekey", "/bookmark")
+
     useRouter.mockImplementation(() => router)
     onLoginSuccess(auth, useNextRouter())(getDefaultUser())
 

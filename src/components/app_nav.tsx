@@ -6,6 +6,7 @@ import { AuthContext, WireContext } from './../pages/app'
 import { Button } from './button'
 import GoogleLoginOptionsImpl from '../google/google_login_options_impl'
 import { LoginButton } from './login_button'
+import { STORAGE } from "../constants/storage"
 import { onLoginSuccess } from '../utils/on_login_success'
 
 export const AppNav = () => {
@@ -20,11 +21,14 @@ export const AppNav = () => {
     router.push('/')
   }
 
-  const onClickBookmark = () => {
-    if (authContext.isLoggedIn()) {
-      router.push('/bookmark')
-    } else {
-      googleLogin()
+  const onClickNav = (page: string) => {
+    return () => {
+      if (authContext.isLoggedIn()) {
+        router.push(page)
+      } else {
+        window.localStorage.setItem(STORAGE.LOGIN_SUCCESS_PAGE_KEY, page)
+        googleLogin()
+      }
     }
   }
 
@@ -55,12 +59,22 @@ export const AppNav = () => {
         &nbsp;
         &nbsp;
         <Button
-          onClick={onClickBookmark}
+          onClick={onClickNav('/bookmark')}
           style={{
             background: router.pathname === '/bookmark' ? 'gainsboro' : 'none'
           }}
         >
           Bookmark
+        </Button>
+        &nbsp;
+        &nbsp;
+        <Button
+          onClick={onClickNav('/favs')}
+          style={{
+            background: router.pathname === '/favs' ? 'gainsboro' : 'none'
+          }}
+        >
+          Favs
         </Button>
       </div>
       <LoginButton />
