@@ -3,6 +3,7 @@ import Head from "next/head"
 import { useRouter } from 'next/router'
 
 import { AuthContext } from './app'
+import { DIMENSIONS } from '../constants/dimensions'
 import { FONT } from "../constants/font"
 
 export default function ProfilePage() {
@@ -29,7 +30,8 @@ export default function ProfilePage() {
         style={{
           fontSize: FONT.FONT_SIZE_S,
           display: "flex",
-          justifyContent: "space-between"
+          justifyContent: "space-between",
+          paddingLeft: `${DIMENSIONS.SZ_6}px`
         }}
       >
         <div>Coming soon.</div>

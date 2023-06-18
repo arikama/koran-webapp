@@ -4,6 +4,7 @@ import { useRouter } from 'next/router'
 
 import { AuthContext } from './../pages/app'
 import { Button } from './../components/button'
+import { DIMENSIONS } from "../constants/dimensions"
 
 const IMG_SZ = 100
 
@@ -27,7 +28,9 @@ export default function ProfilePage() {
       style={{
         display: 'flex',
         flexDirection: 'column',
-        alignItems: 'flex-start'
+        alignItems: 'flex-start',
+        paddingLeft: `${DIMENSIONS.SZ_6}px`,
+        paddingRight: `${DIMENSIONS.SZ_6}px`
       }}
     >
       <Image
@@ -47,7 +50,8 @@ export default function ProfilePage() {
           router.push('/')
         }}
         style={{
-          alignSelf: 'flex-end'
+          alignSelf: 'flex-end',
+          paddingRight: 0,
         }}
       >
         Logout

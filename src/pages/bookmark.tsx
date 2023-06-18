@@ -178,8 +178,15 @@ export default function BookmarkPage() {
           {renderShowHideTranslation()}
         </div>
       </div>
-      {renderVerse()}
-      {renderTranslation()}
+      <div
+        style={{
+          paddingLeft: `${DIMENSIONS.SZ_6}px`,
+          paddingRight: `${DIMENSIONS.SZ_6}px`
+        }}
+      >
+        {renderVerse()}
+        {renderTranslation()}
+      </div>
       <div
         style={{
           textAlign: "right",

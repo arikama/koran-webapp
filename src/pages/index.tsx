@@ -9,6 +9,7 @@ import { getSurahSettings } from "../utils/get_surah_settings"
 
 import type { NextPage } from "next"
 
+import { DIMENSIONS } from "../constants/dimensions"
 import type { KoranApi } from "../apis/koran_api"
 import type { SurahInfo } from "../types/surah_info"
 
@@ -71,7 +72,8 @@ const IndexPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = (pro
           style={{
             display: "flex",
             alignItems: "center",
-            height: `${SURAH_TITLE_HEIGHT}px`
+            height: `${SURAH_TITLE_HEIGHT}px`,
+            paddingLeft: `${DIMENSIONS.SZ_6}px`
           }}
         >
           {renderSurahId()}
