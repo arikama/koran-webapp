@@ -3,7 +3,17 @@ import type { FavApi } from './fav_api'
 import { getUrl } from '../utils/getUrl'
 
 export class FavApiImpl implements FavApi {
-  async add(token: string, surah: number, verse: number): Promise<Fav[]> {
+  private token: string
+
+  constructor(token: string) {
+    this.token = token
+  }
+
+  async add(surah: number, verse: number): Promise<Fav[]> {
+    if (!this.token) {
+      return []
+    }
+
     const response = await fetch(getUrl("/fav"), {
       method: 'POST',
       body: JSON.stringify({
@@ -11,9 +21,46 @@ export class FavApiImpl implements FavApi {
         verse
       }),
       headers: {
-        'x-access-token': token,
+        'x-access-token': this.token,
       }
     })
+
+    return this.toFavs(response)
+  }
+
+  async remove(id: number): Promise<Fav[]> {
+    if (!this.token) {
+      return []
+    }
+
+    const response = await fetch(getUrl("/fav/remove"), {
+      method: 'POST',
+      body: JSON.stringify({
+        id,
+      }),
+      headers: {
+        'x-access-token': this.token,
+      }
+    })
+
+    return this.toFavs(response)
+  }
+
+  async list(): Promise<Fav[]> {
+    const response = await fetch(getUrl("/fav"), {
+      method: 'GET',
+      headers: {
+        'x-access-token': this.token,
+      }
+    })
+
+    return this.toFavs(response)
+  }
+
+  private async toFavs(response: Response): Promise<Fav[]> {
+    if (!this.token) {
+      return []
+    }
 
     type Json = {
       data: {

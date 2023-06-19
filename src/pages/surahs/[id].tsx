@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from 'react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 
+import { AuthContext, WireContext } from "../../pages/app"
 import { Break } from '../../components/break'
 import { Button } from '../../components/button'
 import { DIMENSIONS } from '../../constants/dimensions'
@@ -12,7 +13,6 @@ import { QuranText } from '../../components/quran_text'
 import { STORAGE } from '../../constants/storage'
 import { ShowHideButton } from '../../components/show_hide_button'
 import { TranslationText } from '../../components/translation_text'
-import { WireContext } from "../../pages/app"
 import { getSurahShortcuts } from '../../utils/get_surah_shortcuts'
 import { usePersistentState } from '../../hooks/use_persistent_state'
 
@@ -23,6 +23,7 @@ import type { SurahSettings } from '../../types/surah_settings'
 export default function SurahPage(props: { surah: Surah }) {
   const router = useRouter()
   const wireContext = useContext(WireContext)
+  const authContext = useContext(AuthContext)
   const [surahSettings, updateSurahSettings] = usePersistentState<SurahSettings>(
     STORAGE.SURAH_SETTINGS_STORAGE_KEY,
     {
@@ -126,7 +127,12 @@ export default function SurahPage(props: { surah: Surah }) {
               {`${props.surah.surahId}:${verse.verseId}`}
             </div>
             <div>
-              {renderFav(`${props.surah.surahId}:${verse.verseId}`)}
+              {
+                authContext.isLoggedIn() ?
+                  renderFav(`${props.surah.surahId}:${verse.verseId}`)
+                  :
+                  null
+              }
               <Button
                 onClick={() => {
                   router.back()

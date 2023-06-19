@@ -6,7 +6,9 @@ import { useRouter } from "next/router"
 
 import { AppNav } from "../components/app_nav"
 import { Break } from "../components/break"
+import { FavApiImpl } from "../apis/fav_api_impl"
 import { FavManagerDummy } from "../managers/fav_manager_dummy"
+import { FavManagerImpl } from "../managers/fav_manager_impl"
 import { GoogleAuthApiImpl } from "../apis/google_auth_api_impl"
 import { KoranApiImpl } from "../apis/koran_api_impl"
 import { STORAGE } from "../constants/storage"
@@ -89,7 +91,7 @@ export default function App(props: PropsWithChildren) {
             koranApi: () => new KoranApiImpl(),
             userApi: () => new UserApiImpl(),
             googleAuthApi: () => new GoogleAuthApiImpl(),
-            favManager: () => new FavManagerDummy()
+            favManager: () => new FavManagerImpl(new FavApiImpl(user.token))
           }}
         >
           <GoogleOAuthProvider
