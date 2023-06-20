@@ -10,10 +10,6 @@ export class FavApiImpl implements FavApi {
   }
 
   async add(surah: number, verse: number): Promise<Fav[]> {
-    if (!this.token) {
-      return []
-    }
-
     const response = await fetch(getUrl("/fav"), {
       method: 'POST',
       body: JSON.stringify({
@@ -29,10 +25,6 @@ export class FavApiImpl implements FavApi {
   }
 
   async remove(id: number): Promise<Fav[]> {
-    if (!this.token) {
-      return []
-    }
-
     const response = await fetch(getUrl("/fav/remove"), {
       method: 'POST',
       body: JSON.stringify({
@@ -58,7 +50,7 @@ export class FavApiImpl implements FavApi {
   }
 
   private async toFavs(response: Response): Promise<Fav[]> {
-    if (!this.token) {
+    if (response.status != 200) {
       return []
     }
 

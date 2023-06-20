@@ -1,5 +1,7 @@
 import { rest } from 'msw'
 
+const VALID_TOKEN = 'valid_token'
+
 const baseUrl = process.env.NEXT_PUBLIC_BASE_API
 
 export const handlers = [
@@ -168,5 +170,92 @@ export const handlers = [
         }
       }),
     )
+  }),
+  rest.post(`${baseUrl}/fav`, async (req, res, ctx) => {
+    const token = req.headers.get('x-access-token')
+
+    if (token == VALID_TOKEN) {
+      const json = await req.json()
+      return res(
+        ctx.status(200),
+        ctx.json({
+          data: {
+            favorites: [
+              {
+                id: 1,
+                surah: json.surah,
+                verse: json.verse,
+              }
+            ]
+          }
+        }),
+      )
+    } else {
+      return res(
+        ctx.status(401),
+        ctx.json({
+          data: {
+            error: 'something went wrong'
+          }
+        }),
+      )
+    }
+  }),
+  rest.post(`${baseUrl}/fav/remove`, async (req, res, ctx) => {
+    const token = req.headers.get('x-access-token')
+
+    if (token == VALID_TOKEN) {
+      return res(
+        ctx.status(200),
+        ctx.json({
+          data: {
+            favorites: []
+          }
+        }),
+      )
+    } else {
+      return res(
+        ctx.status(401),
+        ctx.json({
+          data: {
+            error: 'something went wrong'
+          }
+        }),
+      )
+    }
+  }),
+  rest.get(`${baseUrl}/fav`, async (req, res, ctx) => {
+    const token = req.headers.get('x-access-token')
+
+    if (token == VALID_TOKEN) {
+      return res(
+        ctx.status(200),
+        ctx.json({
+          data: {
+            favorites: [
+              {
+                id: 1,
+                surah: 1,
+                verse: 1
+              },
+              {
+                id: 2,
+                surah: 1,
+                verse: 2
+              }
+            ]
+          }
+        }),
+      )
+    } else {
+      return res(
+        ctx.status(401),
+        ctx.json({
+          data: {
+            error: 'something went wrong'
+          }
+        }),
+      )
+    }
   })
 ]
