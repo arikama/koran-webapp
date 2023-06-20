@@ -6,6 +6,7 @@ import BookmarkPage from "../../src/pages/bookmark"
 import { getDefaultUser } from '../../src/testutils/get_default_user'
 
 import type { Auth } from "../../src/types/auth"
+import { FavManagerDummy } from "../../src/managers/fav_manager_dummy"
 import type { Verse } from "../../src/types/verse"
 import type { Wire } from "../../src/types/wire"
 
@@ -44,6 +45,9 @@ describe("BookmarkPage", () => {
     },
     googleAuthApi: () => {
       return { auth: () => Promise.resolve(getDefaultUser()) }
+    },
+    favManager: () => {
+      return new FavManagerDummy()
     }
   }
 
