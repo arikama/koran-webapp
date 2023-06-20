@@ -29,7 +29,7 @@ export const WireContext = React.createContext<Wire>({
   koranApi: () => new KoranApiImpl(),
   userApi: () => new UserApiImpl(),
   googleAuthApi: () => new GoogleAuthApiImpl(),
-  favManager: () => new FavManagerDummy()
+  favManager: () => new FavManagerImpl(new FavApiImpl(''))
 })
 
 export default function App(props: PropsWithChildren) {
