@@ -8,9 +8,13 @@ import { Button } from '../components/button'
 import { DIMENSIONS } from '../constants/dimensions'
 import { FONT } from '../constants/font'
 import { QuranText } from '../components/quran_text'
+import { STORAGE } from '../constants/storage'
+import { ShowHideButton } from '../components/show_hide_button'
 import { TranslationText } from '../components/translation_text'
 import { getSurahVerseId } from '../utils/get_surah_verse_id'
+import { usePersistentState } from '../hooks/use_persistent_state'
 
+import type { FavSettings } from '../types/fav_settings'
 import type { Verse } from '../types/verse'
 
 export default function FavsPage() {
@@ -18,6 +22,14 @@ export default function FavsPage() {
   const wireContext = useContext(WireContext)
   const router = useRouter()
   const [favs, setFavs] = useState<Verse[]>([])
+
+  const [favSettings, updateFavSettings] = usePersistentState<FavSettings>(
+    STORAGE.FAV_SETTINGS_STORAGE_KEY,
+    {
+      hideVerse: false,
+      hideTranslation: false
+    },
+  )
 
   useEffect(() => {
     (async () => {
@@ -58,6 +70,57 @@ export default function FavsPage() {
     return <></>
   }
 
+  const renderUserActions = () => {
+    return (
+      <div
+        style={{
+          fontSize: FONT.FONT_SIZE_S,
+        }}
+      >
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "flex-end"
+          }}
+        >
+          {renderShowHideVerse()}
+          {renderShowHideTranslation()}
+        </div>
+        <Break />
+      </div>
+    )
+  }
+
+  const renderShowHideVerse = () => {
+    return (
+      <ShowHideButton
+        what="verse"
+        isHiding={favSettings.hideVerse}
+        onClick={() => {
+          updateFavSettings({
+            ...favSettings,
+            hideVerse: !favSettings.hideVerse
+          })
+        }}
+      />
+    )
+  }
+
+  const renderShowHideTranslation = () => {
+    return (
+      <ShowHideButton
+        what="translation"
+        isHiding={favSettings.hideTranslation}
+        onClick={() => {
+          updateFavSettings({
+            ...favSettings,
+            hideTranslation: !favSettings.hideTranslation
+          })
+        }}
+      />
+    )
+  }
+
   const renderTag = (surahVerse: string) => {
     const parsed = getSurahVerseId(surahVerse)
 
@@ -85,11 +148,24 @@ export default function FavsPage() {
             paddingRight: `${DIMENSIONS.SZ_6}px`
           }}
         >
-          <QuranText text={verse.verse} />
+          {
+            favSettings.hideVerse ? null : (
+              <div>
+                <QuranText text={verse.verse} />
+                <Break size={DIMENSIONS.SZ_8} />
+              </div>
+            )
+          }
           <Break size={DIMENSIONS.SZ_8} />
-          <TranslationText text={verse.translation} />
+          {
+            favSettings.hideTranslation ? null : (
+              <div>
+                <TranslationText text={verse.translation} />
+                <Break size={DIMENSIONS.SZ_8} />
+              </div>
+            )
+          }
         </div>
-        <Break size={DIMENSIONS.SZ_32} />
       </div>
     )
   }
@@ -99,6 +175,7 @@ export default function FavsPage() {
       <Head>
         <title>Favorite</title>
       </Head>
+      {renderUserActions()}
       <div>{favs.map(renderSingleVerse)}</div>
     </>
   )
