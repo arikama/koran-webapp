@@ -1,8 +1,9 @@
-export function getSurahVerseId(key: string): { surahId: number, verseId: number, ok: boolean } {
+import type { VerseId } from "../types/verse_id"
+
+export function getSurahVerseId(key: string): VerseId {
   const result = {
-    surahId: -1,
-    verseId: -1,
-    ok: false
+    surah: 0,
+    verse: 0,
   }
 
   const arr = key.split(':')
@@ -12,9 +13,8 @@ export function getSurahVerseId(key: string): { surahId: number, verseId: number
     const verseId = parseInt(arr[1])
 
     if (surahId > 0 && verseId > 0) {
-      result.surahId = surahId
-      result.verseId = verseId
-      result.ok = true
+      result.surah = surahId
+      result.verse = verseId
     }
   }
 

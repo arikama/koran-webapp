@@ -14,7 +14,7 @@ export class FavManagerImpl implements FavManager {
   async add(surahVerse: string): Promise<Set<string>> {
     const parsed = getSurahVerseId(surahVerse)
 
-    const favs = await this.favApi.add(parsed.surahId, parsed.verseId)
+    const favs = await this.favApi.add(parsed.surah, parsed.verse)
 
     return Promise.resolve(this.toKeys(favs))
   }
@@ -25,7 +25,7 @@ export class FavManagerImpl implements FavManager {
     const favs = await this.favApi.list()
 
     for (let i = 0; i < favs.length; i++) {
-      if (favs[i].surah == parsed.surahId && favs[i].verse == parsed.verseId) {
+      if (favs[i].surah == parsed.surah && favs[i].verse == parsed.verse) {
         await this.favApi.remove(favs[i].id)
       }
     }

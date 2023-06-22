@@ -12,6 +12,7 @@ import { STORAGE } from '../constants/storage'
 import { ShowHideButton } from '../components/show_hide_button'
 import { TranslationText } from '../components/translation_text'
 import { getSurahVerseId } from '../utils/get_surah_verse_id'
+import { sortFavs } from '../utils/sort_favs'
 import { usePersistentState } from '../hooks/use_persistent_state'
 
 import type { FavSettings } from '../types/fav_settings'
@@ -45,20 +46,13 @@ export default function FavsPage() {
       for (const fav of Array.from(favSet)) {
         const id = getSurahVerseId(fav)
 
-        const verse = await wireContext.koranApi().getVerse(id.surahId, id.verseId)
+        const verse = await wireContext.koranApi().getVerse(id.surah, id.verse)
 
         favs.push(verse)
       }
 
       favs.sort((a, b) => {
-        const aId = getSurahVerseId(a.key)
-        const bId = getSurahVerseId(b.key)
-
-        if (aId.surahId == bId.surahId) {
-          return aId.verseId - bId.verseId
-        } else {
-          return aId.surahId - bId.surahId
-        }
+        return sortFavs(getSurahVerseId(a.key), getSurahVerseId(b.key))
       })
 
       setFavs(favs)
@@ -127,7 +121,7 @@ export default function FavsPage() {
     return (
       <Button
         onClick={() => {
-          router.push(`/surahs/${parsed.surahId}#${parsed.verseId}`)
+          router.push(`/surahs/${parsed.surah}#${parsed.verse}`)
         }}
         style={{
           fontSize: FONT.FONT_SIZE_S,

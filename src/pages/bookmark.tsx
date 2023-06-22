@@ -45,15 +45,11 @@ export default function BookmarkPage() {
 
         const currentPointer = await wireContext.userApi().getUserPointer(authContext.user!.email, authContext.user!.token)
         const parsed = getSurahVerseId(currentPointer)
+        const verse = await wireContext.koranApi().getVerse(parsed.surah, parsed.verse)
 
-        if (parsed.ok) {
-          const verse = await wireContext.koranApi().getVerse(parsed.surahId, parsed.verseId)
-          setCurrentPointer(currentPointer)
-          setVerse(verse)
-        }
-
+        setCurrentPointer(currentPointer)
+        setVerse(verse)
         setIsLoading(false)
-
         setFavSet(await wireContext.favManager().get())
       } catch (e) {
         authContext.updateUser(getEmptyUser())
@@ -94,7 +90,7 @@ export default function BookmarkPage() {
     return (
       <Button
         onClick={() => {
-          router.push(`/surahs/${parsed.surahId}#${parsed.verseId}`)
+          router.push(`/surahs/${parsed.surah}#${parsed.verse}`)
         }}
       >
         {currentPointer}
@@ -167,12 +163,10 @@ export default function BookmarkPage() {
             if (authContext.isLoggedIn() && authContext.user) {
               const currentPointer = await wireContext.userApi().advanceUserPointer(authContext.user.email, authContext.user.token)
               const parsed = getSurahVerseId(currentPointer)
+              const verse = await wireContext.koranApi().getVerse(parsed.surah, parsed.verse)
 
-              if (parsed.ok) {
-                const verse = await wireContext.koranApi().getVerse(parsed.surahId, parsed.verseId)
-                setCurrentPointer(currentPointer)
-                setVerse(verse)
-              }
+              setCurrentPointer(currentPointer)
+              setVerse(verse)
             }
             setIsLoading(false)
           }}

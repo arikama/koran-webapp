@@ -8,17 +8,15 @@ describe('getSurahVerseId', () => {
       {
         input: '1:1',
         expected: {
-          ok: true,
-          surahId: 1,
-          verseId: 1
+          surah: 1,
+          verse: 1
         }
       },
       {
         input: '114:6',
         expected: {
-          ok: true,
-          surahId: 114,
-          verseId: 6
+          surah: 114,
+          verse: 6
         }
       }
     ]
@@ -33,9 +31,8 @@ describe('getSurahVerseId', () => {
     tests.forEach(test => {
       const actual = getSurahVerseId(test)
       expect(actual).toEqual({
-        ok: false,
-        surahId: -1,
-        verseId: -1
+        surah: 0,
+        verse: 0
       })
     })
   })
