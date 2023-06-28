@@ -5,7 +5,6 @@ const store: Set<string> = new Set()
 export class FavManagerDummy implements FavManager {
   async add(surahVerse: string): Promise<Set<string>> {
     store.add(surahVerse)
-
     return Promise.resolve(new Set(store))
   }
 
@@ -13,7 +12,6 @@ export class FavManagerDummy implements FavManager {
     if (store.has(surahVerse)) {
       store.delete(surahVerse)
     }
-
     return Promise.resolve(new Set(store))
   }
 

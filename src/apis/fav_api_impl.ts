@@ -20,7 +20,6 @@ export class FavApiImpl implements FavApi {
         'x-access-token': this.token,
       }
     })
-
     return this.toFavs(response)
   }
 
@@ -34,7 +33,6 @@ export class FavApiImpl implements FavApi {
         'x-access-token': this.token,
       }
     })
-
     return this.toFavs(response)
   }
 
@@ -45,7 +43,6 @@ export class FavApiImpl implements FavApi {
         'x-access-token': this.token,
       }
     })
-
     return this.toFavs(response)
   }
 
@@ -53,7 +50,6 @@ export class FavApiImpl implements FavApi {
     if (response.status != 200) {
       return []
     }
-
     type Json = {
       data: {
         favorites: {
@@ -63,9 +59,7 @@ export class FavApiImpl implements FavApi {
         }[]
       }
     }
-
     const json: Json = await response.json()
-
     return json.data.favorites.map((favorite: {
       id: number
       surah: number

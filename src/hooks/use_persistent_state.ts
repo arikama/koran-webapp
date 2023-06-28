@@ -2,7 +2,6 @@ import { useEffect, useState } from "react"
 
 export function usePersistentState<T>(storageKey: string, initialState: T): [T, (newState: T) => void] {
   const [state, setState] = useState<T>(initialState)
-
   useEffect(() => {
     if (typeof window !== "undefined") {
       const blob = window.localStorage.getItem(storageKey)
@@ -14,7 +13,6 @@ export function usePersistentState<T>(storageKey: string, initialState: T): [T, 
       }
     }
   }, [storageKey])
-
   const update = (newState: T) => {
     setState(newState)
     if (typeof window !== "undefined") {
@@ -22,6 +20,5 @@ export function usePersistentState<T>(storageKey: string, initialState: T): [T, 
       window.localStorage.setItem(storageKey, blob)
     }
   }
-
   return [state, update]
 }

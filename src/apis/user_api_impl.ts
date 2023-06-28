@@ -12,9 +12,7 @@ export class UserApiImpl implements UserApi {
         'x-access-token': token,
       }
     })
-
     const json = await response.json()
-
     return json.data.current_pointer
   }
 
@@ -28,9 +26,7 @@ export class UserApiImpl implements UserApi {
         'x-access-token': token,
       }
     })
-
     const json = await response.json()
-
     return json.data.current_pointer
   }
 }

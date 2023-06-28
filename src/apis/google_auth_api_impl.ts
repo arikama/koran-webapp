@@ -10,16 +10,13 @@ export class GoogleAuthApiImpl implements GoogleAuthApi {
         auth_code: userAuthCode,
       }),
     })
-
     const json = await auth.json()
-
     const user: User = {
       email: json.data.email,
       token: json.data.token,
       name: json.data.name,
       picture: json.data.picture,
     }
-
     return Promise.resolve(user)
   }
 }

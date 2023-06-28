@@ -7,7 +7,6 @@ import { getUrl } from '../utils/getUrl'
 export class KoranApiImpl implements KoranApi {
   async getSurahInfos(): Promise<SurahInfo[]> {
     const response = await fetch(getUrl("/"))
-
     type Json = {
       data: {
         surah_infos: {
@@ -22,9 +21,7 @@ export class KoranApiImpl implements KoranApi {
         }[]
       }
     }
-
     const json: Json = await response.json()
-
     return json.data.surah_infos.map((info: {
       surah_id: number
       title: string
@@ -46,7 +43,6 @@ export class KoranApiImpl implements KoranApi {
 
   async getSurah(surahId: number): Promise<Surah> {
     const response = await fetch(getUrl(`/surah/${surahId}`))
-
     type Json = {
       data: {
         surah: {
@@ -72,9 +68,7 @@ export class KoranApiImpl implements KoranApi {
         }
       }
     }
-
     const json: Json = await response.json()
-
     const surah: Surah = {
       surahId: json.data.surah.surah_info.surah_id,
       englishName: json.data.surah.surah_info.english,
@@ -87,7 +81,6 @@ export class KoranApiImpl implements KoranApi {
         }
       })
     }
-
     return surah
   }
 
@@ -95,15 +88,12 @@ export class KoranApiImpl implements KoranApi {
     const response = await fetch(getUrl(`/surah/${surahId}/verse/${verseId}`), {
       method: 'GET'
     })
-
     const json = await response.json()
-
     const verse: Verse = {
       key: `${surahId}:${verseId}`,
       verse: json.data.verse,
       translation: json.data.translations.clearquran
     }
-
     return verse
   }
 }
