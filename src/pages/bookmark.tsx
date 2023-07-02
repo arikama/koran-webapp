@@ -171,6 +171,12 @@ export default function BookmarkPage() {
             setIsLoading(false)
           }}
           isLoading={isLoading}
+          style={{
+            height: '100vh',
+            width: '100%',
+            display: 'flex',
+            justifyContent: 'right'
+          }}
         >
           Next
         </Button>
