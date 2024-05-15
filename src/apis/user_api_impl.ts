@@ -29,4 +29,18 @@ export class UserApiImpl implements UserApi {
     const json = await response.json()
     return json.data.current_pointer
   }
+
+  async reverseUserPointer(email: string, token: string): Promise<string> {
+    const response = await fetch(getUrl("/user/pointer/reverse"), {
+      method: 'PATCH',
+      body: JSON.stringify({
+        email,
+      }),
+      headers: {
+        'x-access-token': token,
+      }
+    })
+    const json = await response.json()
+    return json.data.current_pointer
+  }
 }

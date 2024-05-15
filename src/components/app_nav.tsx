@@ -54,7 +54,7 @@ export const AppNav = () => {
             background: (router.route === '/' || router.route === '/surahs/[id]') ? 'gainsboro' : 'none'
           }}
         >
-          Koran
+          koran
         </Button>
         &nbsp;
         &nbsp;
@@ -64,7 +64,7 @@ export const AppNav = () => {
             background: router.pathname === '/bookmark' ? 'gainsboro' : 'none'
           }}
         >
-          Bookmark
+          bookmark
         </Button>
         &nbsp;
         &nbsp;
@@ -74,7 +74,7 @@ export const AppNav = () => {
             background: router.pathname === '/favs' ? 'gainsboro' : 'none'
           }}
         >
-          Favorite
+          favorite
         </Button>
       </div>
       <LoginButton />

@@ -54,7 +54,7 @@ export default function ProfilePage() {
           paddingRight: 0,
         }}
       >
-        Logout
+        logout
       </Button>
     </div>
   )

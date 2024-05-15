@@ -114,7 +114,7 @@ export default function BookmarkPage() {
           textDecoration: isFav ? undefined : "underline"
         }}
       >
-        {!isFav ? "favorite" : <div style={{ fontSize: `${FONT.FONT_SIZE_S}` }}>❤️</div>}
+        {!isFav ? "🩶" : "❤️"}
       </Button>
     )
   }
@@ -129,7 +129,7 @@ export default function BookmarkPage() {
           })
         }}
       >
-        {bookmarkSettings.hideVerse ? "show" : "hide"}&nbsp;verse
+        {bookmarkSettings.hideVerse ? "🛐" : "☪️"}
       </Button>
     )
   }
@@ -144,7 +144,7 @@ export default function BookmarkPage() {
           })
         }}
       >
-        {bookmarkSettings.hideTranslation ? "show" : "hide"}&nbsp;translation
+        {bookmarkSettings.hideTranslation ? "📕" : "📖"}
       </Button>
     )
   }
@@ -178,7 +178,42 @@ export default function BookmarkPage() {
             justifyContent: 'right'
           }}
         >
-          Next
+          next
+        </Button>
+      </>
+    )
+  }
+
+  const renderReverse = () => {
+    return (
+      <>
+        <Break size={DIMENSIONS.SZ_8} />
+        <Button
+          onClick={async () => {
+            if (isLoading) {
+              return
+            }
+            setIsLoading(true)
+            triggerGtmUserclick(TRACKING_ACTIONS.BOOKMARK_NEXT)
+            if (authContext.isLoggedIn() && authContext.user) {
+              const currentPointer = await wireContext.userApi().reverseUserPointer(authContext.user.email, authContext.user.token)
+              const parsed = getSurahVerseId(currentPointer)
+              const verse = await wireContext.koranApi().getVerse(parsed.surah, parsed.verse)
+
+              setCurrentPointer(currentPointer)
+              setVerse(verse)
+            }
+            setIsLoading(false)
+          }}
+          isLoading={isLoading}
+          style={{
+            height: '100vh',
+            width: '100%',
+            display: 'flex',
+            justifyContent: 'left'
+          }}
+        >
+          reverse
         </Button>
       </>
     )
@@ -216,10 +251,23 @@ export default function BookmarkPage() {
       </div>
       <div
         style={{
-          textAlign: "right",
+          display: 'flex',
         }}
       >
-        {renderNext()}
+        <div
+          style={{
+            flex: 1,
+          }}
+        >
+          {renderReverse()}
+        </div>
+        <div
+          style={{
+            flex: 1,
+          }}
+        >
+          {renderNext()}
+        </div>
       </div>
     </>
   )
