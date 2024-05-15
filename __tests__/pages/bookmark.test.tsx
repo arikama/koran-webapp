@@ -77,7 +77,7 @@ describe("BookmarkPage", () => {
     expect(await screen.findByText("1:1:verse")).toBeInTheDocument()
     expect(await screen.findByText("1:1:translation")).toBeInTheDocument()
 
-    const nextButton = await screen.findByText("Next")
+    const nextButton = await screen.findByText("next")
     await userEvent.click(nextButton)
 
     expect(await screen.findByText("1:2")).toBeInTheDocument()

@@ -36,7 +36,7 @@ export const LoginButton = () => {
 
   const Login = () => {
     return (
-      <Button onClick={googleLogin}>Login</Button>
+      <Button onClick={googleLogin}>login</Button>
     )
   }
 

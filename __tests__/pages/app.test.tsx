@@ -12,8 +12,8 @@ describe("App", () => {
     render(
       <App />
     )
-    expect(screen.getByText("Koran")).toBeInTheDocument()
-    expect(screen.getByText("Bookmark")).toBeInTheDocument()
-    expect(screen.getByText("Login")).toBeInTheDocument()
+    expect(screen.getByText("koran")).toBeInTheDocument()
+    expect(screen.getByText("bookmark")).toBeInTheDocument()
+    expect(screen.getByText("login")).toBeInTheDocument()
   })
 })

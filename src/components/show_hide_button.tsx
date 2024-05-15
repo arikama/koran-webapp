@@ -1,7 +1,8 @@
 import { Button } from "./button"
 
 export const ShowHideButton = (props: {
-  what: string
+  show: string
+  hide: string
   isHiding: boolean
   onClick: () => void
 }) => {
@@ -9,7 +10,7 @@ export const ShowHideButton = (props: {
     <Button
       onClick={props.onClick}
     >
-      {props.isHiding ? "show" : "hide"}&nbsp;{props.what}
+      {props.isHiding ? props.show : props.hide}
     </Button>
   )
 }

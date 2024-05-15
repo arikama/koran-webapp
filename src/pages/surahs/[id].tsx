@@ -55,7 +55,7 @@ export default function SurahPage(props: { surah: Surah }) {
           textDecoration: isFav ? undefined : "underline"
         }}
       >
-        {!favSet.has(surahVerse) ? "favorite" : <div style={{ fontSize: `${FONT.FONT_SIZE_S}` }}>❤️</div>}
+        {!favSet.has(surahVerse) ? "🩶" : "❤️"}
       </Button>
     )
   }
@@ -63,7 +63,8 @@ export default function SurahPage(props: { surah: Surah }) {
   const renderShowHideVerse = () => {
     return (
       <ShowHideButton
-        what="verse"
+        show='🛐'
+        hide='☪️'
         isHiding={surahSettings.hideVerse}
         onClick={() => {
           updateSurahSettings({
@@ -78,7 +79,8 @@ export default function SurahPage(props: { surah: Surah }) {
   const renderShowHideTranslation = () => {
     return (
       <ShowHideButton
-        what="translation"
+        show="📕"
+        hide="📖"
         isHiding={surahSettings.hideTranslation}
         onClick={() => {
           updateSurahSettings({
@@ -128,6 +130,8 @@ export default function SurahPage(props: { surah: Surah }) {
               {`${props.surah.surahId}:${verse.verseId}`}
             </div>
             <div>
+              {renderShowHideVerse()}
+              {renderShowHideTranslation()}
               {
                 authContext.isLoggedIn() ?
                   renderFav(`${props.surah.surahId}:${verse.verseId}`)
@@ -190,27 +194,6 @@ export default function SurahPage(props: { surah: Surah }) {
     )
   }
 
-  const renderUserActions = () => {
-    return (
-      <div
-        style={{
-          fontSize: FONT.FONT_SIZE_S,
-        }}
-      >
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "flex-end"
-          }}
-        >
-          {renderShowHideVerse()}
-          {renderShowHideTranslation()}
-        </div>
-        <Break />
-      </div>
-    )
-  }
-
   return (
     <>
       <Head>
@@ -223,7 +206,6 @@ export default function SurahPage(props: { surah: Surah }) {
           paddingRight: `${DIMENSIONS.SZ_6}px`
         }}
       >
-        {renderUserActions()}
         {renderVerses()}
       </div>
     </>

@@ -36,7 +36,7 @@ describe('LoginButton', () => {
       </AuthContext.Provider>
     )
 
-    const loginButton = screen.getByText('Login')
+    const loginButton = screen.getByText('login')
     expect(loginButton).toBeInTheDocument()
 
     await userEvent.click(loginButton)

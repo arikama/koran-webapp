@@ -66,7 +66,7 @@ describe('ProfilePage', () => {
     expect(await screen.findByText('Amir')).toBeInTheDocument()
     expect(await screen.findByText('amir.ariffin@google.com')).toBeInTheDocument()
 
-    const logoutButton = await screen.findByText('Logout')
+    const logoutButton = await screen.findByText('logout')
     expect(logoutButton).toBeInTheDocument()
 
     await userEvent.click(logoutButton)

@@ -68,7 +68,7 @@ describe('SurahPage', () => {
       </AuthContext.Provider>
     )
 
-    await userEvent.click((await screen.findAllByText('favorite'))[0])
+    await userEvent.click((await screen.findAllByText('🩶'))[0])
     await userEvent.click((await screen.findAllByText('❤️'))[0])
   })
 })

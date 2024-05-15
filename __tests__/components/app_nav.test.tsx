@@ -43,13 +43,13 @@ describe('AppNav', () => {
       </AuthContext.Provider>
     )
 
-    const koranNav = await screen.findByText('Koran')
+    const koranNav = await screen.findByText('koran')
 
     expect(koranNav).toBeInTheDocument()
     expect(await userEvent.click(koranNav))
     expect(pushMock).toBeCalledWith('/')
 
-    const bookmarkNav = await screen.findByText('Bookmark')
+    const bookmarkNav = await screen.findByText('bookmark')
 
     expect(bookmarkNav).toBeInTheDocument()
     expect(await userEvent.click(bookmarkNav))
@@ -79,13 +79,13 @@ describe('AppNav', () => {
       </AuthContext.Provider>
     )
 
-    const koranNav = await screen.findByText('Koran')
+    const koranNav = await screen.findByText('koran')
 
     expect(koranNav).toBeInTheDocument()
     expect(await userEvent.click(koranNav))
     expect(pushMock).toBeCalledWith('/')
 
-    const bookmarkNav = await screen.findByText('Bookmark')
+    const bookmarkNav = await screen.findByText('bookmark')
 
     expect(bookmarkNav).toBeInTheDocument()
     expect(await userEvent.click(bookmarkNav))

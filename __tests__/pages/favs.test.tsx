@@ -72,8 +72,8 @@ describe('FavsPage', () => {
       )
     })
 
-    expect(await screen.findByText("hide verse")).toBeInTheDocument()
-    expect(await screen.findByText("hide translation")).toBeInTheDocument()
+    expect(await screen.findByText("📖")).toBeInTheDocument()
+    expect(await screen.findByText("☪️")).toBeInTheDocument()
 
     expect(await screen.findByText("1:1")).toBeInTheDocument()
     expect(await screen.findByText("verse 1:1")).toBeInTheDocument()
@@ -84,18 +84,18 @@ describe('FavsPage', () => {
     expect(await screen.findByText("translation 1:2")).toBeInTheDocument()
 
     await act(async () => {
-      await userEvent.click(await screen.findByText("hide verse"))
+      await userEvent.click(await screen.findByText("📖"))
     })
 
-    expect(screen.queryByText("verse 1:1")).not.toBeInTheDocument()
-    expect(screen.queryByText("verse 1:2")).not.toBeInTheDocument()
+    expect(screen.queryByText("☪️ 1:1")).not.toBeInTheDocument()
+    expect(screen.queryByText("☪️ 1:2")).not.toBeInTheDocument()
 
     await act(async () => {
-      await userEvent.click(await screen.findByText("hide translation"))
+      await userEvent.click(await screen.findByText("☪️"))
     })
 
-    expect(screen.queryByText("translation 1:1")).not.toBeInTheDocument()
-    expect(screen.queryByText("translation 1:2")).not.toBeInTheDocument()
+    expect(screen.queryByText("📖 1:1")).not.toBeInTheDocument()
+    expect(screen.queryByText("📖 1:2")).not.toBeInTheDocument()
 
     await act(async () => {
       await userEvent.click(await screen.findByText("1:1"))

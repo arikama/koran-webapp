@@ -88,7 +88,8 @@ export default function FavsPage() {
   const renderShowHideVerse = () => {
     return (
       <ShowHideButton
-        what="verse"
+        show='🛐'
+        hide='☪️'
         isHiding={favSettings.hideVerse}
         onClick={() => {
           updateFavSettings({
@@ -103,7 +104,8 @@ export default function FavsPage() {
   const renderShowHideTranslation = () => {
     return (
       <ShowHideButton
-        what="translation"
+        show="📕"
+        hide="📖"
         isHiding={favSettings.hideTranslation}
         onClick={() => {
           updateFavSettings({
