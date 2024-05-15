@@ -123,15 +123,12 @@ export default function SurahPage(props: { surah: Surah }) {
               display: 'flex',
               justifyContent: 'space-between',
               alignItems: 'center',
-              fontSize: FONT.FONT_SIZE_S
             }}
           >
             <div>
               {`${props.surah.surahId}:${verse.verseId}`}
             </div>
             <div>
-              {renderShowHideVerse()}
-              {renderShowHideTranslation()}
               {
                 authContext.isLoggedIn() ?
                   renderFav(`${props.surah.surahId}:${verse.verseId}`)
@@ -178,18 +175,25 @@ export default function SurahPage(props: { surah: Surah }) {
     return (
       <div
         style={{
-          fontSize: FONT.FONT_SIZE_S
+          display: "flex",
+          justifyContent: "space-between"
         }}
       >
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between"
-          }}
-        >
-          {renderButtons()}
-        </div>
-        <Break />
+        {renderButtons()}
+      </div>
+    )
+  }
+
+  const renderUserActions = () => {
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "flex-end"
+        }}
+      >
+        {renderShowHideVerse()}
+        {renderShowHideTranslation()}
       </div>
     )
   }
@@ -206,6 +210,7 @@ export default function SurahPage(props: { surah: Surah }) {
           paddingRight: `${DIMENSIONS.SZ_6}px`
         }}
       >
+        {renderUserActions()}
         {renderVerses()}
       </div>
     </>

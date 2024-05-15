@@ -90,7 +90,6 @@ const IndexPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = (pro
         style={{
           display: "flex",
           justifyContent: "space-between",
-          fontSize: FONT.FONT_SIZE_S
         }}
       >
         {

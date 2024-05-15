@@ -226,7 +226,6 @@ export default function BookmarkPage() {
       </Head>
       <div
         style={{
-          fontSize: FONT.FONT_SIZE_S,
           display: "flex",
           justifyContent: "space-between"
         }}

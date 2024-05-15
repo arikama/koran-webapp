@@ -68,19 +68,12 @@ export default function FavsPage() {
     return (
       <div
         style={{
-          fontSize: FONT.FONT_SIZE_S,
+          display: "flex",
+          justifyContent: "flex-end"
         }}
       >
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "flex-end"
-          }}
-        >
-          {renderShowHideVerse()}
-          {renderShowHideTranslation()}
-        </div>
-        <Break />
+        {renderShowHideVerse()}
+        {renderShowHideTranslation()}
       </div>
     )
   }
@@ -124,9 +117,6 @@ export default function FavsPage() {
       <Button
         onClick={() => {
           router.push(`/surahs/${parsed.surah}#${parsed.verse}`)
-        }}
-        style={{
-          fontSize: FONT.FONT_SIZE_S,
         }}
       >
         {surahVerse}
