@@ -51,9 +51,6 @@ export default function SurahPage(props: { surah: Surah }) {
             setFavSet(await wireContext.favManager().remove(surahVerse))
           }
         }}
-        style={{
-          textDecoration: isFav ? undefined : "underline"
-        }}
       >
         {!favSet.has(surahVerse) ? "🩶" : "❤️"}
       </Button>

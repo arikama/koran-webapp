@@ -9,6 +9,9 @@ export const ShowHideButton = (props: {
   return (
     <Button
       onClick={props.onClick}
+      style={{
+          textDecoration: "none"
+      }}
     >
       {props.isHiding ? props.show : props.hide}
     </Button>
