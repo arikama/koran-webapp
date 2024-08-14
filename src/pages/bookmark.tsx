@@ -111,7 +111,7 @@ export default function BookmarkPage() {
           }
         }}
         style={{
-          textDecoration: isFav ? undefined : "underline"
+          textDecoration: undefined
         }}
       >
         {!isFav ? "🩶" : "❤️"}
@@ -128,6 +128,9 @@ export default function BookmarkPage() {
             hideVerse: !bookmarkSettings.hideVerse
           })
         }}
+        style={{
+          textDecoration: undefined
+        }}
       >
         {bookmarkSettings.hideVerse ? "🛐" : "☪️"}
       </Button>
@@ -142,6 +145,9 @@ export default function BookmarkPage() {
             ...bookmarkSettings,
             hideTranslation: !bookmarkSettings.hideTranslation
           })
+        }}
+        style={{
+          textDecoration: undefined
         }}
       >
         {bookmarkSettings.hideTranslation ? "📕" : "📖"}
